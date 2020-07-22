@@ -1,0 +1,62 @@
+{
+    "campus": "",
+    "building": "",
+    "input_data_timezone": "",
+    "inputs": [
+        {
+            "topic": "",
+            "mapped": "",
+            "point": "",
+            "initial_value": ""
+        }
+    ],
+    "outputs": [
+        {
+            "mapped": "",
+            "point": "",
+            "topic": "",
+            "flexibility_range": [0, 0],
+            "control_flexibility": [0, 0],
+            "off_setpoint": 0,
+            "actuator": "platform.actuator",
+            "release": "none",
+            "offset": 0,
+            "fallback": 0
+        }
+    ],
+    "schedule": {
+        "Monday": {
+            "start": "",
+            "end": ""
+        },
+        "Tuesday": {
+            "start": "",
+            "end": ""
+        },
+        "Wednesday": {
+            "start": "",
+            "end": ""
+        },
+        "Thursday": {
+            "start": "",
+            "end": ""
+        },
+        "Friday": {
+            "start": "",
+            "end": ""
+        },
+        "Saturday": {
+            "start": "",
+            "end": ""
+        },
+        "Sunday": {
+            "start": "",
+            "end": ""
+        }
+    },
+    "model_parameters": {
+        "rated_power": 0,
+        "model_type": ""
+    },
+    "agent_name": ""
+}

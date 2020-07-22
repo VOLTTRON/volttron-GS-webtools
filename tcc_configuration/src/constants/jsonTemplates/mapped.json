@@ -1,0 +1,24 @@
+{
+    "": {},
+    "ahu": {
+        "sfs": "Supply Fan Status",
+        "mat": "Mixed Air Temperature",
+        "dat": "Discharge-Air Temperature",
+        "saf": "Supply-Air Flow Rate",
+        "oat": "Outdoor-Air Temperature",
+        "rat": "Return-Air Temperature",
+        "mclg": "Mechanical Cooling",
+        "mhtg": "Mechanical Heating"
+    },
+    "light": {
+        "dol": "Lighting Dimming Level",
+        "occ": "Lighting Occupancy Mode"
+    },
+    "vav": {
+        "zt": "Zone Temperature",
+        "zdat": "Zone Discharge-Air Temperature",
+        "zaf": "Zone Supply-Air Flow Rate",
+        "csp": "Zone Cooling Temperature Set-Point",
+        "hsp": "Zone Heating Temperature Set-Point"
+    }
+}
