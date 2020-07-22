@@ -1,0 +1,26 @@
+{"augment": {
+
+    "zonetemperature_setpoint":{
+        "history_zonetemperature":1,
+        "room_type":1,
+        "rated_power":1,
+        "stage":1
+    },
+    "stage":{
+        "history_zonetemperature":1,
+        "room_type":1,
+        "rated_power":1
+    },
+    "history_zonetemperature":{
+        "room_type":1,
+        "rated_power":1
+    },
+
+    "rated_power":{
+        "room_type":1
+    },
+    "room_type":{
+
+    }
+    }
+}
