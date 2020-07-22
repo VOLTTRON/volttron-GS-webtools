@@ -1,0 +1,9 @@
+{
+    "zone_type": {
+        "Private Office": 1,
+        "Office": 3,
+        "Conference Room": 1,
+        "Lobby": 9,
+        "RestRoom": 9
+    }
+}
