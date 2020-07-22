@@ -1,0 +1,12 @@
+{
+    "mapped": "",
+    "point": "",
+    "topic": "",
+    "flexibility_range": ["", ""],
+    "control_flexibility": ["", ""],
+    "off_setpoint": "",
+    "actuator": "platform.actuator",
+    "release": "none",
+    "offset": "",
+    "fallback": ""
+}

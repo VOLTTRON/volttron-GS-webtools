@@ -1,0 +1,20 @@
+{
+    "model_type":"",
+    "equipment_configuration":{
+        "has_economizer":false,
+        "economizer_limit":0,
+        "supply_air_setpoint":0,
+        "nominal_zone_setpoint":0,
+        "building_chiller":false,
+        "variable_volume":false
+    },
+    "model_configuration":{
+        "c0":0,
+        "c1":0,
+        "c2":0,
+        "c3":0,
+        "cpAir":0,
+        "COP":0,
+        "mDotAir":0
+    }
+}

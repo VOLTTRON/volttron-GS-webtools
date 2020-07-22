@@ -1,0 +1,11 @@
+{
+    "model_type": "",
+    "on_min": 0,
+    "off_min": 0,
+    "temp_db": 0,
+    "rated_power": 0,
+    "c": 0,
+    "c1": [],
+    "c2": [],
+    "c3": []
+}
