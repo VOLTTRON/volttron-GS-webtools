@@ -105,7 +105,7 @@ export default function NavigationBar() {
             <MenuItem onClick={handleMasterDriverClick}>Import New Master Driver Configuration Store</MenuItem>
           </Menu>
           <Typography variant="h5">
-            ILC Configuration Tool
+            ILC Configuration Tool CD Builds test
           </Typography>
           <IconButton
             style={{position: "absolute", right: "30px"}}
