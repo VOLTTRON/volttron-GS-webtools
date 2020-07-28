@@ -1,17 +1,13 @@
-import React, { useState, useContext, useEffect, useMemo, Fragment} from 'react';
+import React, { useState, useContext, Fragment} from 'react';
 import MasterDriverContext from '../../context/masterDriverContext';
 import ClusterContext from '../../context/clusterContext';
-import { InputLabel, Tooltip, TextField, MenuItem, Button } from '@material-ui/core';
+import { InputLabel, TextField, MenuItem, Button } from '@material-ui/core';
 import { FormControl } from '../MainConfig/_styledMainConfigForm';
-import { StyledPointSelect, StyledButton, StyledRadio } from './_styledDemandFormula';
-import { createMuiTheme, ThemeProvider } from "@material-ui/core";
-import Grid from '@material-ui/core/Grid';
-import Radio from '@material-ui/core/Radio';
-import RadioGroup from '@material-ui/core/RadioGroup';
+import { StyledPointSelect, StyledButton } from './_styledDemandFormula';
+import { Grid, Radio, RadioGroup } from "@material-ui/core";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { DEMAND_FORMULA, OPERATION, OPERATION_ARGS, _CONTROL, _CRITERIA } from '../../constants/strings'
+import { OPERATION, OPERATION_ARGS, _CONTROL, _CRITERIA } from '../../constants/strings'
 import { darkModeContext } from "../../context/darkModeContext";
-
 
 
 export default function DemandFormula(props) {

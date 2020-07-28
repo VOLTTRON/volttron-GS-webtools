@@ -1,8 +1,7 @@
 import styled from 'styled-components'
-import { Input as input, Button as button, Typography as typography, Drawer as drawer } from '@material-ui/core';
+import { Button as button, Typography as typography, Drawer as drawer, Slider as slider } from '@material-ui/core';
 import treeView from '@material-ui/lab/TreeView';
 import treeItem from '@material-ui/lab/TreeItem';
-import slider from '@material-ui/core/slider'
 
 export const Button = styled(button)`
     justify-content: left;

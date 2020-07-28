@@ -1,10 +1,8 @@
 import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Toolbar, IconButton, Button, Typography } from '@material-ui/core';
+import { Toolbar, IconButton, Typography, Menu, MenuItem } from '@material-ui/core';
 import { AppBar } from './_styledAppBar'
 import { default as MenuIcon } from '@material-ui/icons/Menu'
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
 import {default as history} from '../../history';
 import MasterDriverContext from '../../context/masterDriverContext';
 import configurationTemplate from '../../constants/jsonTemplates/configuration.json'
@@ -105,7 +103,7 @@ export default function NavigationBar() {
             <MenuItem onClick={handleMasterDriverClick}>Import New Master Driver Configuration Store</MenuItem>
           </Menu>
           <Typography variant="h5">
-            ILC Configuration Tool CD Builds test
+            ILC Configuration Tool
           </Typography>
           <IconButton
             style={{position: "absolute", right: "30px"}}

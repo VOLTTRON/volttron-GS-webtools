@@ -1,6 +1,5 @@
 import React, { useState, useContext} from 'react';
-import Grid from '@material-ui/core/Grid';
-import { Toolbar, IconButton, Drawer } from '@material-ui/core';
+import { Drawer } from '@material-ui/core';
 import { Button, TreeView, TreeItem } from '../../containers/_styledLeftPanel';
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowDropDownIcon from '@material-ui/icons/ArrowDropDown';

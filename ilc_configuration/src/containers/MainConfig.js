@@ -1,7 +1,6 @@
 import React, { useState, useContext} from 'react';
 import MasterDriverContext from '../context/masterDriverContext';
 import MainConfigForm from '../components/MainConfig/MainConfigForm'
-import Grid from '@material-ui/core/Grid';
 import { FormWrapper } from './_styledMainConfig'
 import { SmallHeader } from '../components/common/_styledHeader'
 import { darkModeContext } from "../context/darkModeContext";

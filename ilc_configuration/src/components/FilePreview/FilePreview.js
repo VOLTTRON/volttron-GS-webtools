@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { StyledBoxWrapper, StyledBox } from './_styledFilePreview';
+import { StyledBoxWrapper } from './_styledFilePreview';
 import Grid from '@material-ui/core/Grid';
 import ReactJson from 'react-json-view';
 import MasterDriverContext from "../../context/masterDriverContext";
