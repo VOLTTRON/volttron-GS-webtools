@@ -31,7 +31,7 @@ const Layout = (props) => {
             </StyledDivLogoWrapper>
             <div>
               <StyledTypographyTitle variant="h6"  onClick={() => {window.location.reload()}}>
-                This is a test for the CD build1234
+                This is a test for the CD build1
               </StyledTypographyTitle>
             </div>
           </Toolbar>
