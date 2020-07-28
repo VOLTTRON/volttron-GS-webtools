@@ -110,7 +110,7 @@ export default function NavigationBar() {
             <MenuItem onClick={handleMasterDriverClick}>Import New Master Driver Configuration Store</MenuItem>
           </Menu>
           <Typography variant="h5">
-            TCC Configuration Tool CD build test
+            TCC Configuration Tool
           </Typography>
           <IconButton
             style={{position: "absolute", right: "30px"}}
