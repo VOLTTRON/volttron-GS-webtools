@@ -14,10 +14,6 @@ jobs:
       - name: Install Dependencies
         working-directory: ./ahu_configuration
         run: npm install
-      - name: Run Tests
-        env:
-          CI: true
-        run: npm test
       - name: Build
         working-directory: ./ahu_configuration
         run: npm run build
