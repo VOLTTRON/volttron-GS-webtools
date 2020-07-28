@@ -21,7 +21,7 @@ jobs:
         uses: actions/upload-artifact@master
         with:
           name: build
-          path: build
+          path: ./ahu_configuration/build
   deploy:
     name: Deploy
     needs: build
