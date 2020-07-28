@@ -31,7 +31,7 @@ const Layout = (props) => {
             </StyledDivLogoWrapper>
             <div>
               <StyledTypographyTitle variant="h6"  onClick={() => {window.location.reload()}}>
-                This is a test for the CD build
+                AHU Configuration
               </StyledTypographyTitle>
             </div>
           </Toolbar>

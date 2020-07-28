@@ -12,18 +12,16 @@ jobs:
       - name: Checkout Repo
         uses: actions/checkout@master
       - name: Install Dependencies
+        working-directory: ./tcc_configuration
         run: npm install
-      - name: Run Tests
-        env:
-          CI: true
-        run: npm test
       - name: Build
-        run: npm run build
+        working-directory: ./tcc_configuration
+        run: CI=false npm run build
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
         with:
           name: build
-          path: build
+          path: ./tcc_configuration/build
   deploy:
     name: Deploy
     needs: build
@@ -35,10 +33,11 @@ jobs:
         uses: actions/download-artifact@master
         with:
           name: build
-          path: build
+          path: ./tcc_configuration/build
       - name: Deploy to Firebase
         uses: w9jds/firebase-action@master
         with:
           args: deploy --only hosting
         env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+          PROJECT_PATH: ./tcc_configuration
