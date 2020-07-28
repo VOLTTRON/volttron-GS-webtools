@@ -1,8 +1,7 @@
 import styled from 'styled-components'
-import { Tooltip as tooltip, FormControl as formControl, FormControlLabel as formControlLabel } from '@material-ui/core';
+import { Tooltip as tooltip, FormControl as formControl, FormControlLabel as formControlLabel, Checkbox as checkbox } from '@material-ui/core';
 import { default as treeView } from '@material-ui/lab/TreeView';
 import { default as treeItem } from '@material-ui/lab/TreeItem';
-import { default as checkBox } from '@material-ui/core/CheckBox';
 import { Box } from "@material-ui/core";
 
 export const Tooltip = styled(tooltip)`
@@ -37,7 +36,7 @@ export const FormControl = styled(formControl)`
 export const FormControlLabel = styled(formControlLabel)`
 `
 
-export const CheckBox = styled(checkBox)`
+export const Checkbox = styled(checkbox)`
     color: #34593b;
     .MuiIconButton-label{
         color: #34593b;

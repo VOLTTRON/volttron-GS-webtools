@@ -1,6 +1,6 @@
 import React, { useState, useContext} from 'react';
 import { InputLabel, FormHelperText, Select, TextField, NativeSelect, Paper, withTheme } from '@material-ui/core'
-import { FormControl, TreeView, TreeItem, FormControlLabel, CheckBox, StyledBox } from './_styledMainConfigForm';
+import { FormControl, TreeView, TreeItem, FormControlLabel, Checkbox, StyledBox } from './_styledMainConfigForm';
 import { Tooltip } from './_styledMainConfigForm'
 import MasterDriverContext from '../../context/masterDriverContext';
 import configMapping from '../../constants/jsonTemplates/configurationMapping.json'
@@ -119,7 +119,7 @@ export default function MainConfigForm(props) {
         handleChange(event, newConfiguration)
     }
 
-    const handleCheckBoxChange = (event) => {
+    const handleCheckboxChange = (event) => {
         const name = event.target.name
         updateConfiguration(name, !state[name])
         setState({
@@ -316,12 +316,12 @@ export default function MainConfigForm(props) {
                 </Tooltip>
             </FormControl>
             <FormControlLabel
-                control = {<CheckBox checked={state.stagger_release} onChange={handleCheckBoxChange} name="stagger_release"/>}
+                control = {<Checkbox checked={state.stagger_release} onChange={handleCheckboxChange} name="stagger_release"/>}
                 label = "Stagger Release"
                 class={darkMode ? "darkLabel" : ""}
             />
             <FormControlLabel
-                control = {<CheckBox checked={state.stagger_off_time} onChange={handleCheckBoxChange} name="stagger_off_time"/>}
+                control = {<Checkbox checked={state.stagger_off_time} onChange={handleCheckboxChange} name="stagger_off_time"/>}
                 label = "Stagger Off Time"
                 class={darkMode ? "darkLabel" : ""}
             />
