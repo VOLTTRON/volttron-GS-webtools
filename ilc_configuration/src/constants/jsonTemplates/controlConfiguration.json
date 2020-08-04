@@ -24,7 +24,7 @@
             ]
         }
     },
-    "curtail_settings":{
+    "curtail_settingss":{
         "point":"",
         "control_method":"",
         "offset":0.0,
@@ -38,7 +38,7 @@
         "operation":""
         }
     },
-    "augment_settings":{
+    "augment_settingss":{
         "point":"",
         "control_method":"",
         "value":0.0,

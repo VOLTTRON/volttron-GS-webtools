@@ -38,7 +38,11 @@ export default function Status(props) {
 
     const handleFloatChange = (event) => {
         const name = event.target.name
-        updateConfiguration(name, parseFloat(event.target.value))
+        if(isNaN(parseFloat(event.target.value))){
+            updateConfiguration(name, 0)
+        } else{
+            updateConfiguration(name, parseFloat(event.target.value))
+        }
         setState({
             ...state,
             [name]: event.target.value
@@ -90,7 +94,7 @@ export default function Status(props) {
                         name="on_value"
                         label="On Value"
                         type="number"
-                        value= {on_value ? on_value : ""}
+                        value= {on_value ? on_value : 0}
                         step='0.01'
                         onChange={handleFloatChange}/>
                 </FormControl>
@@ -101,7 +105,7 @@ export default function Status(props) {
                         name="off_value"
                         label="Off Value"
                         type="number"
-                        value= {off_value ? off_value : ""}
+                        value= {off_value ? off_value : 0}
                         step='0.01'
                         onChange={handleFloatChange}/>
                 </FormControl>

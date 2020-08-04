@@ -73,7 +73,7 @@ export default function DevicesForm (props) {
                             operation_args: [ ]
                         }
                     },
-                    curtail_setting:{
+                    curtail_settings:{
                         point: "",
                         control_method: "",
                         load:0
@@ -92,8 +92,30 @@ export default function DevicesForm (props) {
         // update configuration
         const type = event.target.value
         let newConfiguration = clone(configuration);
-        newConfiguration[`${clusterFocus}${_CRITERIA}`][props.name][props.name][props.setting][criteriaName] = 
-        { "operation_type" : type}
+        let criteriaObj = { "operation_type" : type}
+        switch(type){
+            case "constant":
+                criteriaObj["value"] = 0;
+                break;
+            case "history":
+                criteriaObj["previous_time"] = 0;
+                criteriaObj["on_value"] = 0;
+                criteriaObj["off_value"] = 0;
+                break;
+            case "status":
+                criteriaObj["on_value"] = 0;
+                criteriaObj["off_value"] = 0;
+                break;
+            case "formula":
+                criteriaObj["operation"] = "";
+                criteriaObj["operation_args"] = {
+                    always: [],
+                    nc: []
+                };
+                break;
+        }
+        newConfiguration[`${clusterFocus}${_CRITERIA}`][props.name][props.name][props.setting][criteriaName] = criteriaObj;
+        
         setConfiguration(newConfiguration)
     }
 

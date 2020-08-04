@@ -37,7 +37,11 @@ export default function Status(props) {
 
     const handleFloatChange = (event) => {
         const name = event.target.name
-        updateConfiguration(name, parseFloat(event.target.value))
+        if (isNaN(parseFloat(event.target.value))){
+            updateConfiguration(name, 0);
+        } else {
+            updateConfiguration(name, parseFloat(event.target.value));
+        }
         setState({
             ...state,
             [name]: event.target.value
@@ -105,18 +109,7 @@ export default function Status(props) {
                         name="previous_time"
                         label="Previous Time (Minutes)"
                         type="number"
-                        value= {previous_time ? previous_time : ""}
-                        step='0.01'
-                        onChange={handleFloatChange}/>
-                </FormControl>
-                <FormControl >
-                    <SmallLabel>Maximum</SmallLabel>
-                    <FloatInput
-                        id="maximum"
-                        name="maximum"
-                        label="Maximum"
-                        type="number"
-                        value= {maximum ? maximum : ""}
+                        value= {previous_time ? previous_time : 0}
                         step='0.01'
                         onChange={handleFloatChange}/>
                 </FormControl>
@@ -127,10 +120,22 @@ export default function Status(props) {
                         name="minimum"
                         label="Minimum"
                         type="number"
-                        value= {minimum ? minimum : ""}
+                        value= {minimum ? minimum : 0}
                         step='0.01'
                         onChange={handleFloatChange}/>
                 </FormControl>
+                <FormControl >
+                    <SmallLabel>Maximum</SmallLabel>
+                    <FloatInput
+                        id="maximum"
+                        name="maximum"
+                        label="Maximum"
+                        type="number"
+                        value= {maximum ? maximum : 0}
+                        step='0.01'
+                        onChange={handleFloatChange}/>
+                </FormControl>
+
             </Fragment>
       
     );

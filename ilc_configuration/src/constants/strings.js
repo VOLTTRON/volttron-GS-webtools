@@ -1,8 +1,12 @@
 export const _CRITERIA = "_criteria_config";
 export const _CONTROL = "_control_config";
 export const _PAIRWISE = "_pairwise_criteria_config";
+export const DEVICE_CRITERIA = "device_criteria_config";
+export const DEVICE_CONTROL = "device_control_config";
+export const PAIRWISE_CRITERIA = "pairwise_criteria_config";
 export const CONFIG = "config";
 export const DEMAND_FORMULA = "demand_formula";
 export const OPERATION = "operation";
 export const OPERATION_ARGS = "operation_args";
 export const MAPPER = "mapper";
+export const POWER_METER = "power_meter";

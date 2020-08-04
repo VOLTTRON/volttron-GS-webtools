@@ -22,12 +22,12 @@ export default function ControlConfig(props) {
         let newConfiguration = clone(configuration)
         if (newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["device_status"]["augment"]){
             delete newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["device_status"]["augment"];
-            delete newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["augment_setting"];
+            delete newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["augment_settings"];
         } else {
             newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["device_status"]["augment"] =
             clone(newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["device_status"]["curtail"])
-            newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["augment_setting"] =
-            clone(newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["curtail_setting"])
+            newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["augment_settings"] =
+            clone(newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["curtail_settings"])
         }
         setConfiguration(newConfiguration)
     }

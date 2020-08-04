@@ -5,16 +5,11 @@
         "power_meter": {
             "device_topic": "campus/building/device",
             "device_name": "",
-            "point": "",
-            "demand_formula": {
-                "operation": "",
-                "operation_args": []
-            }
+            "point": ""
         },
         "agent_id": "",
         "demand_limit": "",
         "control_time": 0,
-        "curtailment_confirm": 0,
         "curtailment_break": 0,
         "average_building_power_window": 0,
         "stagger_release": false,

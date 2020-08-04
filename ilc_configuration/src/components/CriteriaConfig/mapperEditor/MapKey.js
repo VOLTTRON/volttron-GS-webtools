@@ -18,13 +18,13 @@ export default function MapKey (props){
     const { configuration, setConfiguration} = useContext(MasterDriverContext);
     const {clusterFocus} = useContext(ClusterContext)
     const { darkMode } = useContext(darkModeContext);
-    const [addDist, setAddDist] = useState(false);
-    const [newDistName, setNewDistName] = useState("");
-    const [newDistValue, setNewDistValue] = useState("");
+    const [addDict, setAddDict] = useState(false);
+    const [newDictName, setNewDictName] = useState("");
+    const [newDictValue, setNewDictValue] = useState("");
 
-    const deleteDistName = (mapKeyName, distName) => {
+    const deleteDictName = (mapKeyName, dictName) => {
         let newConfiguration = clone(configuration);
-        delete newConfiguration[`${clusterFocus}${_CRITERIA}`][MAPPER][mapKeyName][distName]
+        delete newConfiguration[`${clusterFocus}${_CRITERIA}`][MAPPER][mapKeyName][dictName]
         setConfiguration(newConfiguration)
     }
 
@@ -34,20 +34,23 @@ export default function MapKey (props){
         setConfiguration(newConfiguration)
     }
 
-    const toggleDistName = () => {
-        setAddDist(!addDist)
+    const toggleDictName = () => {
+        setAddDict(!addDict)
     }
 
-    const addDistName = (mapKeyName) => {
+    const addDictName = (mapKeyName) => {
         let newConfiguration = clone(configuration);
-        newConfiguration[`${clusterFocus}${_CRITERIA}`][MAPPER][mapKeyName][newDistName] = newDistValue ;
-        toggleDistName();
+        const floatVal = parseFloat(newDictValue);
+        if(!isNaN(floatVal)){
+            newConfiguration[`${clusterFocus}${_CRITERIA}`][MAPPER][mapKeyName][newDictName] = floatVal;
+        } else {
+            newConfiguration[`${clusterFocus}${_CRITERIA}`][MAPPER][mapKeyName][newDictName] = newDictValue ;
+        }
+        toggleDictName();
         setConfiguration(newConfiguration);
     }
 
     const createMapKey = () => {
-        let mapper = configuration[`${clusterFocus}${_CRITERIA}`][MAPPER];
-        let mapKeys = [];
         const ulStyle = {
             display: 'flex',
             justifyContent: 'left',
@@ -66,14 +69,14 @@ export default function MapKey (props){
                     label={`${mapKeyName}`}
                     darkMode={darkMode}>
                          <LowkeyDeleteButton style={{marginTop: ".5rem", display: "block"}} onClick={() => deleteMapKey(mapKeyName)}>Remove Map Key</LowkeyDeleteButton>
-                    <Label darkMode={darkMode} style={{marginTop : "1rem"}}>Dist Names</Label>
+                    <Label darkMode={darkMode} style={{marginTop : "1rem"}}>Dict Names</Label>
                     <ul style={ulStyle}>
-                    {Object.keys(mapKeyObj).map((distName, index) => {
+                    {Object.keys(mapKeyObj).map((dictName, index) => {
                         return(
                             <li key={index}>
                                 <Chip
-                                    label={`${distName} : ${mapKeyObj[distName]}`}
-                                    onDelete={() => deleteDistName(mapKeyName, distName)}
+                                    label={`${dictName} : ${mapKeyObj[dictName]}`}
+                                    onDelete={() => deleteDictName(mapKeyName, dictName)}
                                 />
                             </li>
                         )
@@ -81,21 +84,21 @@ export default function MapKey (props){
                     </ul>
                     <FormControl>
                         <TextField
-                            id="distNameInput"
-                            name="dist_name"
-                            label="Dist Name"
-                            onChange={(event) => setNewDistName(event.target.value)}
-                            style={{display: addDist ? null : "none"}}/>
+                            id="dictNameInput"
+                            name="dict_name"
+                            label="Dict Name"
+                            onChange={(event) => setNewDictName(event.target.value)}
+                            style={{display: addDict ? null : "none"}}/>
                         <TextField
-                            id="distValueInput"
-                            name="dist_value"
-                            label="Dist Value"
-                            onChange={(event) => setNewDistValue(event.target.value)}
-                        style={{display: addDist ? null : "none"}}/>
+                            id="dictValueInput"
+                            name="dict_value"
+                            label="Dict Value"
+                            onChange={(event) => setNewDictValue(event.target.value)}
+                        style={{display: addDict ? null : "none"}}/>
                     </FormControl>
-                    <PrimaryButton style={{display: addDist ? "none" : null}} onClick={toggleDistName}>Add Dist Name</PrimaryButton>
-                    <PrimaryButton style={{display: addDist ? null : "none"}} onClick={e => addDistName(mapKeyName)}>Save New Dist</PrimaryButton>
-                    <PrimaryButton style={{display: addDist ? null : "none"}} onClick={toggleDistName}>Cancel</PrimaryButton>
+                    <PrimaryButton style={{display: addDict ? "none" : null}} onClick={toggleDictName}>Add Dict Name</PrimaryButton>
+                    <PrimaryButton style={{display: addDict ? null : "none"}} onClick={e => addDictName(mapKeyName)}>Save New Dict</PrimaryButton>
+                    <PrimaryButton style={{display: addDict ? null : "none"}} onClick={toggleDictName}>Cancel</PrimaryButton>
                 </TreeItem>
             </TreeView>
         )

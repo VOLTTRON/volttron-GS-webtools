@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Tooltip as tooltip, FormControl as formControl, FormControlLabel as formControlLabel, Checkbox as checkbox } from '@material-ui/core';
+import { Tooltip as tooltip, FormControl as formControl, FormControlLabel as formControlLabel, Checkbox as checkbox, Switch} from '@material-ui/core';
 import { default as treeView } from '@material-ui/lab/TreeView';
 import { default as treeItem } from '@material-ui/lab/TreeItem';
 import { Box } from "@material-ui/core";
@@ -45,4 +45,8 @@ export const Checkbox = styled(checkbox)`
 
 export const StyledBox = styled(Box)`
     width: auto;
+`
+
+export const Toggle = styled(Switch)`
+
 `

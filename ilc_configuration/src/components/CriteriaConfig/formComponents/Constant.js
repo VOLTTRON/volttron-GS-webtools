@@ -53,7 +53,7 @@ export default function Mapper(props) {
                         name="value"
                         label="Value"
                         type="number"
-                        value= {value ? value : ""}
+                        value= {value ? value : 0}
                         step= '0.01'
                         onChange={handleChange}/>
                 </FormControl>

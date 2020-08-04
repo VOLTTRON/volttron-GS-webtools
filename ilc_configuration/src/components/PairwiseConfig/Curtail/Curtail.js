@@ -8,6 +8,9 @@ import { marks } from '../../../constants/pairwiseMarks'
 import Grid from '@material-ui/core/Grid';
 import { darkModeContext } from "../../../context/darkModeContext";
 import {_PAIRWISE} from '../../../constants/strings'
+import pairwiseValidation from '../pairwiseValidation'
+import { PrimaryButton } from '../../common/_styledButton'
+import { Typography } from '@material-ui/core'
 
 
 export default function Curtail(props) {
@@ -16,12 +19,19 @@ export default function Curtail(props) {
   let {criteria} = useContext(ClusterContext);
   let {clusterFocus} = useContext(ClusterContext);
 
+  const [state, setState] = useState({
+    validationVisible: false,
+    validationMessage: "",
+    consistencyRatio: null,
+})
+
   const updatePairwiseValues = (event, value, parentCriteriaName, criteriaName) => {
     if (value < 0){
       value = -(1/value);
     }
     configuration[`${clusterFocus}${_PAIRWISE}`][props.name][parentCriteriaName][criteriaName] = value;
     setConfiguration(configuration);
+    setState({validationVisible: false})
   }
 
   const createCriteriaSliders = (parentCriteriaName, criteriaObj) => {
@@ -68,6 +78,15 @@ export default function Curtail(props) {
     return treeItems
   }
 
+  const handlePairwiseValidation = () => {
+    const consistencyRatio = pairwiseValidation(configuration, clusterFocus, props.name);
+    if (consistencyRatio < .2){
+      setState({ validationVisible: true, validationMessage: `Pairwise Criteria VALID`, consistencyRatio: consistencyRatio})
+    } else {
+      setState({ validationVisible: true, validationMessage: "Pairwise Criteria INVALID. Please revise. ", consistencyRatio: consistencyRatio})
+    }
+  }
+
   return (
     <TreeView
     defaultCollapseIcon={<ArrowDropDownIcon/>}
@@ -75,6 +94,8 @@ export default function Curtail(props) {
     defaultExpanded={[clusterFocus]}>
       {configuration[`${clusterFocus}${_PAIRWISE}`][props.name] ?
         <TreeItem nodeId={clusterFocus} label={`${props.name} for ${clusterFocus}`} darkMode={darkMode}>
+          <PrimaryButton onClick={handlePairwiseValidation} disabled={state.validationVisible}>Validate</PrimaryButton>
+          <Typography style={{display: state.validationVisible ? null : "none"}} variant="h6">{state.validationMessage}</Typography>
           {createCurtailDropdowns()}
         </TreeItem>
         : ""

@@ -9,6 +9,10 @@ export const PrimaryButton = styled(button)`
     :hover {
         background-color: black;
     }
+    :disabled {
+        color: white;
+        background-color: gray;
+    }
 `
 
 export const SecondaryButton = styled(button)`

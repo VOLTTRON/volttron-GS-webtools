@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {SmallLabel} from '../../common/_styledLabel';
 import {FloatInput} from '../../common/_styledInput';
 import { darkModeContext } from "../../../context/darkModeContext";
-import {_PAIRWISE, _CONTROL, _CRITERIA} from '../../../constants/strings'
+import {_PAIRWISE, _CONTROL, _CRITERIA, PAIRWISE_CRITERIA, DEVICE_CONTROL, DEVICE_CRITERIA, CONFIG} from '../../../constants/strings'
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -21,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ClusterSettings(props) {
     const { darkMode } = useContext(darkModeContext);
     let { configuration, setConfiguration } = useContext(MasterDriverContext);
-    let { clusterFocus, setClusterFocus} = useContext(ClusterContext);
     const [state, setState] = useState({
         cluster_name: props.cluster['cluster_name'],
         oldClusterName: props.cluster['cluster_name'],
@@ -76,13 +75,13 @@ export default function ClusterSettings(props) {
                         return;
                     }
                     // change cluster name in main config
-                    newConfiguration["config"]["cluster"][index][_CONTROL] =
+                    newConfiguration[CONFIG]["cluster"][index][DEVICE_CONTROL] =
                     `config://${newClusterName}${_CONTROL}`
-                    newConfiguration["config"]["cluster"][index][_CRITERIA] =
+                    newConfiguration[CONFIG]["cluster"][index][DEVICE_CRITERIA] =
                     `config://${newClusterName}${_CRITERIA}`
-                    newConfiguration["config"]["cluster"][index][_PAIRWISE] =
+                    newConfiguration[CONFIG]["cluster"][index][PAIRWISE_CRITERIA] =
                     `config://${newClusterName}${_PAIRWISE}`
-                    newConfiguration["config"]["cluster"][index]["cluster_name"] = newClusterName;
+                    newConfiguration[CONFIG]["cluster"][index]["cluster_name"] = newClusterName;
                     if (newConfiguration["criteria"]){
                         newConfiguration["criteria"][newClusterName] =
                         Array.from(newConfiguration["criteria"][oldClusterName])

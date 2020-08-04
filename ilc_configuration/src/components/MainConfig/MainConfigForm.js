@@ -1,35 +1,36 @@
 import React, { useState, useContext} from 'react';
-import { InputLabel, FormHelperText, Select, TextField, NativeSelect, Paper, withTheme } from '@material-ui/core'
-import { FormControl, TreeView, TreeItem, FormControlLabel, Checkbox, StyledBox } from './_styledMainConfigForm';
+import { InputLabel, FormHelperText, Select, TextField, NativeSelect, Paper, withTheme, Grid, Typography } from '@material-ui/core'
+import { FormControl, TreeView, TreeItem, FormControlLabel, Checkbox, StyledBox, Toggle } from './_styledMainConfigForm';
 import { Tooltip } from './_styledMainConfigForm'
 import MasterDriverContext from '../../context/masterDriverContext';
 import configMapping from '../../constants/jsonTemplates/configurationMapping.json'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import DemandFormula from '../common/Calculator'
+import Calculator from '../common/Calculator'
 import {FloatInput} from '../common/_styledInput';
 import {SmallLabel} from '../common/_styledLabel';
 import {clone} from '../../utils/clone'
 import { darkModeContext } from "../../context/darkModeContext";
-import {_CRITERIA, _PAIRWISE} from "../../constants/strings"
+import {_CRITERIA, _PAIRWISE, CONFIG, DEMAND_FORMULA, POWER_METER} from "../../constants/strings"
 
 export default function MainConfigForm(props) {
     const {parsedMDC, campuses, buildings, devices, configuration, setConfiguration} = useContext(MasterDriverContext);
     const { darkMode } = useContext(darkModeContext);
     const [state, setState] = useState({
-        campus: configuration["config"]["campus"],
-        building: configuration["config"]["building"],
-        device_name: configuration["config"]["power_meter"]["device_name"],
-        point: configuration["config"]["power_meter"]["point"],
+        campus: configuration[CONFIG]["campus"],
+        building: configuration[CONFIG]["building"],
+        device_name: configuration[CONFIG][POWER_METER]["device_name"],
+        point: configuration[CONFIG][POWER_METER]["point"],
         points: [],
-        agentId: configuration["config"]["agent_id"],
-        demandLimit: configuration["config"]["demand_limit"],
-        controlTime: configuration["config"]["control_time"],
-        curtailmentConfirm: configuration["config"]["curtailment_confirm"],
-        curtailmentBreak: configuration["config"]["curtailment_break"],
-        averageBuildingPowerWindow: configuration["config"]["average_building_power_window"],
+        agentId: configuration[CONFIG]["agent_id"],
+        demandLimit: configuration[CONFIG]["demand_limit"],
+        controlTime: configuration[CONFIG]["control_time"],
+        curtailmentConfirm: NaN,
+        curtailmentBreak: configuration[CONFIG]["curtailment_break"],
+        averageBuildingPowerWindow: configuration[CONFIG]["average_building_power_window"],
         stagger_release: true,
-        stagger_off_time: false
+        stagger_off_time: false,
+        calcVisible: configuration[CONFIG][POWER_METER][DEMAND_FORMULA] ? true : false
     })
 
     const handleChange = (event, newConfiguration = clone(configuration)) => {
@@ -44,7 +45,17 @@ export default function MainConfigForm(props) {
     const handleFloatChange = (event, newConfiguration = clone(configuration)) => {
         const name = event.target.name
         const floatValue = parseFloat(event.target.value)
-        updateConfiguration(name, floatValue, newConfiguration)
+        if (name === "curtailment_confirm"){
+            if (isNaN(floatValue)){
+                delete newConfiguration[CONFIG]["curtailment_confirm"]
+                setConfiguration(newConfiguration)
+            } else {
+                updateConfiguration(name, floatValue, newConfiguration)
+            }
+        } else {
+            updateConfiguration(name, floatValue, newConfiguration)
+        }
+
         setState({
             ...state,
             [name]: event.target.value
@@ -53,7 +64,7 @@ export default function MainConfigForm(props) {
 
     const handleCampusChange = (event) => {
         const campus = event.target.value
-        let powerMeterDT = clone(configuration["config"]["power_meter"])
+        let powerMeterDT = clone(configuration[CONFIG][POWER_METER])
         let powerMeterDTTokens = powerMeterDT["device_topic"].split("/")
         let newPowerMeterDT = ""
         newPowerMeterDT =` ${campus}/${powerMeterDTTokens[1]}/${powerMeterDTTokens[2]}`
@@ -129,7 +140,7 @@ export default function MainConfigForm(props) {
     }
 
     const handleDeviceChange = (event) => {
-        let deviceTopic = configuration["config"]["power_meter"]["device_topic"]
+        let deviceTopic = configuration[CONFIG][POWER_METER]["device_topic"]
         const deviceTopicTokens = deviceTopic.split("/")
         let newDeviceTopic = `${deviceTopicTokens[0]}/${deviceTopicTokens[1]}/${event.target.value}`
         const name = event.target.name
@@ -167,7 +178,22 @@ export default function MainConfigForm(props) {
         return points;
     }
 
-    let points = getPoints(state.device_name);
+    let points = getPoints(configuration[CONFIG][POWER_METER]["device_name"]);
+
+    const toggleCalc = () => {
+        const {calcVisible} = state;
+        let newConfiguration = clone(configuration);
+        if(!calcVisible){
+            newConfiguration[CONFIG][POWER_METER][DEMAND_FORMULA] = {
+                operation: "",
+                operationArgs: []
+            }
+        } else {
+            delete newConfiguration[CONFIG][POWER_METER][DEMAND_FORMULA]
+        }
+        setConfiguration(newConfiguration);
+        setState({calcVisible: !calcVisible})
+    }
 
     return (
         <StyledBox>
@@ -175,7 +201,7 @@ export default function MainConfigForm(props) {
                 <InputLabel htmlFor="campus">Campus</InputLabel>
                 <Select
                     native
-                    value={state.campus}
+                    value={configuration[CONFIG]["campus"]}
                     onChange={handleCampusChange}
                     inputProps={{
                         name: 'campus',
@@ -189,7 +215,7 @@ export default function MainConfigForm(props) {
             <FormControl >
                 <InputLabel htmlFor="building">Building</InputLabel>
                 <NativeSelect
-                    value={state.building}
+                    value={configuration[CONFIG]["building"]}
                     onChange={handleBuildingChange}
                     inputProps={{
                         name: 'building',
@@ -207,21 +233,21 @@ export default function MainConfigForm(props) {
                     <FormControl >
                         <InputLabel htmlFor="device">Device</InputLabel>
                         <NativeSelect
-                            value={state.device_name}
+                            value={configuration[CONFIG][POWER_METER]["device_name"]}
                             onChange={handleDeviceChange}
                             inputProps={{
                                 name: 'device_name',
                                 id: 'deviceNameInput'
                             }}
                         >
-                                    <option aria-label="None" value="" />
+                            <option aria-label="None" value="" />
                             {devices.map(device => {return <option value={device["device_name"]}>{device["device_name"]}</option>})}
                         </NativeSelect>
                     </FormControl>
                     <FormControl >
                         <InputLabel htmlFor="device">Point</InputLabel>
                         <NativeSelect
-                            value={state.point}
+                            value={configuration[CONFIG][POWER_METER]["point"]}
                             onChange={handleChange}
                             inputProps={{
                                 name: 'point',
@@ -232,7 +258,19 @@ export default function MainConfigForm(props) {
                             {points.map(point => {return <option value={point}>{point}</option>})}
                         </NativeSelect>
                     </FormControl>
-                    <DemandFormula points={points} savePath={["config", "power_meter", "demand_formula"]} mainConfiguration = {true}/>
+                    <Typography component="div">
+                        <Grid component="label" container alignItems="center" spacing={.5}>
+                        <Grid item>Calculator Off</Grid>
+                        <Grid item>
+                            <Toggle
+                                    checked = {state.calcVisible}
+                                    onChange = {toggleCalc}>
+                            </Toggle>
+                        </Grid>
+                        <Grid item>On</Grid>
+                        </Grid>
+                    </Typography>
+                    {state.calcVisible ? <Calculator points={points} savePath={["config", "power_meter", "demand_formula"]} mainConfiguration = {true} /> : null}
             </TreeItem>
           </TreeView>
             <FormControl >

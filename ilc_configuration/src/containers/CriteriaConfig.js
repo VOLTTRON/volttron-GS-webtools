@@ -1,7 +1,7 @@
 import React, {useContext, useState} from 'react';
 import { FormWrapper, FormControl, TreeView, TreeItem } from './_styledCriteriaConfig'
 import { SmallHeader, TinyHeader } from '../components/common/_styledHeader'
-import { PrimaryButton } from '../components/common/_styledButton'
+import { PrimaryButton, LowkeyDeleteButton } from '../components/common/_styledButton'
 import DevicesForm from '../components/CriteriaConfig/CriteriaConfigForm'
 import MasterDriverContext from '../context/masterDriverContext';
 import ClusterContext from '../context/clusterContext'
@@ -35,6 +35,13 @@ export default function CriteriaConfig(props) {
         setConfiguration(newConfiguration)
     }
 
+    const removeDevice = (deviceName) => {
+        let newConfiguration = clone(configuration);
+        delete newConfiguration[`${clusterFocus}${_CRITERIA}`][deviceName]
+        delete newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName]
+        setConfiguration(newConfiguration);
+    }
+
     const buildCriteriaConfigs = () => {
 
         let criteriaConfigs =
@@ -54,6 +61,11 @@ export default function CriteriaConfig(props) {
                             label={deviceTopic}
                             darkMode={darkMode}
                         >
+                            <LowkeyDeleteButton 
+                            style={{marginTop: ".5rem", display: "block"}} 
+                            onClick={() => removeDevice(deviceName)}>
+                            Remove Device
+                            </LowkeyDeleteButton>
                             <DevicesForm name={deviceName} setting={"curtail"}/>
                             { viewAugment ?
                             <DevicesForm name={deviceName} setting={"augment"}/> : null}
@@ -109,14 +121,14 @@ export default function CriteriaConfig(props) {
                         operation_args: [ ]
                     }
                 },
-                curtail_setting:{
+                curtail_settings:{
                     point: "",
                     control_method: "",
                     load: 0
                 },
         }
         setConfiguration(newConfiguration);
-        setState({addCriteriaDevice: false})
+        setState({addCriteriaDevice: false, newDeviceName: ""})
     }
 
     return (

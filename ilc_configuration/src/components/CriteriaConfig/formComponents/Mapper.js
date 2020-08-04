@@ -51,16 +51,16 @@ export default function Mapper(props) {
         return mapKeys;
     }
 
-    const createDistNames = (mapKey) => {
-        const distNames = Object.keys(mapperObj[mapKey]).map(distName => {
+    const createDictNames = (mapKey) => {
+        const dictNames = Object.keys(mapperObj[mapKey]).map(dictName => {
             return(
-                <option value={distName}>{distName}</option>
+                <option value={dictName}>{dictName}</option>
             )
         })
-        return distNames;
+        return dictNames;
     }
 
-    const {map_key, dist_name} = configuration[`${clusterFocus}${_CRITERIA}`][device][device][setting][criteria]
+    const {map_key, dict_name} = configuration[`${clusterFocus}${_CRITERIA}`][device][device][setting][criteria]
     return (
             <>
                 <FormControl >
@@ -79,16 +79,16 @@ export default function Mapper(props) {
                 {map_key ? 
                 <>
                 <FormControl>
-                    <InputLabel >Dist. Name</InputLabel>
+                    <InputLabel >Dict. Name</InputLabel>
                     <NativeSelect
-                        value={dist_name ? dist_name : ""} 
+                        value={dict_name ? dict_name : ""} 
                         onChange={handleChange}
                         inputProps={{
-                            name: "dist_name",
+                            name: "dict_name",
                         }}
                     >
                         <option value=""></option>
-                        {createDistNames(map_key)}
+                        {createDictNames(map_key)}
                     </NativeSelect> 
                 </FormControl>
                 </> : null

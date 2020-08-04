@@ -5,7 +5,6 @@ import { InputLabel, FormControl, Select, TextField, Button } from '@material-ui
 import { makeStyles } from '@material-ui/core/styles';
 import {default as history} from '../../../history';
 import pairwiseTemplate from '../../../constants/jsonTemplates/pairwiseCurtail.json'
-import controlTemplate from '../../../constants/jsonTemplates/controlConfiguration.json'
 import mapperTemplate from '../../../constants/jsonTemplates/mapper.json'
 import {SmallLabel} from '../../common/_styledLabel';
 import {FloatInput} from '../../common/_styledInput'
@@ -13,7 +12,7 @@ import {SmallHeader} from '../../common/_styledHeader'
 import ClusterPriority from './ClusterPriority'
 import { clone } from '../../../utils/clone'
 import { darkModeContext } from "../../../context/darkModeContext";
-import {_CRITERIA, _CONTROL, _PAIRWISE} from "../../../constants/strings"
+import {_CRITERIA, _CONTROL, _PAIRWISE, DEVICE_CRITERIA, DEVICE_CONTROL, PAIRWISE_CRITERIA} from "../../../constants/strings"
 
 const useStyles = makeStyles((theme) => ({
     formControl: {
@@ -64,9 +63,9 @@ export default function AddCluster(props) {
             "cluster_name": cluster_name,
             "cluster_type": cluster_type,
             "cluster_priority": parseFloat(cluster_priority),
-            "device_control_config": `config://${cluster_name}${_CONTROL}`,
-            "device_criteria_config": `config://${cluster_name}${_CRITERIA}`,
-            "pairwise_criteria_config": `config://${cluster_name}${_PAIRWISE}`
+            [DEVICE_CONTROL]: `config://${cluster_name}${_CONTROL}`,
+            [DEVICE_CRITERIA]: `config://${cluster_name}${_CRITERIA}`,
+            [PAIRWISE_CRITERIA]: `config://${cluster_name}${_PAIRWISE}`
         }
         for(let index in newConfiguration["config"]["cluster"]){
             if (newConfiguration["config"]["cluster"][index]["cluster_name"] == cluster_name){
