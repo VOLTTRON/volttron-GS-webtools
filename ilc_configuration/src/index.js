@@ -7,18 +7,21 @@ import { MasterDriverProvider } from './context/masterDriverContext'
 import { ClusterProvider } from './context/clusterContext'
 import CurrentPageProvider from './context/currentPageContext';
 import DarkModeProvider from './context/darkModeContext';
+import { NotificationProvider } from './context/notificationContext';
 
 
 ReactDOM.render(
   <React.StrictMode>
     <MasterDriverProvider>
-      <ClusterProvider>
-        <DarkModeProvider>
-          <CurrentPageProvider>
-            <App />
-          </CurrentPageProvider>
-        </DarkModeProvider>
-      </ClusterProvider>
+      <NotificationProvider>
+        <ClusterProvider>
+          <DarkModeProvider>
+            <CurrentPageProvider>
+              <App />
+            </CurrentPageProvider>
+          </DarkModeProvider>
+        </ClusterProvider>
+      </NotificationProvider>
     </MasterDriverProvider>
   </React.StrictMode>,
   document.getElementById('root')

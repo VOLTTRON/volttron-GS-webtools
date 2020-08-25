@@ -5,7 +5,7 @@ import { useDrag, useDrop } from 'react-dnd'
 import { IconButton } from '../../common/_styledButton'
 import CloseIcon from '@material-ui/icons/Close'
 import { createPairwiseConfiguration } from '../../../utils/createPairwiseConfig'
-import {_CRITERIA} from '../../../constants/strings'
+import {_CRITERIA, _PAIRWISE} from '../../../constants/strings'
 
 const style = {
   border: '1px solid gray',
@@ -30,7 +30,17 @@ const Card = ({ id, text, index, moveCard }) => {
     for(const index in newConfiguration["criteria"][clusterFocus]){
       if (newConfiguration["criteria"][clusterFocus][index]["text"] === text){
         newConfiguration["criteria"][clusterFocus].splice(index, 1);
-        newConfiguration = createPairwiseConfiguration(newConfiguration, clusterFocus)
+        // delete criteria from pairwise config
+        delete newConfiguration[`${clusterFocus}${_PAIRWISE}`]["curtail"][text]
+        for(const [key, value] of Object.entries(newConfiguration[`${clusterFocus}${_PAIRWISE}`]["curtail"])){
+          delete value[text];
+        }
+        if(newConfiguration[`${clusterFocus}${_PAIRWISE}`]["augment"]){
+          delete newConfiguration[`${clusterFocus}${_PAIRWISE}`]["augment"][text]
+          for(const [key, value] of Object.entries(newConfiguration[`${clusterFocus}${_PAIRWISE}`]["augment"])){
+            delete value[text];
+          }
+        }
         // delete criteria from criteria config
         Object.keys(newConfiguration[`${clusterFocus}${_CRITERIA}`]).forEach(deviceName => {
           if(deviceName === "mapper"){

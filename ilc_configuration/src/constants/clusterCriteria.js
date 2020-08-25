@@ -12,5 +12,5 @@ export const criteriaList = [{
     text: "rated_power"
 },{
     id: 5,
-    text: "roomtype"
+    text: "room_type"
 }]

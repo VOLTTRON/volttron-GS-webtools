@@ -93,7 +93,7 @@ export default function AddCluster(props) {
             text: "rated_power"
         },{
             id: 5,
-            text: "roomtype"
+            text: "room_type"
         }]
 
         setConfiguration(newConfiguration)

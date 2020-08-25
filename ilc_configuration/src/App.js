@@ -18,13 +18,16 @@ import PairwiseConfig from './containers/PairwiseConfig'
 import CriteriaConfig from './containers/CriteriaConfig'
 import ControlConfig from './containers/ControlConfig'
 import FilePreview from './components/FilePreview/FilePreview';
-
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 import { darkModeContext } from "./context/darkModeContext";
+import NotificationContext from './context/notificationContext';
+import {NotificationContainer} from 'react-notifications';
+import 'react-notifications/lib/notifications.css';
 
 function App() {
 
   const {darkMode} = useContext(darkModeContext);
+  const {notification} = useContext(NotificationContext)
 
   const darkTheme = createMuiTheme({
       palette: {
@@ -105,6 +108,11 @@ function App() {
             <FilePreview />
           </Grid>
         </Grid>
+        <div>
+        {notification}
+        <NotificationContainer/>
+      </div>
+
       </div>
     </ThemeProvider>
 

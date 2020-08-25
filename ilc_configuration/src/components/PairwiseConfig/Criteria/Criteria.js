@@ -47,12 +47,17 @@ export default function Criteria(props) {
       id: JSON.stringify(time),
       text: state.criteriaName
     })
+    // Add criteria to pairwise config
+    for(const [key, value] of Object.entries(newConfiguration[`${clusterFocus}${_PAIRWISE}`]["curtail"])){
+      value[state.criteriaName] = 1
+    }
     newConfiguration[`${clusterFocus}${_PAIRWISE}`]["curtail"][state.criteriaName] = {}
     if (newConfiguration[`${clusterFocus}${_PAIRWISE}`]["augment"]){
+      for(const [key, value] of Object.entries(newConfiguration[`${clusterFocus}${_PAIRWISE}`]["augment"])){
+        value[state.criteriaName] = 1
+      }
       newConfiguration[`${clusterFocus}${_PAIRWISE}`]["augment"][state.criteriaName] = {}
     }
-    newConfiguration = createPairwiseConfiguration(newConfiguration, clusterFocus);
-    // update criteria configuration
 
     setConfiguration(newConfiguration)
     setState({...state, addCriteriaName: false, criteriaName: ""})
