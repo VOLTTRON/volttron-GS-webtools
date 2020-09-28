@@ -7,6 +7,7 @@ import { FormControl, TreeView, TreeItem } from './_styledCriteriaConfigForm'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import DemandFormula from '../common/Calculator'
+import { PrimaryButton } from '../common/_styledButton'
 import Status from './formComponents/Status'
 import Mapper from './formComponents/Mapper'
 import Constant from './formComponents/Constant'
@@ -14,16 +15,22 @@ import History from './formComponents/History'
 import { VerySmallHeader } from '../common/_styledHeader'
 import { _CRITERIA, _CONTROL } from '../../constants/strings'
 import defaultMapper from '../../constants/jsonTemplates/mapper.json'
+import { Grid } from '@material-ui/core'
+
 
 const operationTypes = [
     "formula", "status", "mapper", "constant", "history"
 ]
 
-export default function DevicesForm (props) {
+export default function CriteriaConfigForm (props) {
     const { devices, configuration, setConfiguration} = useContext(MasterDriverContext);
     const {clusterFocus} = useContext(ClusterContext);
     const {darkMode} = useContext(darkModeContext);
     const clone = (obj) => JSON.parse(JSON.stringify(obj));
+    const [state, setState] = useState({
+        copying: false,
+        sourceDeviceName: null
+    })
 
     const handleDeviceChange = (event) => {
 
@@ -73,7 +80,7 @@ export default function DevicesForm (props) {
                             operation_args: [ ]
                         }
                     },
-                    curtail_settings:{
+                    curtail_setting:{
                         point: "",
                         control_method: "",
                         load:0
@@ -129,6 +136,51 @@ export default function DevicesForm (props) {
         return points;
     }
 
+    const copyInputs = () => {
+        const thisDevice = props.name
+        return state.copying ?
+            <FormControl>
+                <InputLabel htmlFor="device">Copy Values From</InputLabel>
+                <NativeSelect
+                    onChange={(event) => {setState({...state, sourceDeviceName: event.target.value})}}
+                >
+                    <option aria-label="None" value="" />
+                    {Object.entries(configuration[`${clusterFocus}${_CRITERIA}`]).map(deviceObj => {
+                        const deviceName = deviceObj[0]
+                        if (!(deviceName == "mapper" || deviceName == thisDevice)){
+                            return <option value={deviceName}>{deviceName}</option>
+                        }
+                    })}
+                </NativeSelect>
+            </FormControl>
+            : null
+
+    }
+
+    const performCopy = () => {
+        const copyToDevice = props.name;
+        const { sourceDeviceName } = state;
+        if(sourceDeviceName){
+            const newConfiguration = clone(configuration)
+            const curtailDeviceTopic = newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][copyToDevice]["curtail"]["device_topic"]
+            let augmentDeviceTopic = ""
+            if(newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][copyToDevice]["augment"]){
+                augmentDeviceTopic = newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][copyToDevice]["augment"]["device_topic"]
+            }
+            const sourceDevice = clone(configuration[`${clusterFocus}${_CRITERIA}`][sourceDeviceName][sourceDeviceName])
+            newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][copyToDevice] = sourceDevice
+            // update device topic
+            newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][copyToDevice]["curtail"]["device_topic"] = curtailDeviceTopic
+            if(newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][copyToDevice]["augment"]){
+                newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][copyToDevice]["augment"]["device_topic"] = augmentDeviceTopic
+            }
+            setConfiguration(newConfiguration);
+            setState({...state, copying: false})
+        } else {
+            
+        }
+    }
+
     let points = getPoints(props.name);
 
 
@@ -182,25 +234,54 @@ export default function DevicesForm (props) {
     }
 
     return(
-            <FormControl >
-                {props.setting == "curtail" || !props.name ? 
-                <>
-                <InputLabel htmlFor="device">Device</InputLabel>
-                <NativeSelect
-                    value={props.name}
-                    onChange={handleDeviceChange}
-                    inputProps={{
-                        name: props.name,
-                        id: props.name
-                    }}
+        <>
+        {props.setting === "curtail" ? 
+        <>
+            <PrimaryButton 
+                display={(state.copying || devices.length <= 2) ? "none" : "block"} 
+                marginTop="1.5rem"
+                backgroundColor="#0000008a" 
+                onClick={() => setState({...state, copying: true})}
+            >
+                Copy Center
+            </PrimaryButton>
+            <Grid container spacing={1}>
+                <Grid item xs={4}>
+                <PrimaryButton 
+                    display={state.copying ? "block" : "none"} 
+                    backgroundColor="#0000008a" 
+                    marginTop="1.5rem" 
+                    onClick={() => performCopy()}
                 >
-                    <option aria-label="None" value="" />
-                    {devices.map(device => {return <option value={device["device_name"]}>{device["device_name"]}</option>})}
-                </NativeSelect>
-                </> : null }
-                <VerySmallHeader darkMode={darkMode}>{props.setting}</VerySmallHeader>
-                {props.name ? buildCriteriaDropdowns() : null}
-            </FormControl>
+                    Execute Copy
+                </PrimaryButton>
+                </Grid>
+                <Grid item xs={8}>
+                {copyInputs()}
+                </Grid>
+            </Grid>
+        </> : null
+        }
+        <FormControl >
+            {props.setting == "curtail" || !props.name ? 
+            <>
+            <InputLabel htmlFor="device">Device</InputLabel>
+            <NativeSelect
+                value={props.name}
+                onChange={handleDeviceChange}
+                inputProps={{
+                    name: props.name,
+                    id: props.name
+                }}
+            >
+                <option aria-label="None" value="" />
+                {devices.map(device => {return <option value={device["device_name"]}>{device["device_name"]}</option>})}
+            </NativeSelect>
+            </> : null }
+            <VerySmallHeader darkMode={darkMode}>{props.setting}</VerySmallHeader>
+            {props.name ? buildCriteriaDropdowns() : null}
+        </FormControl>
+        </>
     )
 
 }

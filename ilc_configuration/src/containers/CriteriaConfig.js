@@ -7,7 +7,7 @@ import MasterDriverContext from '../context/masterDriverContext';
 import ClusterContext from '../context/clusterContext'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { InputLabel, NativeSelect } from '@material-ui/core'
+import { InputLabel, NativeSelect, Grid } from '@material-ui/core'
 import { clone } from '../utils/clone'
 import defaultMapper from '../constants/jsonTemplates/mapper.json'
 import { darkModeContext } from "../context/darkModeContext";
@@ -21,7 +21,7 @@ export default function CriteriaConfig(props) {
     const [state, setState] = useState({
         addCriteriaDevice: false,
         criteriaDeviceElement: null,
-        newDeviceName: ""
+        newDeviceName: "",
     })
 
     const toggleAugment = deviceName => e => {
@@ -43,9 +43,9 @@ export default function CriteriaConfig(props) {
     }
 
     const buildCriteriaConfigs = () => {
-
+        const devices = Object.keys(configuration[`${clusterFocus}${_CRITERIA}`])
         let criteriaConfigs =
-        Object.keys(configuration[`${clusterFocus}${_CRITERIA}`]).map(deviceName => {
+        devices.map(deviceName => {
             if(deviceName === "mapper"){
                 return
             }
@@ -68,7 +68,7 @@ export default function CriteriaConfig(props) {
                             </LowkeyDeleteButton>
                             <DevicesForm name={deviceName} setting={"curtail"}/>
                             { viewAugment ?
-                            <DevicesForm name={deviceName} setting={"augment"}/> : null}
+                            <DevicesForm name={deviceName} setting="augment"/> : null}
                             <PrimaryButton
                                 onClick={toggleAugment(deviceName)}
                             >
@@ -121,7 +121,7 @@ export default function CriteriaConfig(props) {
                         operation_args: [ ]
                     }
                 },
-                curtail_settings:{
+                curtail_setting:{
                     point: "",
                     control_method: "",
                     load: 0

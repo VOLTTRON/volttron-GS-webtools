@@ -20,38 +20,38 @@ export default function ControlConfigForm (props) {
     const { devices, configuration, setConfiguration} = useContext(MasterDriverContext);
     const {clusterFocus} = useContext(ClusterContext);
     const {deviceName, setting} = props;
-    const isLoadCalc = configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`][`load`][OPERATION]
+    const isLoadCalc = configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`][`load`][OPERATION]
     const [loadConfig, setLoadConfig] = useState(isLoadCalc ? "calculator" : "float");
 
     const handleChange = (event) => {
         let newConfiguration = clone(configuration)
         const name = event.target.name
         const value = event.target.value
-        newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`][name] = value
+        newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`][name] = value
         setConfiguration(newConfiguration)
     }
 
     const handleControlMethodChange = (event) => {
         let newConfiguration = clone(configuration)
-        const point = newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`]["point"]
-        const load = newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`]["load"]
+        const point = newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`]["point"]
+        const load = newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`]["load"]
         const name = event.target.name
         const controlMethod = event.target.value
-        let traveller = newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`]["offset"]
+        let traveller = newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`]["offset"]
         if (!traveller){
-            traveller = newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`]["value"]
+            traveller = newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`]["value"]
         }
-        newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`] = {}
-        newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`]["point"] = point;
-        newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`]["load"] = load;
+        newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`] = {}
+        newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`]["point"] = point;
+        newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`]["load"] = load;
         if (traveller && (controlMethod === "value" || controlMethod === "offset")){
-            newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`][controlMethod] = traveller;
+            newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`][controlMethod] = traveller;
         }
-        newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`][name] = controlMethod
+        newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`][name] = controlMethod
         if (controlMethod === "equation"){
-            newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`]["equation"] = {}
-            newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`]["equation"]["operation"] = ""
-            newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`]["equation"]["operation_args"] = []
+            newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`]["equation"] = {}
+            newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`]["equation"]["operation"] = ""
+            newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`]["equation"]["operation_args"] = []
 
         }
         setConfiguration(newConfiguration)
@@ -60,7 +60,7 @@ export default function ControlConfigForm (props) {
     const handleFloatChange = (event, newConfiguration = clone(configuration)) => {
         const name = event.target.name
         const floatValue = parseFloat(event.target.value)
-        newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`][name] = floatValue
+        newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`][name] = floatValue
         setConfiguration(newConfiguration)
     }
 
@@ -86,7 +86,7 @@ export default function ControlConfigForm (props) {
             <FormControl >
                 <InputLabel htmlFor="device">Point</InputLabel>
                 <NativeSelect
-                    value={configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`]["point"]}
+                    value={configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`]["point"]}
                     onChange={handleChange}
                     inputProps={{
                         name: 'point',
@@ -102,7 +102,7 @@ export default function ControlConfigForm (props) {
     }
 
     const createControlMethodContent = () => {
-        const controlMethod = configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`]["control_method"]
+        const controlMethod = configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`]["control_method"]
         switch(controlMethod){
             case "offset":
                 return(
@@ -115,9 +115,8 @@ export default function ControlConfigForm (props) {
                             label="Offset"
                             type="number"
                             defaultValue={0}
-                            value= {configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`]["offset"]}
+                            value= {configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`]["offset"]}
                             step= '0.01'
-                            min='0'
                             onChange={handleFloatChange}
                             darkMode={darkMode}
                         />
@@ -135,9 +134,8 @@ export default function ControlConfigForm (props) {
                             label="Value"
                             type="number"
                             defaultValue={0}
-                            value= {configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`]["value"]}
+                            value= {configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`]["value"]}
                             step= '0.01'
-                            min='0'
                             onChange={handleFloatChange}
                             darkMode={darkMode}
                         />
@@ -146,7 +144,7 @@ export default function ControlConfigForm (props) {
                 )
             case "equation":
                 return(
-                    <Calculator points={points} savePath={[`${clusterFocus}${_CONTROL}`, props.deviceName, props.deviceName, `${props.setting}_settings`, "equation"]} mainConfiguration = {false}/>
+                    <Calculator points={points} savePath={[`${clusterFocus}${_CONTROL}`, props.deviceName, props.deviceName, `${props.setting}_setting`, "equation"]} mainConfiguration = {false}/>
                 )
         }
     }
@@ -187,7 +185,7 @@ export default function ControlConfigForm (props) {
             <FormControl >
                 <InputLabel htmlFor="device">Control Method</InputLabel>
                 <NativeSelect
-                    value={configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`]["control_method"]}
+                    value={configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`]["control_method"]}
                     onChange={handleControlMethodChange}
                     inputProps={{
                         name: 'control_method',
@@ -208,12 +206,12 @@ export default function ControlConfigForm (props) {
                         name="load"
                         label="Load"
                         type="number"
-                        defaultValue= {configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_settings`]["load"]}
+                        defaultValue= {configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][`${setting}_setting`]["load"]}
                         step= '0.01'
                         onChange={handleFloatChange}
                         darkMode={darkMode}
                     /> : 
-                    <Calculator  points={points} savePath={[`${clusterFocus}${_CONTROL}`, props.deviceName, props.deviceName, `${setting}_settings`, `load`]}/>
+                    <Calculator  points={points} savePath={[`${clusterFocus}${_CONTROL}`, props.deviceName, props.deviceName, `${setting}_setting`, `load`]}/>
                 }
             </FormControl>
             </>
@@ -230,7 +228,7 @@ export default function ControlConfigForm (props) {
                 <TreeItem nodeId={`${setting}_device_status`} label={`${capitalizeFirstLetter(props.setting)} Device Status`} darkMode={darkMode}>
                     <Calculator points={points} savePath={[`${clusterFocus}${_CONTROL}`, props.deviceName, props.deviceName, "device_status", props.setting]} deviceStatus = {true}/>
                 </TreeItem>
-                <TreeItem darkMode={darkMode} nodeId={`${setting}_device_settings`} label={`${capitalizeFirstLetter(props.setting)} Settings`}>
+                <TreeItem darkMode={darkMode} nodeId={`${setting}_device_setting`} label={`${capitalizeFirstLetter(props.setting)} Settings`}>
                     {createSettings()}
                     {createControlMethods()}
                 </TreeItem>

@@ -3,13 +3,15 @@ import { InputLabel, Select, TextField } from '@material-ui/core'
 import { FormControl } from '../_styledCriteriaConfigForm';
 import MasterDriverContext from '../../../context/masterDriverContext';
 import ClusterContext from '../../../context/clusterContext';
+import { darkModeContext } from "../../../context/darkModeContext";
 import configMapping from '../../../constants/jsonTemplates/configurationMapping.json'
-import {FloatInputGray as FloatInput} from '../../common/_styledInput'
+import {FloatInput} from '../../common/_styledInput'
 import {SmallLabel} from '../../common/_styledLabel'
 import {_CRITERIA} from '../../../constants/strings'
 
 export default function Status(props) {
     let {devices, configuration, setConfiguration} = useContext(MasterDriverContext);
+    const { darkMode } = useContext(darkModeContext);
     let {clusterFocus} = useContext(ClusterContext);
     const [state, setState] = useState({
         stateClusterFocus: clusterFocus
@@ -88,7 +90,7 @@ export default function Status(props) {
                     </Select>
                 </FormControl>
                 <FormControl >
-                    <SmallLabel>On Value</SmallLabel>
+                    <SmallLabel darkMode={darkMode}>On Value</SmallLabel>
                     <FloatInput
                         id={`${clusterFocus}onValue`}
                         name="on_value"
@@ -96,10 +98,11 @@ export default function Status(props) {
                         type="number"
                         value= {on_value ? on_value : 0}
                         step='0.01'
-                        onChange={handleFloatChange}/>
+                        onChange={handleFloatChange}
+                        darkMode={darkMode}/>
                 </FormControl>
                 <FormControl >
-                    <SmallLabel>Off Value</SmallLabel>
+                    <SmallLabel darkMode={darkMode}>Off Value</SmallLabel>
                     <FloatInput
                         id="offValue"
                         name="off_value"
@@ -107,7 +110,8 @@ export default function Status(props) {
                         type="number"
                         value= {off_value ? off_value : 0}
                         step='0.01'
-                        onChange={handleFloatChange}/>
+                        onChange={handleFloatChange}
+                        darkMode={darkMode}/>
                 </FormControl>
             </Fragment>
       

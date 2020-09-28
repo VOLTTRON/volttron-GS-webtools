@@ -38,12 +38,12 @@ export default function ControlConfig(props) {
         let newConfiguration = clone(configuration)
         if (newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["device_status"]["augment"]){
             delete newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["device_status"]["augment"];
-            delete newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["augment_settings"];
+            delete newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["augment_setting"];
         } else {
             newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["device_status"]["augment"] =
             clone(newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["device_status"]["curtail"])
-            newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["augment_settings"] =
-            clone(newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["curtail_settings"])
+            newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["augment_setting"] =
+            clone(newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["curtail_setting"])
         }
         setConfiguration(newConfiguration)
     }
@@ -61,19 +61,19 @@ export default function ControlConfig(props) {
                     continue;
                 }
                 value[key]["device_status"] = clone(newConfiguration[`${clusterFocus}${_CONTROL}`][copyFrom][copyFrom]["device_status"])
-                value[key]["curtail_settings"] = clone(newConfiguration[`${clusterFocus}${_CONTROL}`][copyFrom][copyFrom]["curtail_settings"])
-                if(newConfiguration[`${clusterFocus}${_CONTROL}`][copyFrom][copyFrom]["augment_settings"]){
-                    value[key]["augment_settings"] = clone(newConfiguration[`${clusterFocus}${_CONTROL}`][copyFrom][copyFrom]["augment_settings"])
+                value[key]["curtail_setting"] = clone(newConfiguration[`${clusterFocus}${_CONTROL}`][copyFrom][copyFrom]["curtail_setting"])
+                if(newConfiguration[`${clusterFocus}${_CONTROL}`][copyFrom][copyFrom]["augment_setting"]){
+                    value[key]["augment_setting"] = clone(newConfiguration[`${clusterFocus}${_CONTROL}`][copyFrom][copyFrom]["augment_setting"])
                 }
             }
         } else {
             newConfiguration[`${clusterFocus}${_CONTROL}`][copyTo][copyTo]["device_status"] = 
             clone(newConfiguration[`${clusterFocus}${_CONTROL}`][copyFrom][copyFrom]["device_status"])
-            newConfiguration[`${clusterFocus}${_CONTROL}`][copyTo][copyTo]["curtail_settings"] = 
-            clone(newConfiguration[`${clusterFocus}${_CONTROL}`][copyFrom][copyFrom]["curtail_settings"])
-            if(newConfiguration[`${clusterFocus}${_CONTROL}`][copyFrom][copyFrom]["augment_settings"]){
-                newConfiguration[`${clusterFocus}${_CONTROL}`][copyTo][copyTo]["augment_settings"] = 
-                clone(newConfiguration[`${clusterFocus}${_CONTROL}`][copyFrom][copyFrom]["augment_settings"])
+            newConfiguration[`${clusterFocus}${_CONTROL}`][copyTo][copyTo]["curtail_setting"] = 
+            clone(newConfiguration[`${clusterFocus}${_CONTROL}`][copyFrom][copyFrom]["curtail_setting"])
+            if(newConfiguration[`${clusterFocus}${_CONTROL}`][copyFrom][copyFrom]["augment_setting"]){
+                newConfiguration[`${clusterFocus}${_CONTROL}`][copyTo][copyTo]["augment_setting"] = 
+                clone(newConfiguration[`${clusterFocus}${_CONTROL}`][copyFrom][copyFrom]["augment_setting"])
             }
         }
         setConfiguration(newConfiguration)
