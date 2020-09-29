@@ -1,0 +1,565 @@
+{
+    "AHU2/VAV132": {
+        "VAV132": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV132",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV132_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Conference Room",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV133": {
+        "VAV133": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV133",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV133_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Private Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV136A": {
+        "VAV136A": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV136A",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV136A_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Private Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV136B": {
+        "VAV136B": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV136B",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV113B_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV136C": {
+        "VAV136C": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV136C",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV136C_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Private Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV142A": {
+        "VAV142A": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV142A",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV142A_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Private Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV142B": {
+        "VAV142B": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV142B",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV142B_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV142C": {
+        "VAV142C": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV142C",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV142C_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Private Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV1147A": {
+        "VAV1147A": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV1147A",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV147A_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Conference Room",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV147B": {
+        "VAV147B": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV147B",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV147B_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV147C": {
+        "VAV147C": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV147C",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV147C_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Private Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV232": {
+        "VAV232": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV232",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV232_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Conference Room",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV233": {
+        "VAV233": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV233",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV233_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Private Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV236A": {
+        "VAV236A": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV236A",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV236A_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Private Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV236B": {
+        "VAV236B": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV236B",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV236B_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV236C": {
+        "VAV236C": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV236C",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV236C_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Private Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV242A": {
+        "VAV242A": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV242A",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV242A_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Private Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV242B": {
+        "VAV242B": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV242B",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV242B_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV242C": {
+        "VAV242C": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV242C",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV242C_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Private Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV247A": {
+        "VAV247A": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV247A",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV247A_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Private Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV247B": {
+        "VAV247B": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV247B",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV247B_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV247C": {
+        "VAV247C": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV247C",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV247C_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Private Office",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "AHU2/VAV248": {
+        "VAV248": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV248",
+            "available_zone_airflow_ratio": {
+                "operation": "ZoneAirFlow/MaximumZoneAirFlow - 1.0",
+                "operation_type": "formula",
+                "operation_args": ["ZoneAirFlow", ["PNNL/3860_BUILDING/AHU2/VAV248_SETTINGS", "MaximumZoneAirFlow"]],
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "zonetemperature_setpoint":{
+                "operation": "1/(ZoneTemperature - ZoneCoolingTemperatureSetPoint)",
+                "operation_type": "formula",
+                "operation_args": {"always": ["ZoneTemperature"], "nc": ["ZoneCoolingTemperatureSetPoint"]},
+                "minimum": 0.0,
+                "maximum": 10.0
+            },
+            "room_type": {
+                "map_key": "Conference Room",
+                "operation_type": "mapper",
+                "dict_name": "zone_type"
+            }
+        }
+    },
+    "mappers": {
+        "zone_type": {
+            "Private Office": 1,
+            "Office": 3,
+            "Conference Room": 5,
+            "Lobby": 9,
+            "Restroom": 9,
+            "Mechanical": 9,
+            "Common": 9
+        }
+    }
+}

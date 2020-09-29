@@ -1,10 +1,9 @@
 import React, { useContext } from "react";
 import MasterDriverContext from '../../context/masterDriverContext';
-import Select from '@material-ui/core/Select';
+import { Select, InputLabel, MenuItem } from '@material-ui/core';
 import { FormControl } from '../common/_styledFormControl';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
 import { ModedFormHeader } from '../common/utility';
+import Agent from '../Agent/Agent';
 
 const Campus = props => {
     const { configuration, setConfiguration, buildings, campuses } = useContext(MasterDriverContext);
@@ -65,6 +64,7 @@ const Campus = props => {
                     })}
                 </Select>
             </FormControl>
+            <Agent />
         </>
     );
 };

@@ -1,0 +1,439 @@
+{
+    "AHU2/VAV102": {
+        "VAV102": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV132",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV132_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV132_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.04*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV133": {
+        "VAV133": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV133",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV133_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV133_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.014*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV136A": {
+        "VAV136A": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV136A",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV136A_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV136A_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.03*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV136B": {
+        "VAV136B": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV136B",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV136B_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV136B_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.07*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV136C": {
+        "VAV136C": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV136C",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV136C_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV136C_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.05*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV142A": {
+        "VAV142A": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV142A",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV142A_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV142A_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.07*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV142B": {
+        "VAV142B": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV142B",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV142B_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV142B_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.03*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV142C": {
+        "VAV142C": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV142C",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV142C_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV142C_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.015*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV147A": {
+        "VAV147A": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV147A",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV147A_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset"
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV147A_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.04*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV147B": {
+        "VAV147B": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV147B",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV147B_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV147B_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.07*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV147C": {
+        "VAV147C": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV147C",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV147C_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV147C_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.05*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV232": {
+        "VAV232": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV232",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV232_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV232_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.03*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV233": {
+        "VAV233": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV233",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV233_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV233_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.015*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV236A": {
+        "VAV236A": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV236A",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV236A_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV236A_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.03*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV236B": {
+        "VAV236B": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV236B",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV236B_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV236B_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.07*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV236C": {
+        "VAV236C": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV236C",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV236C_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV236C_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.05*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV242A": {
+        "VAV242A": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV242A",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV242A_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV242A_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.03*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV242B": {
+        "VAV242B": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV242B",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV242B_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV242B_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.07*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV242C": {
+        "VAV242C": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV242C",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV242C_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV242C_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.02*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV247A": {
+        "VAV247A": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV247A",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV247A_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV247A_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.03*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV247B": {
+        "VAV247B": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV247B",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV247B_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV247B_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.07*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV247C": {
+        "VAV247C": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV247C",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV247C_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV247C_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.05*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    },
+    "AHU2/VAV248": {
+        "VAV248": {
+            "device_topic": "PNNL/3860_BUILDING/AHU2/VAV248",
+            "device_status": {
+                "condition": ["ZoneAirFlow>MinimumZoneAirFlow"], 
+                "device_status_args": [["PNNL/3860_BUILDING/AHU2/VAV248_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"]
+            },
+            "curtail_settings": {
+                "point": "ZoneCoolingTemperatureSetPoint",
+                "control_method": "offset",
+                "revert_priority": 1,
+                "offset": 2.0,
+                "load": {
+                    "equation_args": [["PNNL/3860_BUILDING/AHU2/SUPPLY_FAN_VFD1", "SupplyFanPower"], ["PNNL/3860_BUILDING/AHU2/VAV248_SETTINGS", "MinimumZoneAirFlow"], "ZoneAirFlow"],
+                    "operation": "SupplyFanPower*2*0.01*(1 - (MinimumZoneAirFlow/ZoneAirFlow)**3)"
+                }
+            }
+        }
+    }
+}

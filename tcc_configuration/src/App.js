@@ -9,10 +9,9 @@ import LeftPanel from './components/LeftPanel/LeftPanel';
 import FilePreview from './components/FilePreview/FilePreview';
 import Schedule from './components/Schedule/Schedule';
 import Campus from './components/Campus/Campus';
-import InputsConfiguration from './components/Inputs/InputsConfiguration';
+import Inputs from './components/Inputs/Inputs';
 import Outputs from './components/Outputs/Outputs';
-import DeviceConfiguration from './components/DeviceConfiguration/DeviceConfiguration';
-import AgentConfiguration from './components/AgentConfiguration/AgentConfiguration';
+import Device from './components/Device/Device';
 import { MainGrid } from './containers/_styledApp';
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
@@ -47,14 +46,11 @@ function App() {
                     <Grid item xs={6}>
                         <Router history={history}>
                             <Switch>
-                                <Route path="/campus">
+                                <Route path="/agent">
                                     <Campus />
                                 </Route>
-                                <Route path="/agent">
-                                    <AgentConfiguration />
-                                </Route>
                                 <Route path="/inputs">
-                                    <InputsConfiguration />
+                                    <Inputs />
                                 </Route>
                                 <Route path="/outputs">
                                     <Outputs />
@@ -62,8 +58,8 @@ function App() {
                                 <Route path="/schedule">
                                     <Schedule />
                                 </Route>
-                                <Route path="/device_configuration">
-                                    <DeviceConfiguration />
+                                <Route path="/device">
+                                    <Device />
                                 </Route>
                                 <Route exact path="/">
                                     <LandingPage />
