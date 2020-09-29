@@ -21,21 +21,12 @@ export default function Outputs(props) {
         setMapped(m)
     }
 
-    const setMappedType = (value, index) => {
-        let config = configuration
-        config["outputs"][index]["mapped"] = "";
-        setConfiguration(config)
-        let t = types;
-        t[index] = value;
-        setTypes(t);
-    }
-
     const initPointsList = () => {
         let pointList = []
         let inputIndex = 0
         for (var output in configuration["outputs"]) {
             if (configuration["outputs"][output]["topic"] !== "") {
-                let devIndex = findDeviceIndex(configuration["outputs"][output]["topic"].split("/")[2], devices)
+                let devIndex = findDeviceIndex(configuration["outputs"][output]["topic"].split("/")[3], devices)
                 if (devIndex !== -1) {
                     pointList[inputIndex] = devices[devIndex]["points"]
                 }
@@ -64,7 +55,7 @@ export default function Outputs(props) {
             setPoints(p);
             let outputArray = configuration["outputs"];
             let config = configuration;
-            outputArray[index]["topic"] = config["campus"] + "/" + config["building"] + "/" + e.target.value
+            outputArray[index]["topic"] = `devices/${config["campus"]}/${config["building"]}/${e.target.value}/all`
             config["outputs"] = outputArray
             setConfiguration(config)
         }
@@ -122,7 +113,7 @@ export default function Outputs(props) {
     }
 
 
-    const Output = () => {
+    const OutputsList = () => {
         return (
             configuration["outputs"].map((i, index) => {
                 return (
@@ -140,7 +131,7 @@ export default function Outputs(props) {
                         <Select
                             labelId={"topicLabel_".concat(index)}
                             id={"topicSelect_".concat(index)}
-                            value={configuration["outputs"][index]["topic"].split("/")[2]}
+                            value={configuration["outputs"][index]["topic"].split("/")[3]}
                             onChange={e => handleTopicChange(e, index)}
                         >
                             {devices.map(d => {
@@ -171,7 +162,6 @@ export default function Outputs(props) {
                     <Mapped
                         source="outputs"
                         index={index}
-                        setType={setMappedType} type={types[index]}
                         setMapped={handleMappedChange} mapped={mapped[index]}
                     />
                     <Grid container>
@@ -239,21 +229,6 @@ export default function Outputs(props) {
                         </Grid>
                         <Grid item xs={4}>
                             <TextField
-                                id={"offset_".concat(index)}
-                                key={"offset_".concat(index)}
-                                label="Offset"
-                                value={configuration["outputs"][index]["offset"]}
-                                type="number"
-                                inputProps={{"step":"0.01"}}
-                                onChange={e => handleChange(e, index, "offset")}
-                                style={{"textAlign": "center"}}
-                            />
-                        </Grid>
-                    </Grid>
-                    <Grid container>
-                        <Grid item xs={4}></Grid>
-                        <Grid item xs={4}>
-                            <TextField
                                 id={"fallback_".concat(index)}
                                 key={"fallback_".concat(index)}
                                 label="Fallback"
@@ -298,7 +273,7 @@ export default function Outputs(props) {
     return (
         <FormWrapper>
             {ModedFormHeader("Outputs", "medium")}
-            {Output()}
+            {OutputsList()}
             <PrimaryButton id="addOutputButton" onClick={addOutput}>Add Output</PrimaryButton>
         </FormWrapper>
     );

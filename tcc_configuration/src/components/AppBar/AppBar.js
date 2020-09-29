@@ -1,17 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { Toolbar, IconButton, Typography } from '@material-ui/core';
+import { Toolbar, IconButton, Typography, Menu, MenuItem } from '@material-ui/core';
+import { Menu as MenuIcon, Brightness6, Brightness7 } from '@material-ui/icons'
 import { AppBar } from './_styledAppBar'
-import { default as MenuIcon } from '@material-ui/icons/Menu'
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
-import {default as history} from '../../history';
+import { default as history } from '../../history';
 import MasterDriverContext from '../../context/masterDriverContext';
 import { CurrentPageContext } from "../../context/currentPageContext";
 import ConfigurationTemplate from '../../constants/jsonTemplates/configuration.json'
 import OutputFormatTemplate from '../../constants/jsonTemplates/format.json'
-import Brightness6Icon from '@material-ui/icons/Brightness6';
-import Brightness7Icon from '@material-ui/icons/Brightness7';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -117,7 +113,7 @@ export default function NavigationBar() {
             onClick={handleDarkMode}
             color="inherit"
           >
-            {darkMode ? <Brightness7Icon/> : <Brightness6Icon/>}
+            {darkMode ? <Brightness7/> : <Brightness6/>}
           </IconButton>
         </Toolbar>
       </AppBar>

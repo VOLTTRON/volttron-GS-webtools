@@ -1,0 +1,36 @@
+{
+    "campus": "PNNL",
+    "building": "3860_BUILDING",
+        "power_meter": {
+            "device": "METERS",
+            "point": "WholeBuildingPower"
+        },
+    "agent_id": "3860 ILC",
+    "demand_limit": "TRIGGER",
+    "simulation_running": false,
+    "curtailment_time": 20,
+    "curtailment_confirm": 5,
+    "curtailment_break": 20,
+    "average_building_power_window": 15,
+
+    "stagger_release": true,
+    "stagger_off_time": false,
+    "application_category": "Load Control",
+    "application_name": "Intelligent Load Control",
+    "clusters": [ 
+        {
+            "device_control_file": "/home/vuzer/volttron/config/ilc/3860_building/vav1_curtailment_config",
+            "device_criteria_file": "/home/vuzer/volttron/config/ilc/3860_building/vav1_criteria_config",
+            "pairwise_criteria_file": "/home/vuzer/volttron/config/ilc/3860_building/vav_criteria_matrix.json",
+            "cluster_actuator": "platform.actuator1",
+            "cluster_priority": 0.5
+        },
+        {
+            "device_control_file": "/home/vuzer/volttron/config/ilc/3860_building/vav2_curtail_config",
+            "device_criteria_file": "/home/vuzer/volttron/config/ilc/3860_building/vav2_criteria_config",
+            "pairwise_criteria_file": "/home/vuzer/volttron/config/ilc/3860_building/vav_criteria_matrix.json",
+            "cluster_actuator": "platform.actuator2",
+            "cluster_priority": 0.5
+        }
+    ]
+ }

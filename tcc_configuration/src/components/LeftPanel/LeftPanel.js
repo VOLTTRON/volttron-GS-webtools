@@ -47,28 +47,20 @@ export default function LeftPanel(props) {
                 }}
                 anchor="left">
                 <Button
-                    onClick = {() => {return navigateTo("campus")}}
-                    selected={currentPage === "campus" ? true : false}
-                    darkMode={darkMode}
-                    animate={currentPage === "campus" ? true : false}
-                >
-                    Campus Configuration
-                </Button>
-                <Button
-                    onClick = {() => {return navigateTo("device_configuration")}}
-                    selected={currentPage === "device_configuration" ? true : false}
-                    darkMode={darkMode}
-                    animate={currentPage === "device_configuration" ? true : false}
-                >
-                    Device Configuration
-                </Button>
-                <Button
                     onClick = {() => {return navigateTo("agent")}}
                     selected={currentPage === "agent" ? true : false}
                     darkMode={darkMode}
                     animate={currentPage === "agent" ? true : false}
                 >
                     Agent Configuration
+                </Button>
+                <Button
+                    onClick = {() => {return navigateTo("device")}}
+                    selected={currentPage === "device" ? true : false}
+                    darkMode={darkMode}
+                    animate={currentPage === "device" ? true : false}
+                >
+                    Device Configuration
                 </Button>
                 <Button
                     onClick = {() => {return navigateTo("inputs")}}

@@ -1,62 +1,44 @@
 {
+    "agent_name": "",
     "campus": "",
     "building": "",
     "input_data_timezone": "",
+    "device": "",
+    "subdevice": "",
     "inputs": [
         {
             "topic": "",
-            "mapped": "",
             "point": "",
+            "mapped": "",
             "initial_value": ""
         }
     ],
     "outputs": [
         {
-            "mapped": "",
-            "point": "",
             "topic": "",
+            "point": "",
+            "mapped": "",
             "flexibility_range": [0, 0],
             "control_flexibility": [0, 0],
             "off_setpoint": 0,
             "actuator": "platform.actuator",
             "release": "none",
-            "offset": 0,
             "fallback": 0
         }
     ],
     "schedule": {
-        "Monday": {
-            "start": "",
-            "end": ""
-        },
-        "Tuesday": {
-            "start": "",
-            "end": ""
-        },
-        "Wednesday": {
-            "start": "",
-            "end": ""
-        },
-        "Thursday": {
-            "start": "",
-            "end": ""
-        },
-        "Friday": {
-            "start": "",
-            "end": ""
-        },
-        "Saturday": {
-            "start": "",
-            "end": ""
-        },
-        "Sunday": {
-            "start": "",
-            "end": ""
-        }
+        "Monday": "always_on",
+        "Tuesday": "always_on",
+        "Wednesday": "always_on",
+        "Thursday": "always_on",
+        "Friday": "always_on",
+        "Saturday": "always_on",
+        "Sunday": "always_on"
     },
     "model_parameters": {
         "rated_power": 0,
         "model_type": ""
     },
-    "agent_name": ""
+    "demand_limiting": false,
+    "static_price_flag": false
 }

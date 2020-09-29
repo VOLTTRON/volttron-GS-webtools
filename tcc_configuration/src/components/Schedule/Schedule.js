@@ -1,7 +1,6 @@
 import React, { useState, useContext } from "react";
-import {Switch, Grid} from '@material-ui/core';
+import { Switch, Grid } from '@material-ui/core';
 import MasterDriverContext from '../../context/masterDriverContext';
-
 import { MuiPickersUtilsProvider, TimePicker } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { ModedFormHeader } from '../common/utility';
@@ -70,7 +69,7 @@ const Schedule = props => {
         if (e.target.checked === true) {
             newSchedule[day] = "always_on";
         } else {
-            newSchedule[day] = {"start": "", "end": ""};
+            newSchedule[day] = {"start": "00:00:00", "end": "00:00:00"};
         }
 
         let config = configuration;
@@ -91,7 +90,7 @@ const Schedule = props => {
         if (e.target.checked === true) {
             newSchedule[day] = "always_off"
         } else {
-            newSchedule[day] = {"start": "", "end": ""}
+            newSchedule[day] = {"start": "00:00:00", "end": "00:00:00"}
         }
 
         let config = configuration;
