@@ -178,14 +178,7 @@ const ConfigPage = (props) => {
         </ErrorModal>
       ) : null}
       <StyledDivLeft
-        disabled={
-          !(
-            campus &&
-            building &&
-            (ahuContext.fileType[0] === "Economizer_AIRCx" ||
-              Object.keys(device).length > 0)
-          )
-        }
+        disabled={!(campus && building && Object.keys(device).length > 0)}
       >
         <LeftPanel
           open={open}
@@ -213,14 +206,7 @@ const ConfigPage = (props) => {
           ></TopPanel>
         </StyledDivTop>
         <StyledDivMain
-          disabled={
-            !(
-              campus &&
-              building &&
-              (ahuContext.fileType[0] === "Economizer_AIRCx" ||
-                Object.keys(device).length > 0)
-            )
-          }
+          disabled={!(campus && building && Object.keys(device).length > 0)}
         >
           <MainContent
             open={open}

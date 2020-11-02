@@ -2,14 +2,13 @@ import { dropDown } from "../../../containers/ConfigPage/Util/DropDown";
 
 const setAirsideContexts = (
   fileContentObject,
-  setPointMapping,
+  setAirPointMapping,
   setArgument,
   setThresholds
 ) => {
   let error = "";
-  // Point Mapping
   try {
-    setPointMapping({
+    setAirPointMapping({
       fan_status: fileContentObject.arguments.point_mapping.fan_status,
       zone_reheat: fileContentObject.arguments.point_mapping.zone_reheat,
       zone_damper: fileContentObject.arguments.point_mapping.zone_damper,
@@ -103,14 +102,14 @@ const setAirsideContexts = (
 
 const setEconContexts = (
   fileContentObject,
-  setPointMapping,
+  setEconPointMapping,
   setArgument,
   setThresholds
 ) => {
   let error = "";
   // Point Mapping
   try {
-    setPointMapping({
+    setEconPointMapping({
       supply_fan_status:
         fileContentObject.arguments.point_mapping.supply_fan_status,
       outdoor_air_temperature:
@@ -142,6 +141,7 @@ const setEconContexts = (
       rated_cfm: fileContentObject.arguments.rated_cfm,
       device_type: fileContentObject.arguments.device_type,
       economizer_type: fileContentObject.arguments.economizer_type,
+      constant_volume: fileContentObject.arguments.constant_volume,
       econ_hl_temp: fileContentObject.arguments.econ_hl_temp,
       temp_band: fileContentObject.arguments.temp_band,
       eer: fileContentObject.arguments.eer,
@@ -192,7 +192,8 @@ export const handleAHUUpload = (
   masterDriverContext,
   dropDownsContext
 ) => {
-  const [pointMapping, setPointMapping] = ahuContext.pointMapping;
+  const [econPointMapping, setEconPointMapping] = ahuContext.econPointMapping;
+  const [airPointMapping, setAirPointMapping] = ahuContext.airPointMapping;
   const [fileType, setFileType] = ahuContext.fileType;
   const [campus, setCampus] = campusBuildingDeviceContext.campus;
   const [building, setBuilding] = campusBuildingDeviceContext.building;
@@ -287,7 +288,7 @@ export const handleAHUUpload = (
   if (fileContentObject.analysis_name === "AirsideAIRCx") {
     error = setAirsideContexts(
       fileContentObject,
-      setPointMapping,
+      setAirPointMapping,
       setAirsideArguments,
       setAirsideThresholds
     );
@@ -295,7 +296,7 @@ export const handleAHUUpload = (
   } else {
     error = setEconContexts(
       fileContentObject,
-      setPointMapping,
+      setEconPointMapping,
       setEconArgument,
       setEconThresholds
     );

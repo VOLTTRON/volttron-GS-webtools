@@ -15,7 +15,6 @@ const AHUUpload = (props) => {
   let content = (
     <>
       <input
-        accept="application/JSON"
         style={{ display: "none" }}
         type="file"
         id="ahu-file-upload"
@@ -44,10 +43,10 @@ const AHUUpload = (props) => {
       <StyledDivReUpload>
         <StyledPReUpload>{props.fileName}</StyledPReUpload>
         <input
-          accept="application/JSON"
           style={{ display: "none" }}
           type="file"
           onChange={props.handleFileUpload}
+          id="ahu-file-reupload"
         />
         <StyledLabelReUpload htmlFor="ahu-file-reupload">
           <StyledButtonReUpload

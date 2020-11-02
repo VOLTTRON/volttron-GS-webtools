@@ -5,6 +5,7 @@ export const EconArgumentsContext = createContext(null);
 export default ({ children }) => {
   const [argument, setArgument] = useState({
     data_window: 30.0,
+    constant_volume: false,
     open_damper_time: 5,
     minimum_damper_setpoint: 20.0,
     desired_oaf: 10.0,

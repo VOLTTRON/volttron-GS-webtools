@@ -6,7 +6,12 @@ import { MasterDriverContext } from "../../context/MasterDriverContext/MasterDri
 import { AHUContext } from "../../context/AHUContext/AHUContext";
 import { verifyLocation } from "../../components/LandingPage/Utils/Util";
 import AHUIcon from "../../assets/icons/AHUIcon.PNG";
-import {StyledDivWrapper, StyledTypographyTitle, StyledDivLogoWrapper, StyledDivContent} from "./_style"
+import {
+  StyledDivWrapper,
+  StyledTypographyTitle,
+  StyledDivLogoWrapper,
+  StyledDivContent,
+} from "./_style";
 
 const Layout = (props) => {
   const masterDriverContext = useContext(MasterDriverContext);
@@ -25,21 +30,32 @@ const Layout = (props) => {
         <AppBar position="static">
           <Toolbar style={{ backgroundColor: "#1F1F1F" }}>
             <StyledDivLogoWrapper>
-              <Icon style={{cursor: "pointer"}}>
-                <img onClick={() => {window.location.reload()}} src={AHUIcon} height={30} width={30} alt="logo" />
+              <Icon style={{ cursor: "pointer" }}>
+                <img
+                  onClick={() => {
+                    window.location.reload();
+                  }}
+                  src={AHUIcon}
+                  height={30}
+                  width={30}
+                  alt="logo"
+                />
               </Icon>
             </StyledDivLogoWrapper>
             <div>
-              <StyledTypographyTitle variant="h6"  onClick={() => {window.location.reload()}}>
+              <StyledTypographyTitle
+                variant="h6"
+                onClick={() => {
+                  window.location.reload();
+                }}
+              >
                 AHU Configuration
               </StyledTypographyTitle>
             </div>
           </Toolbar>
         </AppBar>
       </StyledDivWrapper>
-      <StyledDivContent>
-      {content}
-      </StyledDivContent>
+      <StyledDivContent>{content}</StyledDivContent>
     </>
   );
 };

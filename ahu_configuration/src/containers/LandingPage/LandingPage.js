@@ -94,6 +94,7 @@ const LandingPage = (props) => {
               variant="contained"
               color="primary"
               onClick={() => {
+                localStorage.removeItem("AHU_Configuration");
                 setReloadConfigWindow(false);
               }}
             >

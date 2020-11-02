@@ -27,7 +27,8 @@ const readFromLocalStorage = (
   );
   ahuContext.fileName[1](localStorageData.ahu.fileName);
   ahuContext.fileType[1](localStorageData.ahu.fileType);
-  ahuContext.pointMapping[1](localStorageData.ahu.pointMapping);
+  ahuContext.econPointMapping[1](localStorageData.ahu.econPointMapping);
+  ahuContext.airPointMapping[1](localStorageData.ahu.airPointMapping);
   currentPageContext.currentPage[1](localStorageData.currentPage);
   dropDownsContext.setDropDownsChildren(
     localStorageData.dropDown.dropDownsChildren
@@ -110,7 +111,8 @@ const writeToLocalStorage = (
     ahu: {
       fileName: ahuContext.fileName[0],
       fileType: ahuContext.fileType[0],
-      pointMapping: ahuContext.pointMapping[0],
+      econPointMapping: ahuContext.econPointMapping[0],
+      airPointMapping: ahuContext.airPointMapping[0],
     },
     airsideArguments: airsideArguments,
     airsideThresholds: airsideThresholds,

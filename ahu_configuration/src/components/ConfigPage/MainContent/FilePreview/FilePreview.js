@@ -19,7 +19,8 @@ import {
 
 const FilePreview = (props) => {
   const ahuContext = useContext(AHUContext);
-  const [pointMapping, setPointMapping] = ahuContext.pointMapping;
+  const [econPointMapping, setEconPointMapping] = ahuContext.econPointMapping;
+  const [airPointMapping, setAirPointMapping] = ahuContext.airPointMapping;
   const [fileType, setFileType] = ahuContext.fileType;
 
   const currentPageContext = useContext(CurrentPageContext);
@@ -100,48 +101,67 @@ const FilePreview = (props) => {
 
     const econArgumentsSection = `   "arguments": {
         "point_mapping": {
-            "supply_fan_status": "${
-              pointMapping.supply_fan_status
-                ? pointMapping.supply_fan_status
+            "supply_fan_status": [${
+              econPointMapping.supply_fan_status
+                ? econPointMapping.supply_fan_status.map((item) => {
+                    return item == "" ? `"" ` : `"${item}" `;
+                  })
                 : ""
-            }",
-            "outdoor_air_temperature": "${
-              pointMapping.outdoor_air_temperature
-                ? pointMapping.outdoor_air_temperature
+            }],
+            "outdoor_air_temperature": [${
+              econPointMapping.outdoor_air_temperature
+                ? econPointMapping.outdoor_air_temperature.map((item) => {
+                    return item == "" ? `"" ` : `"${item}" `;
+                  })
                 : ""
-            }",
-            "return_air_temperature": "${
-              pointMapping.return_air_temperature
-                ? pointMapping.return_air_temperature
+            }],
+            "return_air_temperature": [${
+              econPointMapping.return_air_temperature
+                ? econPointMapping.return_air_temperature.map((item) => {
+                    return item == "" ? `"" ` : `"${item}" `;
+                  })
                 : ""
-            }",
-            "mixed_air_temperature": "${
-              pointMapping.mixed_air_temperature
-                ? pointMapping.mixed_air_temperature
+            }],
+            "mixed_air_temperature": [${
+              econPointMapping.mixed_air_temperature
+                ? econPointMapping.mixed_air_temperature.map((item) => {
+                    return item == "" ? `"" ` : `"${item}" `;
+                  })
                 : ""
-            }",
-            "outdoor_damper_signal": "${
-              pointMapping.outdoor_damper_signal
-                ? pointMapping.outdoor_damper_signal
+            }],
+            "outdoor_damper_signal": [${
+              econPointMapping.outdoor_damper_signal
+                ? econPointMapping.outdoor_damper_signal.map((item) => {
+                    return item == "" ? `"" ` : `"${item}" `;
+                  })
                 : ""
-            }",
-            "cool_call": "${
-              pointMapping.cool_call ? pointMapping.cool_call : ""
-            }",
-            "supply_fan_speed": "${
-              pointMapping.supply_fan_speed ? pointMapping.supply_fan_speed : ""
-            }"
+            }],
+            "cool_call": [${
+              econPointMapping.cool_call
+                ? econPointMapping.cool_call.map((item) => {
+                    return item == "" ? `"" ` : `"${item}" `;
+                  })
+                : ""
+            }],
+            "supply_fan_speed": [${
+              econPointMapping.supply_fan_speed
+                ? econPointMapping.supply_fan_speed.map((item) => {
+                    return item == "" ? `"" ` : `"${item}" `;
+                  })
+                : ""
+            }],
         },`;
 
     const variableArgs1 = `        "device_type": "${
-        argument.device_type ? argument.device_type : ""
-        }",
+      argument.device_type ? argument.device_type : ""
+    }",
         "economizer_type": "${
           argument.economizer_type ? argument.economizer_type : ""
         }",
-        "econ_hl_temp": ${
-          argument.econ_hl_temp ? argument.econ_hl_temp: ""
+        "constant_volume": ${
+          argument.constant_volume
         },
+        "econ_hl_temp": ${argument.econ_hl_temp ? argument.econ_hl_temp : ""},
         "data_window": ${argument.data_window ? argument.data_window : ""},
         "no_required_data": ${
           argument.no_required_data ? argument.no_required_data : ""
@@ -151,17 +171,19 @@ const FilePreview = (props) => {
           argument.open_damper_time ? argument.open_damper_time : ""
         },
         "minimum_damper_setpoint": ${
-          argument.minimum_damper_setpoint ? argument.minimum_damper_setpoint : ""
+          argument.minimum_damper_setpoint
+            ? argument.minimum_damper_setpoint
+            : ""
         },
         "rated_cfm":  ${argument.rated_cfm ? argument.rated_cfm : ""},
         "eer":  ${argument.eer ? argument.eer : ""},
         "temp_band": ${argument.temp_band ? argument.temp_band : ""},`;
     const variableArgs2 = `        "custom": ${thresholds.custom},
         "low_supply_fan_threshold": ${
-      thresholds.low_supply_fan_threshold
-        ? thresholds.low_supply_fan_threshold
-        : ""
-    },
+          thresholds.low_supply_fan_threshold
+            ? thresholds.low_supply_fan_threshold
+            : ""
+        },
         "mat_low_threshold": ${
           thresholds.mat_low_threshold ? thresholds.mat_low_threshold : ""
         },
@@ -230,30 +252,68 @@ const FilePreview = (props) => {
         ${deviceAndSubDevice()}
     },
     "analysis_name": "AirsideAIRCx",
-    "actuation_mode": "${airsideArgument.autocorrect_flag ? "ACTIVE": "PASSIVE"}",`;
+    "actuation_mode": "${
+      airsideArgument.autocorrect_flag ? "ACTIVE" : "PASSIVE"
+    }",`;
 
     const econArgumentsSection = `   "arguments": {
         "point_mapping": {
-            "fan_status": "${
-              pointMapping.fan_status ? pointMapping.fan_status : ""
-            }",
-            "zone_reheat": "${
-              pointMapping.zone_reheat ? pointMapping.zone_reheat : ""
-            }",
-            "zone_damper": "${
-              pointMapping.zone_damper ? pointMapping.zone_damper : ""
-            }",
-            "duct_stcpr": "${
-              pointMapping.duct_stcpr ? pointMapping.duct_stcpr : ""
-            }",
-            "duct_stcpr_stpt": "${
-              pointMapping.duct_stcpr_stpt ? pointMapping.duct_stcpr_stpt : ""
-            }",
-            "sa_temp": "${pointMapping.sa_temp ? pointMapping.sa_temp : ""}",
-            "fan_speedcmd": "${
-              pointMapping.fan_speedcmd ? pointMapping.fan_speedcmd : ""
-            }",
-            "sat_stpt": "${pointMapping.sat_stpt ? pointMapping.sat_stpt : ""}"
+            "fan_status": [${
+              airPointMapping.supply_fan_status
+                ? airPointMapping.supply_fan_status.map((item) => {
+                    return item == "" ? `"" ` : `"${item}" `;
+                  })
+                : ""
+            }],
+            "zone_reheat": [${
+              airPointMapping.zone_reheat
+                ? airPointMapping.zone_reheat.map((item) => {
+                    return item == "" ? `"" ` : `"${item}" `;
+                  })
+                : ""
+            }],
+            "zone_damper": [${
+              airPointMapping.zone_damper
+                ? airPointMapping.zone_damper.map((item) => {
+                    return item == "" ? `"" ` : `"${item}" `;
+                  })
+                : ""
+            }],
+            "duct_stcpr": [${
+              airPointMapping.duct_stcpr
+                ? airPointMapping.duct_stcpr.map((item) => {
+                    return item == "" ? `"" ` : `"${item}" `;
+                  })
+                : ""
+            }],
+            "duct_stcpr_stpt": [${
+              airPointMapping.duct_stcpr_stpt
+                ? airPointMapping.duct_stcpr_stpt.map((item) => {
+                    return item == "" ? `"" ` : `"${item}" `;
+                  })
+                : ""
+            }],
+            "sa_temp": [${
+              airPointMapping.sa_temp
+                ? airPointMapping.sa_temp.map((item) => {
+                    return item == "" ? `"" ` : `"${item}" `;
+                  })
+                : ""
+            }],
+            "fan_speedcmd": [${
+              airPointMapping.fan_speedcmd
+                ? airPointMapping.fan_speedcmd.map((item) => {
+                    return item == "" ? `"" ` : `"${item}" `;
+                  })
+                : ""
+            }],
+            "sat_stpt": [${
+              airPointMapping.sat_stpt
+                ? airPointMapping.sat_stpt.map((item) => {
+                    return item == "" ? `"" ` : `"${item}" `;
+                  })
+                : ""
+            }],
         },`;
     const variableArgs1 = `        "sensitivity": "${
       airsideArgument.sensitivity ? airsideArgument.sensitivity : ""
@@ -305,10 +365,10 @@ const FilePreview = (props) => {
         : ""
     },
         "stcpr_stpt_deviation_thr": "${
-      airsideThresholds.stcpr_stpt_deviation_thr
-        ? airsideThresholds.stcpr_stpt_deviation_thr
-        : ""
-    }",`;
+          airsideThresholds.stcpr_stpt_deviation_thr
+            ? airsideThresholds.stcpr_stpt_deviation_thr
+            : ""
+        }",`;
     const variableArgs3 = `        "low_sf_thr": ${
       airsideThresholds.low_sf_thr ? airsideThresholds.low_sf_thr : ""
     },
@@ -362,7 +422,9 @@ const FilePreview = (props) => {
             : ""
         },
         "unocc_time_thr": ${
-          airsideThresholds.unocc_time_thr ? airsideThresholds.unocc_time_thr : ""
+          airsideThresholds.unocc_time_thr
+            ? airsideThresholds.unocc_time_thr
+            : ""
         },
         "unocc_stp_thr": ${
           airsideThresholds.unocc_stp_thr ? airsideThresholds.unocc_stp_thr : ""

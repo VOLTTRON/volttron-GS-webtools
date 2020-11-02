@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
 import {
+  Checkbox ,
   Slider,
   Input,
   Grid,
@@ -73,11 +74,18 @@ const Arguments = (props) => {
     }
   };
 
+  const handleCheckBoxChange = (event) => {
+    setArgument({
+      ...argument,
+      [event.target.name]: event.target.checked,
+    });
+  }
+
   return (
     <>
       {/* Radio buttons */}
       <Grid container spacing={3}>
-        <Grid item xs={6} container spacing={3}>
+        <Grid item xs={5} container spacing={3}>
           <Grid item xs={12}>
             <StyledTypography color="primary">
               DEVICE TYPE
@@ -106,10 +114,10 @@ const Arguments = (props) => {
             </FormControl>
           </Grid>
         </Grid>
-        <Grid item xs={6} container spacing={3}>
+        <Grid item xs={5} container spacing={3}>
           <Grid item xs={12}>
             <StyledTypography color="primary">
-              Economizer Type
+              ECONOMIZER TYPE
               <ToolTipInfo fieldName="economizer_type" />
             </StyledTypography>
             <FormControl component="fieldset">
@@ -132,6 +140,23 @@ const Arguments = (props) => {
                   labelPlacement="end"
                 />
               </RadioGroup>
+            </FormControl>
+          </Grid>
+        </Grid>
+        <Grid item xs={2} container spacing={3}>
+          <Grid item xs={12}>
+            <StyledTypography color="primary">
+              CONSTANT SYSTEM VOLUME
+              <ToolTipInfo fieldName="constant_volume" />
+            </StyledTypography>
+            <FormControl component="fieldset">
+              <Checkbox
+                name="constant_volume"
+                checked={argument.constant_volume}
+                onChange={handleCheckBoxChange}
+                row
+              >
+              </Checkbox>
             </FormControl>
           </Grid>
         </Grid>

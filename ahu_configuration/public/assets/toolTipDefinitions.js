@@ -45,6 +45,7 @@ var toolTipDefinitions = {
   eer: "Rated Energy Efficiency Ratio for unit.",
   economizer_type:
     "Economizer type differential dry bulb (DDB) or outdoor-air temperature high limit set point (HL).",
+  constant_volumne: "",
   econ_hl_temp:
     "For high limit economizer, this is the outdoor-air temperature below which economizing should be enabled.",
   temp_band:
