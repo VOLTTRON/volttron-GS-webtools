@@ -1,5 +1,13 @@
 import React, { useContext, useState } from "react";
-import { Box, List, ListItemText, Button } from "@material-ui/core";
+import {
+  Box,
+  List,
+  ListItemText,
+  Button,
+  Dialog,
+  DialogContent,
+  DialogActions,
+} from "@material-ui/core";
 import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import { AHUContext } from "../../../context/AHUContext/AHUContext";
@@ -28,6 +36,7 @@ const LeftPanel = (props) => {
   const currentPageContext = useContext(CurrentPageContext);
   const [currentPage, setCurrentPage] = currentPageContext.currentPage;
   const [expandOpen, setExpandOpen] = useState(false);
+  const [showReUploadDialog, setShowReUploadDialog] = useState(false);
   const [animate, setAnimate] = useState(false);
   const customThreshold = airsideThresholdsContext.custom;
 
@@ -53,16 +62,45 @@ const LeftPanel = (props) => {
     setCurrentPage(buttonName);
   };
 
-  const handleReUpload = (event) => {
-    if (
-      window.confirm(
-        "Are you sure you want to re-upload a new file? This will start the process over and all unsaved data will be lost."
-      )
-    ) {
-      localStorage.removeItem("AHU_Configuration");
-      window.location.reload();
-    }
-  };
+  const reUploadDialog = (
+    <div>
+      <Dialog open keepMounted onClose={props.onClose}>
+        <DialogContent>
+          <p
+            style={{
+              color: "black",
+              textAlign: "center",
+              fontSize: "1.5rem",
+            }}
+          >
+            Are you sure you want to re-upload a new file? This will start the
+            process over and all unsaved data will be lost.
+          </p>
+        </DialogContent>
+        <DialogActions style={{ justifyContent: "center" }}>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              localStorage.removeItem("AHU_Configuration");
+              window.location.reload();
+            }}
+          >
+            OK
+          </Button>
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={() => {
+              setShowReUploadDialog(false);
+            }}
+          >
+            Cancel
+          </Button>
+        </DialogActions>
+      </Dialog>
+    </div>
+  );
 
   let threshold = (
     <>
@@ -129,8 +167,10 @@ const LeftPanel = (props) => {
       </>
     );
   }
+
   return (
     <>
+      {showReUploadDialog === true ? reUploadDialog : null}
       <StyledBoxWrapper display="flex" p={1} flexDirection="column">
         <Box p={1} flexGrow={0}>
           <Box display="flex" flexDirection="column">
@@ -154,7 +194,9 @@ const LeftPanel = (props) => {
                   variant="outlined"
                   color="primary"
                   size="small"
-                  onClick={handleReUpload}
+                  onClick={() => {
+                    setShowReUploadDialog(true);
+                  }}
                   style={{
                     display: "inline-block",
                     borderRadius: "0px",
@@ -183,7 +225,9 @@ const LeftPanel = (props) => {
                   variant="outlined"
                   color="primary"
                   size="small"
-                  onClick={handleReUpload}
+                  onClick={() => {
+                    setShowReUploadDialog(true);
+                  }}
                   style={{
                     display: "inline-block",
                     borderRadius: "0px",

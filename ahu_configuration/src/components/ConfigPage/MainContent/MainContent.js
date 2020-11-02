@@ -39,7 +39,8 @@ const MainContent = props => {
   const ahuContext = useContext(AHUContext);
   const [airsideArguments, setAirsideArguments] = useContext(AirsideArgumentsContext);
   const [airsideThresholds, setAirsideThresholds] = useContext(AirsideThresholdsContext);
-  const [pointMapping, setPointMapping] = ahuContext.pointMapping;
+  const [econPointMapping, setEconPointMapping] = ahuContext.econPointMapping;
+  const [airPointMapping, setAirPointMapping] = ahuContext.airPointMapping;
   const [fileType, setFileType] = ahuContext.fileType;
 
   const [thresholds, setThresholds] = useContext(EconThresholdsContext);
@@ -71,7 +72,7 @@ const MainContent = props => {
       device,
       subDevice,
       locationList,
-      pointMapping,
+      airPointMapping,
       airsideArguments,
       airsideThresholds,
       file,
@@ -83,7 +84,7 @@ const MainContent = props => {
       device,
       subDevice,
       locationList,
-      pointMapping,
+      econPointMapping,
       argument,
       thresholds,
       file,
