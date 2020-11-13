@@ -6,7 +6,7 @@ import { FormControl } from '../MainConfig/_styledMainConfigForm';
 import { StyledPointSelect, StyledButton } from './_styledDemandFormula';
 import { Grid, Radio, RadioGroup } from "@material-ui/core";
 import FormControlLabel from '@material-ui/core/FormControlLabel';
-import { OPERATION, OPERATION_ARGS, _CONTROL, _CRITERIA } from '../../constants/strings'
+import { OPERATION, OPERATION_ARGS, _CONTROL, _CRITERIA } from '../../constants/strings';
 import { darkModeContext } from "../../context/darkModeContext";
 
 
@@ -17,7 +17,6 @@ export default function DemandFormula(props) {
     const savePathArray = props.savePath;
     let operationPath = null;
     let formulaStringValue = null;
-    let operationArgsArray = []
     if (savePathArray.length === 5){
         operationPath = configuration[savePathArray[0]][savePathArray[1]][savePathArray[2]][savePathArray[3]][savePathArray[4]]
         formulaStringValue = operationPath[OPERATION]
@@ -32,7 +31,6 @@ export default function DemandFormula(props) {
     const [formulaString, setFormulaString] = useState(formulaStringValue);
     const [pointsCounter, setPointsCounter] = useState(2);
     const [formulaArray, setFormulaArray] = useState(formulaStringValue.trim().split(" "));
-    const [stateClusterFocus, setStateClusterFocus] = useState(clusterFocus);
     const [curtailed, setCurtailed] = useState("always")
     const [minimum, setMinimum] = useState(0)
     const [maximum, setMaximum] = useState(0)
