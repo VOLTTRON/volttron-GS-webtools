@@ -37,11 +37,9 @@ import {
 } from "../../constants/strings";
 import EditIcon from "@material-ui/icons/Edit";
 import FloatingCalculator from "../common/FloatingCalculator";
-import { FormatListNumberedOutlined } from "@material-ui/icons";
 
 export default function MainConfigForm(props) {
   const {
-    parsedMDC,
     campuses,
     buildings,
     devices,
@@ -106,6 +104,7 @@ export default function MainConfigForm(props) {
       formula: operation,
     });
   };
+
   const handleFloatChange = (
     event,
     newConfiguration = clone(configuration)
@@ -144,14 +143,14 @@ export default function MainConfigForm(props) {
         for (let [parentDeviceKey, parentDevice] of Object.entries(
           newConfiguration[configName]
         )) {
-          if (parentDeviceKey == "mapper") {
+          if (parentDeviceKey === "mapper") {
             continue;
           }
           for (let [deviceName, deviceCriteria] of Object.entries(
             parentDevice
           )) {
             for (let [settingKey, setting] of Object.entries(deviceCriteria)) {
-              if (settingKey == "mapper") {
+              if (settingKey === "mapper") {
                 continue;
               }
               let dtTokens = setting["device_topic"].split("/");
@@ -379,10 +378,8 @@ export default function MainConfigForm(props) {
           </Typography>
           <Grid container spacing={0}>
             <Grid item xs={10}>
-              {/* <FormControl> */}
                 <TextField
                   id="demandFormulaInput"
-                  // name={OPERATION}
                   label="Operation"
                   type="string"
                   value={state.formula}
@@ -394,10 +391,9 @@ export default function MainConfigForm(props) {
                   handleClose={() => setOpenModal(false)}
                   operationalArguments={points}
                   formula={state.formula}
-                  value={state.formula}
                   handleOperationChange={handleOperationChange}
+                  extraButtons={false}
                 />
-              {/* </FormControl> */}
             </Grid>
             <Grid xs={2}>
               <IconButton

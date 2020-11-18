@@ -5,7 +5,7 @@ export const PrimaryButton = styled(button)`
     color: ${(props) => (props.color ? props.color : "white")};
     border: solid;
     border-width: 1px;
-    background-color: ${(props) => (props.backgroundColor ? props.backgroundColor : "#34593b")};
+    background-color: ${(props) => (props.backgroundcolor ? props.backgroundcolor : "#34593b")};
     :hover {
         background-color: black;
     }
@@ -14,7 +14,7 @@ export const PrimaryButton = styled(button)`
         background-color: gray;
     }
     display: ${(props) => (props.display ? props.display : null)};
-    margin-top: ${(props) => (props.marginTop ? props.marginTop : "inherit")}
+    margin-top: ${(props) => (props.margintop ? props.margintop : "inherit")}
 `
 
 export const SecondaryButton = styled(button)`

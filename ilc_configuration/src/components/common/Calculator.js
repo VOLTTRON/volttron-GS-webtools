@@ -13,7 +13,6 @@ import { darkModeContext } from "../../context/darkModeContext";
 export default function DemandFormula(props) {
     const { darkMode } = useContext(darkModeContext);
     let {configuration, setConfiguration} = useContext(MasterDriverContext);
-    let {clusterFocus} = useContext(ClusterContext);
     const savePathArray = props.savePath;
     let operationPath = null;
     let formulaStringValue = null;
@@ -26,6 +25,7 @@ export default function DemandFormula(props) {
         const mainConfigPath = configuration[savePathArray[0]][savePathArray[1]][savePathArray[2]]
         formulaStringValue = mainConfigPath[OPERATION]
     }
+    console.log(`From calculator: ${savePathArray}`)
 
     const [pointValue, setPointValue] = useState("");
     const [formulaString, setFormulaString] = useState(formulaStringValue);
@@ -216,7 +216,7 @@ export default function DemandFormula(props) {
                                             onChange={handlePointChange}>
                                             {props.points.map((point, index) => {
                                                 return (
-                                                    <MenuItem value={point}>{point}</MenuItem>
+                                                    <MenuItem key={index} value={point}>{point}</MenuItem>
                                                     )})}
                                         </StyledPointSelect>
                                 </Grid>

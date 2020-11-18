@@ -109,13 +109,15 @@ const FloatingCalculator = (props) => {
     operationalArguments,
     formula,
     handleOperationChange,
+    extraButtons,
+    curtailed = false,
   } = props;
   const [displayFormula, setDisplayFormula] = useState(
     formatStringFormulaToArray(formula)
   );
 
   // Handle button presses
-  const buttonPress = (value, type) => {
+  const buttonPress = (value, type, curtailedType = null) => {
     let displayFormulaCopy = [...displayFormula];
     const lastValue = displayFormulaCopy[displayFormulaCopy.length - 1];
     if (lastValue && lastValue.type === "int" && type === "int") {
@@ -123,7 +125,16 @@ const FloatingCalculator = (props) => {
         displayFormulaCopy.length - 1
       ].title = `${lastValue.title}${value}`;
     } else {
-      displayFormulaCopy.push({ title: value, type });
+      if (curtailedType !== null){
+        if (curtailedType === "always")
+        displayFormulaCopy.push({ title: `${value}[always]`, type });
+        else {
+          displayFormulaCopy.push({ title: `${value}[nc]`, type });
+        }
+      } else {
+        displayFormulaCopy.push({ title: value, type });
+      }
+      
     }
     setDisplayFormula(displayFormulaCopy);
   };
@@ -173,14 +184,18 @@ const FloatingCalculator = (props) => {
     );
   };
 
-  const operationalArgs = operationalArguments.map((arg) => {
+  let operationalArgsAlways = null;
+
+  const operationalArgs = operationalArguments.map((arg, index) => {
     return (
-      <Grid container item xs={12} justify="center">
+      <Grid container item xs={12} key={index} justify="center">
         <Grid item style={{ paddingTop: "5px" }}>
           <Button
             variant="contained"
             size="small"
-            onClick={() => buttonPress(arg, "arg")}
+            onClick={() =>
+              buttonPress(arg, "arg", curtailed ? "curtailed" : null)
+            }
             style={{
               textTransform: "none",
               fontSize: "10px",
@@ -193,6 +208,31 @@ const FloatingCalculator = (props) => {
       </Grid>
     );
   });
+
+  if (curtailed) {
+    operationalArgsAlways = operationalArguments.map((arg, index) => {
+      return (
+        <Grid container item xs={12} key={index} justify="center">
+          <Grid item style={{ paddingTop: "5px" }}>
+            <Button
+              variant="contained"
+              size="small"
+              onClick={() =>
+                buttonPress(arg, "arg", curtailed ? "always" : null)
+              }
+              style={{
+                textTransform: "none",
+                fontSize: "10px",
+                minWidth: "220px",
+              }}
+            >
+              {arg}
+            </Button>
+          </Grid>
+        </Grid>
+      );
+    });
+  }
 
   const buttonConfigurations = [
     [
@@ -240,6 +280,21 @@ const FloatingCalculator = (props) => {
     ],
   ];
 
+  if (extraButtons === true) {
+    buttonConfigurations.push([
+      [buttonPress, "==", "==", "op"],
+      [buttonPress, ">", ">", "op"],
+      [buttonPress, "<", "<", "op"],
+      [buttonPress, "<=", "<=", "op"],
+      [buttonPress, ">=", ">=", "op"],
+    ]);
+    buttonConfigurations.push([
+      [buttonPress, "AND", "AND", "op"],
+      [buttonPress, "OR", "OR", "op"],
+      [buttonPress, "NOT", "NOT", "op"],
+    ]);
+  }
+
   const deleteChip = (index) => {
     let displayFormulaCopy = [...displayFormula];
     if (
@@ -260,8 +315,8 @@ const FloatingCalculator = (props) => {
   const chipWrapper = displayFormula.map((chip, index) => {
     return (
       <Chip
-        // variant={chip.type === "op" ? "outlined" : "default"}
-        variant={"outlined"}
+      index={index}
+      variant={"outlined"}
         label={chip.title}
         color={
           chip.type === "op"
@@ -278,9 +333,9 @@ const FloatingCalculator = (props) => {
   });
 
   const keypad = (
-    <Grid container xs={12} justify="center">
-      {buttonConfigurations.map((rowConfigs) => {
-        return <GridRow buttonConfig={rowConfigs} />;
+    <Grid container justify="center">
+      {buttonConfigurations.map((rowConfigs, index) => {
+        return <GridRow index={index} buttonConfig={rowConfigs} />;
       })}
     </Grid>
   );
@@ -288,17 +343,25 @@ const FloatingCalculator = (props) => {
   const saveForumla = () => {
     let forumlaString = "";
     let argArray = [];
+    let alwaysArray = [];
+    let curtailedArray = [];
     for (let form of displayFormula) {
       if (forumlaString === "") {
         forumlaString = form.title;
       } else {
         forumlaString = `${forumlaString} ${form.title}`;
       }
-      if(form.type === "arg" && argArray.indexOf(form.title) === -1){
+      if (form.type === "arg" && argArray.indexOf(form.title) === -1) {
+        if (curtailed && form.title.indexOf("[nc]") > -1){
+          curtailedArray.push(form.title.slice(0,-4))
+        }
+        if (curtailed && form.title.indexOf("[always]") > -1){
+          alwaysArray.push(form.title.slice(0,-8))
+        }
         argArray.push(form.title);
       }
     }
-    handleOperationChange(forumlaString, argArray); //TODO: Operation args
+    handleOperationChange(forumlaString, argArray, alwaysArray, curtailedArray);
     handleClose();
   };
 
@@ -314,7 +377,7 @@ const FloatingCalculator = (props) => {
         <DialogTitle id="alert-dialog-title">{"Edit Formula"}</DialogTitle>
         <DialogContent>
           <StyledFormulaDiv>{chipWrapper}</StyledFormulaDiv>
-          
+
           <Grid container spacing={0}>
             <Grid item xs={7}>
               <Typography style={{ textAlign: "center" }}>
@@ -324,7 +387,22 @@ const FloatingCalculator = (props) => {
             </Grid>
             <Grid item xs={5}>
               <Typography style={{ textAlign: "center" }}>Arguments</Typography>
+              {curtailed ? (
+                <Typography style={{ textAlign: "center", fontSize: ".75rem" }}>
+                  Always
+                </Typography>
+              ) : null}
               {operationalArgs}
+              {curtailed ? (
+                <>
+                  <Typography
+                    style={{ textAlign: "center", fontSize: ".75rem" }}
+                  >
+                    Not Curtailed
+                  </Typography>
+                  {operationalArgsAlways}
+                </>
+              ) : null}
             </Grid>
           </Grid>
         </DialogContent>
