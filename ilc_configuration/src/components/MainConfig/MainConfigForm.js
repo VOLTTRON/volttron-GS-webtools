@@ -83,6 +83,8 @@ export default function MainConfigForm(props) {
   const handleOperationChange = (
     operation,
     operationArgs,
+    alwaysArray,
+    curtailedArray,
     newConfiguration = clone(configuration)
   ) => {
     
@@ -406,13 +408,6 @@ export default function MainConfigForm(props) {
               </IconButton>
             </Grid>
           </Grid>
-          {/* {state.calcVisible ? (
-            <Calculator
-              points={points}
-              savePath={["config", "power_meter", "demand_formula"]}
-              mainConfiguration={true}
-            />
-          ) : null} */}
         </TreeItem>
       </TreeView>
       <FormControl>

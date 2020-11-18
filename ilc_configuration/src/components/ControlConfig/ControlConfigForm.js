@@ -75,8 +75,11 @@ export default function ControlConfigForm(props) {
   const handleCurtailCalculatorChange = (
     forumla,
     formulaArgs,
+    alwaysArray,
+    curtailedArray,
     newConfiguration = clone(configuration)
   ) => {
+    debugger;
     newConfiguration[`${clusterFocus}${_CONTROL}`][props.deviceName][
       props.deviceName
     ]["device_status"][props.setting][OPERATION] = forumla;
@@ -90,6 +93,8 @@ export default function ControlConfigForm(props) {
   const handleLoadCalculatorChange = (
     forumla,
     formulaArgs,
+    alwaysArray,
+    curtailedArray,
     newConfiguration = clone(configuration)
   ) => {
     newConfiguration[`${clusterFocus}${_CONTROL}`][props.deviceName][
@@ -300,24 +305,6 @@ export default function ControlConfigForm(props) {
               />
             </FormControl>
           </>
-        );
-      case "equation":
-        return (
-          <div>
-            <h1>In equation</h1>
-
-            <Calculator
-              points={points}
-              savePath={[
-                `${clusterFocus}${_CONTROL}`,
-                props.deviceName,
-                props.deviceName,
-                `${props.setting}_setting`,
-                "equation",
-              ]}
-              mainConfiguration={false}
-            />
-          </div>
         );
       default:
         return null;
