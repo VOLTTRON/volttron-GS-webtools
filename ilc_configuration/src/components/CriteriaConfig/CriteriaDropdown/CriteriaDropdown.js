@@ -39,15 +39,13 @@ export default function CriteriaDropdown(props) {
 
   const { clusterFocus } = useContext(ClusterContext);
   const [calculatorModalOpen, setCalculatorModalOpen] = useState(false);
-  const [calculatorFormula, setCalculatorFormula] = useState(
-    configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
-      propsSetting
-    ][criteria["text"]]
-      ? configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
-          propsSetting
-        ][criteria["text"]][OPERATION]
-      : ""
-  );
+  const calculatorFormula =  configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
+    propsSetting
+  ][criteria["text"]]
+    ? configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
+        propsSetting
+      ][criteria["text"]][OPERATION]
+    : ""
 
   /**
    * Save formula from floating calculator
@@ -80,8 +78,8 @@ export default function CriteriaDropdown(props) {
     };
 
     setConfiguration(clonedConfig);
-    setCalculatorFormula(formula);
   };
+
 
   /**
    * Render component based on settingConfig[criteriaName]["operation_type" 

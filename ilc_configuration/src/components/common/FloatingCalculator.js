@@ -315,7 +315,7 @@ const FloatingCalculator = (props) => {
   const chipWrapper = displayFormula.map((chip, index) => {
     return (
       <Chip
-      index={index}
+      key={index}
       variant={"outlined"}
         label={chip.title}
         color={
@@ -335,7 +335,7 @@ const FloatingCalculator = (props) => {
   const keypad = (
     <Grid container justify="center">
       {buttonConfigurations.map((rowConfigs, index) => {
-        return <GridRow index={index} buttonConfig={rowConfigs} />;
+        return <GridRow key={index} buttonConfig={rowConfigs} />;
       })}
     </Grid>
   );

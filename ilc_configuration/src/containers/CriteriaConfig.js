@@ -155,7 +155,7 @@ export default function CriteriaConfig(props) {
                         style={state.addCriteriaDevice ? {} : {display: 'none'}}
                     >
                         <option aria-label="None" value="" />
-                        {devices.map(device => {return <option value={device["device_name"]}>{device["device_name"]}</option>})}
+                        {devices.map((device, index) => {return <option key={index} value={device["device_name"]}>{device["device_name"]}</option>})}
                     </NativeSelect>
                 </FormControl>
                 <PrimaryButton

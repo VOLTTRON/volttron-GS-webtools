@@ -39,16 +39,8 @@ export default function MapperEditor (props){
     const createMapKeys = () => {
         let mapper = configuration[`${clusterFocus}${_CRITERIA}`][MAPPER];
         let mapKeys = [];
-        const ulStyle = {
-            display: 'flex',
-            justifyContent: 'left',
-            flexWrap: 'wrap',
-            listStyle: 'none',
-            padding: '0.5rem',
-            margin: 0,
-          }
         for (const [mapKeyName, mapKeyObj] of Object.entries(mapper)){
-            mapKeys.push(<MapKey mapKeyObj = {mapKeyObj} mapKeyName={mapKeyName}/>)
+            mapKeys.push(<MapKey key={mapKeyName} mapKeyObj = {mapKeyObj} mapKeyName={mapKeyName}/>)
         }
         return mapKeys;
     }

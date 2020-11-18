@@ -164,7 +164,7 @@ export default function CriteriaConfigForm(props) {
           {Object.entries(configuration[`${clusterFocus}${_CRITERIA}`]).map(
             (deviceObj) => {
               const deviceName = deviceObj[0];
-              if (!(deviceName === "mapper" || deviceName == thisDevice)) {
+              if (!(deviceName === "mapper" || deviceName === thisDevice)) {
                 return (
                   <option key={deviceName} value={deviceName}>
                     {deviceName}
@@ -233,9 +233,10 @@ export default function CriteriaConfigForm(props) {
         props.setting
       ];
     let criteriaArray = configuration["criteria"][clusterFocus].map(
-      (criteria) => {
+      (criteria, index) => {
         return (
           <CriteriaDropdown
+            key={index}
             criteria={criteria}
             setting={setting}
             propsSetting={props.setting}

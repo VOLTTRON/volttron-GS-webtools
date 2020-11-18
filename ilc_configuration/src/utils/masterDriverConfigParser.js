@@ -2,7 +2,6 @@ import * as CSV from 'csv-string';
 
 export function masterDriverConfigParser () {
     const masterDriverConfig = JSON.parse(localStorage.getItem('ilc-config-master-driver-config'));
-    // console.log(masterDriverConfig)
     // parse master driver config object
     let parsedMDC = {
         "campuses": [],
@@ -36,10 +35,9 @@ export function masterDriverConfigParser () {
             }
         } else if (key.includes('registry_configs')) {
             // if registry, check if csv and load into object
-            if (masterDriverConfig[key].type == 'csv'){
+            if (masterDriverConfig[key].type === 'csv'){
                 const registryArray = CSV.parse(masterDriverConfig[key].data)
                 registries[key] = registryArray;
-                // registryArray.forEach(array => console.log(array))
             }
         }
     }

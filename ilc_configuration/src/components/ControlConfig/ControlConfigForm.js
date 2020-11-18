@@ -23,6 +23,7 @@ import { clone } from "../../utils/clone";
 import { TreeView, TreeItem } from "../common/_styledTree";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import Calculator from "../common/Calculator"
 
 export default function ControlConfigForm(props) {
   const { darkMode } = useContext(darkModeContext);
@@ -46,8 +47,6 @@ export default function ControlConfigForm(props) {
         ][`${props.setting}_setting`]["load"][OPERATION]
       : null
   );
-  console.log(`Load calculator formula: ${clusterFocus}${_CONTROL} ${props.deviceName} ${props.setting}_setting load`)
-
 
   const [loadCalculatorFormulaArgs, setLoadCalculatorFormulaArgs] = useState(
     configuration[`${clusterFocus}${_CONTROL}`][props.deviceName][
@@ -307,7 +306,7 @@ export default function ControlConfigForm(props) {
           <div>
             <h1>In equation</h1>
 
-            {/* <Calculator
+            <Calculator
               points={points}
               savePath={[
                 `${clusterFocus}${_CONTROL}`,
@@ -317,7 +316,7 @@ export default function ControlConfigForm(props) {
                 "equation",
               ]}
               mainConfiguration={false}
-            /> */}
+            />
           </div>
         );
       default:
