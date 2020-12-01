@@ -23,7 +23,6 @@ import { clone } from "../../utils/clone";
 import { TreeView, TreeItem } from "../common/_styledTree";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
-import Calculator from "../common/Calculator"
 
 export default function ControlConfigForm(props) {
   const { darkMode } = useContext(darkModeContext);
@@ -245,8 +244,8 @@ export default function ControlConfigForm(props) {
             }}
           >
             <option aria-label="None" value="" />
-            {points.map((point) => {
-              return <option value={point}>{point}</option>;
+            {points.map((point, index) => {
+              return <option key={index} value={point}>{point}</option>;
             })}
           </NativeSelect>
         </FormControl>
@@ -357,8 +356,8 @@ export default function ControlConfigForm(props) {
             }}
           >
             <option aria-label="None" value="" />
-            {controlMethods.map((method) => {
-              return <option value={method}>{method}</option>;
+            {controlMethods.map((method, index) => {
+              return <option key={index} value={method}>{method}</option>;
             })}
           </NativeSelect>
         </FormControl>
@@ -399,7 +398,7 @@ export default function ControlConfigForm(props) {
                 </Grid>
                 <Grid item xs={2}>
                   <IconButton
-                    style={{ paddingTop: "28px" }}
+                  style={{ marginTop: "14px" }}
                     onClick={() => {
                       setLoadCalculatorOpenModal(true);
                     }}
@@ -451,7 +450,7 @@ export default function ControlConfigForm(props) {
             </Grid>
             <Grid item xs={2}>
               <IconButton
-                style={{ paddingTop: "28px" }}
+              style={{ marginTop: "14px" }}
                 onClick={() => {
                   setCurtailCalculatorOpenModal(true);
                 }}

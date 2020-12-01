@@ -92,7 +92,7 @@ export default function MainConfigForm(props) {
     if(!newConfiguration[CONFIG][POWER_METER][DEMAND_FORMULA]){
       newConfiguration[CONFIG][POWER_METER][DEMAND_FORMULA] = {
         operation: "",
-        operationArgs: [],
+        operation_args: [],
       };
     }
     newConfiguration[CONFIG][POWER_METER][DEMAND_FORMULA][
@@ -281,7 +281,7 @@ export default function MainConfigForm(props) {
     if (!calcVisible) {
       newConfiguration[CONFIG][POWER_METER][DEMAND_FORMULA] = {
         operation: "",
-        operationArgs: [],
+        operation_args: [],
       };
     } else {
       delete newConfiguration[CONFIG][POWER_METER][DEMAND_FORMULA];
@@ -399,7 +399,7 @@ export default function MainConfigForm(props) {
             </Grid>
             <Grid xs={2}>
               <IconButton
-                style={{ paddingTop: "28px" }}
+                style={{ marginTop: "14px" }}
                 onClick={() => {
                   setOpenModal(true);
                 }}

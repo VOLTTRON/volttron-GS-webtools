@@ -112,7 +112,7 @@ export default function CriteriaDropdown(props) {
                   </Grid>
                   <Grid item xs={2}>
                     <IconButton
-                      style={{ paddingTop: "28px" }}
+                    style={{ marginTop: "14px" }}
                       onClick={() => {
                         setCalculatorModalOpen(true);
                       }}

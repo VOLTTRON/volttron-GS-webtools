@@ -65,12 +65,15 @@ const FloatingCalculator = (props) => {
             previous = part;
           }
         } else {
+          if (previous !== null) {
           displayArray[index] = {
             title: previous,
             type: argumentType(previous),
           };
-          previous = part;
           index++;
+        }
+          previous = part;
+          
         }
       } else {
         // catch first iteration
@@ -126,11 +129,7 @@ const FloatingCalculator = (props) => {
       ].title = `${lastValue.title}${value}`;
     } else {
       if (curtailedType !== null){
-        if (curtailedType === "always")
-        displayFormulaCopy.push({ title: `${value}[always]`, type });
-        else {
-          displayFormulaCopy.push({ title: `${value}[nc]`, type });
-        }
+        displayFormulaCopy.push({ title: `${value}`, type });
       } else {
         displayFormulaCopy.push({ title: value, type });
       }
@@ -172,7 +171,7 @@ const FloatingCalculator = (props) => {
             <Grid item key={conf[1]}>
               <Button
                 variant="contained"
-                onClick={(e) => conf[0](conf[1], conf[3])}
+                onClick={() => conf[0](conf[1], conf[3])}
                 disabled={conf[4]}
               >
                 {conf[2]}
@@ -369,7 +368,6 @@ const FloatingCalculator = (props) => {
     <Modal open={open} disableBackdropClick>
       <Dialog
         open={open}
-        // onClose={handleClose}
         aria-labelledby="alert-dialog-title"
         aria-describedby="alert-dialog-description"
         disableBackdropClick
