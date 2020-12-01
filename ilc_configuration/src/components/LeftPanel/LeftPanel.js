@@ -31,7 +31,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export default function LeftPanel(props) {
-    const [open, setOpen] = useState(true);
     const classes = useStyles();
     let {configuration, setConfiguration} = useContext(MasterDriverContext);
     let {clusterFocus, setClusterFocus} = useContext(ClusterContext);
@@ -111,14 +110,14 @@ export default function LeftPanel(props) {
           defaultCollapseIcon={<ArrowDropDownIcon />}
           defaultExpandIcon={<ArrowRightIcon />}
           defaultExpanded={["1"]}>
-            <TreeItem nodeId="1" label="Device Clusters" darkMode={darkMode}>
+            <TreeItem index="1" nodeId="1" label="Device Clusters" darkMode={darkMode}>
               {configuration["config"]["cluster"].map(cluster => {
                 nodeId = nodeId + 4;
                 return (
-                  <TreeItem nodeId={`${nodeId + 1}`} label={cluster["cluster_name"]} darkMode={darkMode}>
+                  <TreeItem key={`${nodeId + 1}`} nodeId={`${nodeId + 1}`} label={cluster["cluster_name"]} darkMode={darkMode}>
                     <TreeItem nodeId={`${nodeId + 2}`} label="Pairwise Configuration" onClick={() => {return navigateToCluster("pairwise", cluster["cluster_name"])}} darkMode={darkMode}/>
                     <TreeItem nodeId={`${nodeId + 3}`} label="Criteria Configuration" onClick={() => {return navigateToCluster("criteria", cluster["cluster_name"])}} darkMode={darkMode}/>
-                    <TreeItem nodeId={`${nodeId + 4}`} label="Control Configuration" onClick={() => {return navigateToCluster("control", cluster["cluster_name"])}} darkMode={darkMode}/>
+                    <TreeItem  nodeId={`${nodeId + 4}`} label="Control Configuration" onClick={() => {return navigateToCluster("control", cluster["cluster_name"])}} darkMode={darkMode}/>
                     <Button style={{"color":"red"}} onClick={e => removeCluster(e, cluster["cluster_name"])} darkMode={darkMode}>Remove Cluster</Button>
                   </TreeItem>
                 )

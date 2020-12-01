@@ -1,4 +1,4 @@
-import React, {useContext, useState, useEffect} from 'react';
+import React, {useContext, useState} from 'react';
 import { FormWrapper, FormControl, TreeView, TreeItem } from './_styledCriteriaConfig'
 import { SmallHeader, TinyHeader } from '../components/common/_styledHeader'
 import { PrimaryButton } from '../components/common/_styledButton'
@@ -7,7 +7,7 @@ import MasterDriverContext from '../context/masterDriverContext';
 import ClusterContext from '../context/clusterContext'
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
-import { InputLabel, Select, Alert } from '@material-ui/core'
+import { InputLabel, Select } from '@material-ui/core'
 import { _CONTROL } from '../constants/strings'
 import { clone } from '../utils/clone'
 import { darkModeContext } from "../context/darkModeContext";
@@ -108,7 +108,7 @@ export default function ControlConfig(props) {
                                 id: 'copyFrom'
                             }}
                         >
-                            {Object.keys(configuration[`${clusterFocus}${_CONTROL}`]).map(deviceName => {return <option value={deviceName}>{deviceName}</option>})}
+                            {Object.keys(configuration[`${clusterFocus}${_CONTROL}`]).map((deviceName, index) => {return <option key={index} value={deviceName}>{deviceName}</option>})}
                         </Select>
                     </FormControl>
                     <FormControl >
@@ -124,11 +124,11 @@ export default function ControlConfig(props) {
                         >
                             <option aria-label="None" value="" />
                             {devices.length > 2 ? <option value={"all"}>{"All"}</option> : null}
-                            {Object.keys(configuration[`${clusterFocus}${_CONTROL}`]).map(deviceName => { 
+                            {Object.keys(configuration[`${clusterFocus}${_CONTROL}`]).map((deviceName, index) => { 
                                 if(copyFrom === deviceName){
                                     return(null)
                                 }
-                                return  <option value={deviceName}>{deviceName}</option>})}
+                                return  <option key={index} value={deviceName}>{deviceName}</option>})}
                         </Select>
                     </FormControl>
                     <PrimaryButton
