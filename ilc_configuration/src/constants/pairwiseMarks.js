@@ -76,24 +76,3 @@ export const marks = [
     label: "10",
   },
 ];
-
-export const indexToFraction = {
-  2: 1 / 2,
-  3: 1 / 3,
-  4: 1 / 4,
-  5: 1 / 5,
-  6: 1 / 6,
-  7: 1 / 7,
-  8: 1 / 8,
-  9: 1 / 9,
-  10: 1 / 10,
-};
-
-export const decimalToIndex = (decimal) => {
-  for (let i = 2; i <= 10; i++) {
-    if (decimal > indexToFraction[i] - 0.001) {
-      return i;
-    }
-  }
-  return -1;
-};
