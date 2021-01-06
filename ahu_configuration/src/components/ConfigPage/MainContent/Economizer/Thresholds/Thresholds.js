@@ -10,6 +10,7 @@ import {
   Input,
   InputAdornment,
   Slider,
+  FormLabel
 } from "@material-ui/core";
 import { EconThresholdsContext } from "../../../../../context/EconThresholdsContext/EconThresholdsContext";
 import ToolTipInfo from "../../Util/ToolTipInfo";
@@ -17,6 +18,10 @@ import ToolTipInfo from "../../Util/ToolTipInfo";
 const StyledTypography = styled(Typography)`
   display: flex;
   font-size: 12px;
+`;
+
+const StyledFormControl = styled(FormControl)`
+  min-width: 50%;
 `;
 
 const Threshholds = (props) => {
@@ -547,7 +552,13 @@ const Threshholds = (props) => {
   return (
     <>
       <div>
-        <FormControl component="fieldset">
+      <StyledFormControl component="fieldset">
+          <FormLabel
+            style={{ color: "#0c9a6f", display: "flex", fontSize: "12px" }}
+          >
+            SENSITIVITY
+            <ToolTipInfo fieldName="sensitivity" />
+          </FormLabel>
           <RadioGroup
             name="custom"
             value={thresholds.custom}
@@ -557,17 +568,17 @@ const Threshholds = (props) => {
             <FormControlLabel
               value={false}
               control={<Radio color="primary" />}
-              label="Use Default thresholds (recommended)"
+              label="Default(recommended)"
               labelPlacement="end"
             />
             <FormControlLabel
               value={true}
               control={<Radio color="primary" />}
-              label="Customize threshold parameters"
+              label="Custom"
               labelPlacement="end"
             />
           </RadioGroup>
-        </FormControl>
+        </StyledFormControl>
       </div>
       {content}
     </>

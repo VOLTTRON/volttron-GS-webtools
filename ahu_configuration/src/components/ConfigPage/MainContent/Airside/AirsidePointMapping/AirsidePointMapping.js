@@ -146,7 +146,7 @@ const AirSidePointMapping = (props) => {
               handlePointMappingChange={handlePointMappingChange}
               handleRemoveButtonClick={handleRemoveButtonClick}
               pointMapping={pointMapping}
-              parentSelectItems={parentSelectItems}
+              parentSelectItems={subDeviceSelectItems}
             />
           );
         })}
@@ -175,7 +175,7 @@ const AirSidePointMapping = (props) => {
               handlePointMappingChange={handlePointMappingChange}
               handleRemoveButtonClick={handleRemoveButtonClick}
               pointMapping={pointMapping}
-              parentSelectItems={parentSelectItems}
+              parentSelectItems={subDeviceSelectItems}
             />
           );
         })}
