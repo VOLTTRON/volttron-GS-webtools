@@ -154,7 +154,7 @@ const setEconContexts = (
   // Thresholds
   try {
     setThresholds({
-      custom: fileContentObject.arguments.custom,
+      custom: fileContentObject.arguments.sensitivity,
       low_supply_fan_threshold:
         fileContentObject.arguments.low_supply_fan_threshold,
       mat_low_threshold: fileContentObject.arguments.mat_low_threshold,
