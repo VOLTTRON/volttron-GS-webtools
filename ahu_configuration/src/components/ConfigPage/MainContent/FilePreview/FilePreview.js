@@ -178,7 +178,7 @@ const FilePreview = (props) => {
         "rated_cfm":  ${argument.rated_cfm ? argument.rated_cfm : ""},
         "eer":  ${argument.eer ? argument.eer : ""},
         "temp_band": ${argument.temp_band ? argument.temp_band : ""},`;
-    const variableArgs2 = `        "custom": ${thresholds.custom},
+    const variableArgs2 = `        "sensitivity": "${thresholds.custom}",
         "low_supply_fan_threshold": ${
           thresholds.low_supply_fan_threshold
             ? thresholds.low_supply_fan_threshold

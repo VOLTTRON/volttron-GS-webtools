@@ -64,7 +64,8 @@ const Threshholds = (props) => {
   };
 
   const handleRadioChange = (event) => {
-    if (event.target.value === "false") {
+    debugger;
+    if (event.target.value === "default") {
       setThresholds({
         low_supply_fan_threshold: 20.0,
         mat_low_threshold: 50.0,
@@ -77,19 +78,19 @@ const Threshholds = (props) => {
         temp_difference_threshold: 4.0,
         oaf_temperature_threshold: 5.0,
         cooling_enabled_threshold: 5.0,
-        custom: false,
+        custom: "default",
       });
     } else {
       setThresholds({
         ...thresholds,
-        [event.target.name]: true,
+        [event.target.name]: "custom",
       });
     }
   };
 
   let content = null;
 
-  if (thresholds.custom && thresholds.custom === true) {
+  if (thresholds.custom && thresholds.custom === "custom") {
     content = (
       <div>
         <Grid container spacing={3}>
@@ -566,13 +567,13 @@ const Threshholds = (props) => {
             row
           >
             <FormControlLabel
-              value={false}
+              value="default"
               control={<Radio color="primary" />}
               label="Default(recommended)"
               labelPlacement="end"
             />
             <FormControlLabel
-              value={true}
+              value="custom"
               control={<Radio color="primary" />}
               label="Custom"
               labelPlacement="end"
