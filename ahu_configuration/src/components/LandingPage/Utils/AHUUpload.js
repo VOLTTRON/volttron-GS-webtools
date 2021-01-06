@@ -170,7 +170,6 @@ const setEconContexts = (
         fileContentObject.arguments.oaf_temperature_threshold,
       cooling_enabled_threshold:
         fileContentObject.arguments.cooling_enabled_threshold,
-     
     });
   } catch (e) {
     error = "File is not in JSON format. Check the thresholds part of file";
@@ -258,6 +257,7 @@ export const handleAHUUpload = (
 
     // Set drop down options for zone_reheat & zone_damper on airside
     let subdevice = null;
+
     if (fileContentObject.device.unit && Object.keys(fileContentObject.device.unit)[0]) {
       subdevice = fileContentObject.device.unit[Object.keys(fileContentObject.device.unit)[0]].subdevices
       dropDown(

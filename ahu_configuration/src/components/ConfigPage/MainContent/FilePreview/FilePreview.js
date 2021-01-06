@@ -50,7 +50,7 @@ const FilePreview = (props) => {
     let subDeviceCount = 0;
     if (campus && building && device) {
       campusBuildingDeviceContext.device[0].forEach((device) => {
-        content += `   
+        content += `
             "${device}":{
                 "subdevices":[`;
         if (
@@ -259,8 +259,8 @@ const FilePreview = (props) => {
     const econArgumentsSection = `   "arguments": {
         "point_mapping": {
             "fan_status": [${
-              airPointMapping.supply_fan_status
-                ? airPointMapping.supply_fan_status.map((item) => {
+              airPointMapping.fan_status
+                ? airPointMapping.fan_status.map((item) => {
                     return item == "" ? `"" ` : `"${item}" `;
                   })
                 : ""
@@ -325,7 +325,7 @@ const FilePreview = (props) => {
         },
         "sat_retuning": ${
           airsideThresholds.sat_retuning ? airsideThresholds.sat_retuning : ""
-        }, 
+        },
         "stcpr_retuning": ${
           airsideThresholds.stcpr_retuning
             ? airsideThresholds.stcpr_retuning
@@ -364,11 +364,11 @@ const FilePreview = (props) => {
         ? airsideArgument.sat_stpt_deviation_thr
         : ""
     },
-        "stcpr_stpt_deviation_thr": "${
+        "stcpr_stpt_deviation_thr": ${
           airsideThresholds.stcpr_stpt_deviation_thr
             ? airsideThresholds.stcpr_stpt_deviation_thr
             : ""
-        }",`;
+        },`;
     const variableArgs3 = `        "low_sf_thr": ${
       airsideThresholds.low_sf_thr ? airsideThresholds.low_sf_thr : ""
     },
