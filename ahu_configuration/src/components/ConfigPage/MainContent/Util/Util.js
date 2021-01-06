@@ -106,7 +106,7 @@ const getEconomizerJsonString = (
         "rated_cfm": ${argument.rated_cfm ? argument.rated_cfm : ""},
         "eer": ${argument.eer ? argument.eer : ""},
         "temp_band": ${argument.temp_band ? argument.temp_band : ""},
-        "custom": ${thresholds.custom},
+        "sensitivity": "${thresholds.custom}",
         "low_supply_fan_threshold": ${
           thresholds.low_supply_fan_threshold
             ? thresholds.low_supply_fan_threshold
