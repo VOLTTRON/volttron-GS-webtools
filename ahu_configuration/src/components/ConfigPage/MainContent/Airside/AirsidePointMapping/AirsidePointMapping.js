@@ -96,6 +96,7 @@ const AirSidePointMapping = (props) => {
   let zoneReheatKey = -1;
   let zoneDamperKey = -1;
   let ductStcprKey = -1;
+  let ductStcprStpt = -1;
   let fanSpeedKey = -1;
   let saTempKey = -1;
   let satStptKey = -1;
@@ -209,6 +210,34 @@ const AirSidePointMapping = (props) => {
         })}
         <IconButton
           onClick={() => handleAddButtonClick("duct_stcpr")}
+          aria-label="add"
+          color="primary"
+        >
+          <AddIcon />
+        </IconButton>
+      </Grid>
+
+      <Grid item xs={12} style={{ minWidth: "250px" }}>
+        <InputLabel style={{ color: "#0c9a6f", display: "flex" ,fontSize: "12px"}}>
+          DUCT STATIC PRESSURE SETPOINT
+          <ToolTipInfo fieldName="duct_stcpr_stpt" />
+        </InputLabel>
+        {pointMapping.duct_stcpr_stpt.map((e) => {
+          ductStcprStpt += 1;
+          return (
+            <PointMappingDropDown
+              fieldName="duct_stcpr_stpt"
+              key={ductStcprStpt}
+              keyIndex={ductStcprStpt}
+              handlePointMappingChange={handlePointMappingChange}
+              handleRemoveButtonClick={handleRemoveButtonClick}
+              pointMapping={pointMapping}
+              parentSelectItems={parentSelectItems}
+            />
+          );
+        })}
+        <IconButton
+          onClick={() => handleAddButtonClick("duct_stcpr_stpt")}
           aria-label="add"
           color="primary"
         >
