@@ -64,7 +64,6 @@ const Threshholds = (props) => {
   };
 
   const handleRadioChange = (event) => {
-    debugger;
     if (event.target.value === "default") {
       setThresholds({
         low_supply_fan_threshold: 20.0,
