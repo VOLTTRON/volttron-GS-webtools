@@ -129,6 +129,12 @@ export default function CriteriaConfigForm(props) {
           always: [],
           nc: [],
         };
+        criteriaObj["min"] = 0;
+        criteriaObj["max"] = 0;
+        break;
+      case "mapper":
+        criteriaObj["map_key"] = "";
+        criteriaObj["dict_name"] = "";
         break;
       default:
         return null;

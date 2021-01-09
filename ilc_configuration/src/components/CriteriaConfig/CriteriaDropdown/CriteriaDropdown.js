@@ -19,6 +19,8 @@ import {
   IconButton,
   TextField,
 } from "@material-ui/core";
+import { SmallLabel } from "../../common/_styledLabel";
+import { FloatInput } from "../../common/_styledInput";
 import EditIcon from "@material-ui/icons/Edit";
 import FloatingCalculator from "../../common/FloatingCalculator";
 import { clone } from "../../../utils/clone";
@@ -39,21 +41,35 @@ export default function CriteriaDropdown(props) {
 
   const { clusterFocus } = useContext(ClusterContext);
   const [calculatorModalOpen, setCalculatorModalOpen] = useState(false);
-  const calculatorFormula =  configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
-    propsSetting
-  ][criteria["text"]]
+  const calculatorFormula = configuration[`${clusterFocus}${_CRITERIA}`][
+    propsName
+  ][propsName][propsSetting][criteria["text"]]
     ? configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
         propsSetting
       ][criteria["text"]][OPERATION]
-    : ""
+    : "";
+  const calculatorMin = configuration[`${clusterFocus}${_CRITERIA}`][
+    propsName
+  ][propsName][propsSetting][criteria["text"]]
+    ? configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
+        propsSetting
+      ][criteria["text"]]["min"]
+    : 0;
+  const calculatorMax = configuration[`${clusterFocus}${_CRITERIA}`][
+    propsName
+  ][propsName][propsSetting][criteria["text"]]
+    ? configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
+        propsSetting
+      ][criteria["text"]]["max"]
+    : 0;
 
   /**
    * Save formula from floating calculator
-   * @param {*} formula 
-   * @param {*} args 
-   * @param {*} alwaysArray 
-   * @param {*} curtailedArray 
-   * @param {*} clonedConfig 
+   * @param {*} formula
+   * @param {*} args
+   * @param {*} alwaysArray
+   * @param {*} curtailedArray
+   * @param {*} clonedConfig
    */
   const handleCalculatorOperationChange = (
     formula,
@@ -80,10 +96,16 @@ export default function CriteriaDropdown(props) {
     setConfiguration(clonedConfig);
   };
 
+  const handleFloatChange = (e, clonedConfig = clone(configuration)) => {
+    clonedConfig[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
+      propsSetting
+    ][criteria["text"]][e.target.name] = parseFloat(e.target.value);
+    setConfiguration(clonedConfig);
+  };
 
   /**
-   * Render component based on settingConfig[criteriaName]["operation_type" 
-   * @param {*} criteriaName 
+   * Render component based on settingConfig[criteriaName]["operation_type"
+   * @param {*} criteriaName
    */
   const buildCriteriaInputForms = (criteriaName) => {
     // default duplicate names for now
@@ -112,13 +134,39 @@ export default function CriteriaDropdown(props) {
                   </Grid>
                   <Grid item xs={2}>
                     <IconButton
-                    style={{ marginTop: "14px" }}
+                      style={{ marginTop: "14px" }}
                       onClick={() => {
                         setCalculatorModalOpen(true);
                       }}
                     >
                       <EditIcon />
                     </IconButton>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl>
+                      <SmallLabel>Min</SmallLabel>
+                      <FloatInput
+                        name="min"
+                        label="On Value"
+                        type="number"
+                        value={calculatorMin ? calculatorMin : 0}
+                        step="0.01"
+                        onChange={handleFloatChange}
+                      />
+                    </FormControl>
+                  </Grid>
+                  <Grid item xs={12}>
+                    <FormControl>
+                      <SmallLabel>Max</SmallLabel>
+                      <FloatInput
+                        name="max"
+                        label="Off Value"
+                        type="number"
+                        value={calculatorMax ? calculatorMax : 0}
+                        step="0.01"
+                        onChange={handleFloatChange}
+                      />
+                    </FormControl>
                   </Grid>
                 </Grid>
                 <FloatingCalculator
@@ -194,7 +242,11 @@ export default function CriteriaDropdown(props) {
           >
             <option aria-label="None" value="" />
             {operationTypes.map((type, index) => {
-              return <option key={index} value={type}>{type}</option>;
+              return (
+                <option key={index} value={type}>
+                  {type}
+                </option>
+              );
             })}
           </NativeSelect>
         </FormControl>

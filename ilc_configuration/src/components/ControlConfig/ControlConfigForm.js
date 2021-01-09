@@ -78,7 +78,6 @@ export default function ControlConfigForm(props) {
     curtailedArray,
     newConfiguration = clone(configuration)
   ) => {
-    debugger;
     newConfiguration[`${clusterFocus}${_CONTROL}`][props.deviceName][
       props.deviceName
     ]["device_status"][props.setting][OPERATION] = forumla;
