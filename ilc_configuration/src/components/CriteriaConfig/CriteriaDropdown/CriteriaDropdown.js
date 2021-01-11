@@ -53,14 +53,14 @@ export default function CriteriaDropdown(props) {
   ][propsName][propsSetting][criteria["text"]]
     ? configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
         propsSetting
-      ][criteria["text"]]["min"]
+      ][criteria["text"]]["minimum"]
     : 0;
   const calculatorMax = configuration[`${clusterFocus}${_CRITERIA}`][
     propsName
   ][propsName][propsSetting][criteria["text"]]
     ? configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
         propsSetting
-      ][criteria["text"]]["max"]
+      ][criteria["text"]]["maximum"]
     : 0;
 
   /**
@@ -144,9 +144,9 @@ export default function CriteriaDropdown(props) {
                   </Grid>
                   <Grid item xs={12}>
                     <FormControl>
-                      <SmallLabel>Min</SmallLabel>
+                      <SmallLabel>Minimum</SmallLabel>
                       <FloatInput
-                        name="min"
+                        name="minimum"
                         label="On Value"
                         type="number"
                         value={calculatorMin ? calculatorMin : 0}
@@ -157,9 +157,9 @@ export default function CriteriaDropdown(props) {
                   </Grid>
                   <Grid item xs={12}>
                     <FormControl>
-                      <SmallLabel>Max</SmallLabel>
+                      <SmallLabel>Maximum</SmallLabel>
                       <FloatInput
-                        name="max"
+                        name="maximum"
                         label="Off Value"
                         type="number"
                         value={calculatorMax ? calculatorMax : 0}
