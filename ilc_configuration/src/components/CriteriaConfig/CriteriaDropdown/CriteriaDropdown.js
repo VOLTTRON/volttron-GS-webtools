@@ -48,20 +48,23 @@ export default function CriteriaDropdown(props) {
         propsSetting
       ][criteria["text"]][OPERATION]
     : "";
-  const calculatorMin = configuration[`${clusterFocus}${_CRITERIA}`][
+  const calculatorMin = configuration[`${clusterFocus}${_CRITERIA}`][propsName][
     propsName
-  ][propsName][propsSetting][criteria["text"]]
+  ][propsSetting][criteria["text"]]
     ? configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
         propsSetting
       ][criteria["text"]]["minimum"]
     : 0;
-  const calculatorMax = configuration[`${clusterFocus}${_CRITERIA}`][
+  const calculatorMax = configuration[`${clusterFocus}${_CRITERIA}`][propsName][
     propsName
-  ][propsName][propsSetting][criteria["text"]]
+  ][propsSetting][criteria["text"]]
     ? configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
         propsSetting
       ][criteria["text"]]["maximum"]
     : 0;
+
+  const [minValue, setMinValue] = useState(calculatorMin);
+  const [maxValue, setMaxValue] = useState(calculatorMax);
 
   /**
    * Save formula from floating calculator
@@ -96,10 +99,29 @@ export default function CriteriaDropdown(props) {
     setConfiguration(clonedConfig);
   };
 
+  /**
+   * Update state of rended textbox value
+   * @param {*} e
+   * @param {*} clonedConfig
+   */
   const handleFloatChange = (e, clonedConfig = clone(configuration)) => {
+    let newValue = e.target.value;
+    if (e.target.name === "minimum") {
+      setMinValue(newValue);
+    } else {
+      setMaxValue(newValue);
+    }
+  };
+
+  /**
+   * Update config when leaving text box
+   * @param {*} e
+   * @param {*} clonedConfig
+   */
+  const handleFloatBlur = (e, clonedConfig = clone(configuration)) => {
     clonedConfig[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
       propsSetting
-    ][criteria["text"]][e.target.name] = parseFloat(e.target.value);
+    ][criteria["text"]][e.target.name] = Number(e.target.value);
     setConfiguration(clonedConfig);
   };
 
@@ -145,26 +167,28 @@ export default function CriteriaDropdown(props) {
                   <Grid item xs={12}>
                     <FormControl>
                       <SmallLabel>Minimum</SmallLabel>
-                      <FloatInput
+                      <TextField
                         name="minimum"
-                        label="On Value"
-                        type="number"
-                        value={calculatorMin ? calculatorMin : 0}
-                        step="0.01"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
                         onChange={handleFloatChange}
+                        value={minValue}
+                        onBlur={handleFloatBlur}
                       />
                     </FormControl>
                   </Grid>
                   <Grid item xs={12}>
                     <FormControl>
                       <SmallLabel>Maximum</SmallLabel>
-                      <FloatInput
+                      <TextField
                         name="maximum"
-                        label="Off Value"
-                        type="number"
-                        value={calculatorMax ? calculatorMax : 0}
-                        step="0.01"
+                        InputLabelProps={{
+                          shrink: true,
+                        }}
                         onChange={handleFloatChange}
+                        value={maxValue}
+                        onBlur={handleFloatBlur}
                       />
                     </FormControl>
                   </Grid>
