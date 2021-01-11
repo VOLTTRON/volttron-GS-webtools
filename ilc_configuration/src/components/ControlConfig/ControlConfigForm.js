@@ -25,11 +25,41 @@ import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 
 export default function ControlConfigForm(props) {
+  const { deviceName, setting } = props;
   const { darkMode } = useContext(darkModeContext);
   const { devices, configuration, setConfiguration } = useContext(
     MasterDriverContext
   );
   const { clusterFocus } = useContext(ClusterContext);
+
+  const [offset, setOffset] = useState(
+    configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
+      `${setting}_setting`
+    ]
+      ? configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
+          `${setting}_setting`
+        ]["offset"]
+      : ""
+  );
+  const [value, setValue] = useState(
+    configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
+      `${setting}_setting`
+    ]
+      ? configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
+          `${setting}_setting`
+        ]["value"]
+      : ""
+  );
+
+  const [load, setLoad] = useState(
+    configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
+      `${setting}_setting`
+    ]
+      ? configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
+          `${setting}_setting`
+        ]["load"]
+      : ""
+  );
 
   const [curtailCalculatorFormula, setCurtailCalculatorFormula] = useState(
     configuration[`${clusterFocus}${_CONTROL}`][props.deviceName][
@@ -57,7 +87,6 @@ export default function ControlConfigForm(props) {
       : []
   );
 
-  const { deviceName, setting } = props;
   const isLoadCalc =
     configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
       `${setting}_setting`
@@ -81,6 +110,7 @@ export default function ControlConfigForm(props) {
     newConfiguration[`${clusterFocus}${_CONTROL}`][props.deviceName][
       props.deviceName
     ]["device_status"][props.setting][OPERATION] = forumla;
+
     newConfiguration[`${clusterFocus}${_CONTROL}`][props.deviceName][
       props.deviceName
     ]["device_status"][props.setting][OPERATION_ARGS] = formulaArgs;
@@ -197,16 +227,28 @@ export default function ControlConfigForm(props) {
     setConfiguration(newConfiguration);
   };
 
-  const handleFloatChange = (
-    event,
-    newConfiguration = clone(configuration)
-  ) => {
-    const name = event.target.name;
-    const floatValue = parseFloat(event.target.value);
-    newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
+  const handleFloatChange = (e, newConfiguration = clone(configuration)) => {
+    const newValue = e.target.value;
+    switch (e.target.name) {
+      case "offset":
+        setOffset(newValue);
+        break;
+      case "value":
+        setValue(newValue);
+        break;
+      case "load":
+        setLoad(newValue);
+        break;
+      default:
+        break;
+    }
+  };
+
+  const handleFloatBlur = (e, clonedConfig = clone(configuration)) => {
+    clonedConfig[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
       `${setting}_setting`
-    ][name] = floatValue;
-    setConfiguration(newConfiguration);
+    ][e.target.name] = Number(e.target.value);
+    setConfiguration(clonedConfig);
   };
 
   const getPoints = (deviceName) => {
@@ -244,7 +286,11 @@ export default function ControlConfigForm(props) {
           >
             <option aria-label="None" value="" />
             {points.map((point, index) => {
-              return <option key={index} value={point}>{point}</option>;
+              return (
+                <option key={index} value={point}>
+                  {point}
+                </option>
+              );
             })}
           </NativeSelect>
         </FormControl>
@@ -263,20 +309,14 @@ export default function ControlConfigForm(props) {
           <>
             <FormControl>
               <SmallLabel darkMode={darkMode}>Offset</SmallLabel>
-              <FloatInput
-                id="controlTimeInput"
+              <TextField
                 name="offset"
-                label="Offset"
-                type="number"
-                defaultValue={0}
-                value={
-                  configuration[`${clusterFocus}${_CONTROL}`][deviceName][
-                    deviceName
-                  ][`${setting}_setting`]["offset"]
-                }
-                step="0.01"
+                InputLabelProps={{
+                  shrink: true,
+                }}
                 onChange={handleFloatChange}
-                darkMode={darkMode}
+                value={offset}
+                onBlur={handleFloatBlur}
               />
             </FormControl>
           </>
@@ -286,20 +326,14 @@ export default function ControlConfigForm(props) {
           <>
             <FormControl>
               <SmallLabel darkMode={darkMode}>Value</SmallLabel>
-              <FloatInput
-                id="controlTimeInput"
+              <TextField
                 name="value"
-                label="Value"
-                type="number"
-                defaultValue={0}
-                value={
-                  configuration[`${clusterFocus}${_CONTROL}`][deviceName][
-                    deviceName
-                  ][`${setting}_setting`]["value"]
-                }
-                step="0.01"
+                InputLabelProps={{
+                  shrink: true,
+                }}
                 onChange={handleFloatChange}
-                darkMode={darkMode}
+                value={value}
+                onBlur={handleFloatBlur}
               />
             </FormControl>
           </>
@@ -356,7 +390,11 @@ export default function ControlConfigForm(props) {
           >
             <option aria-label="None" value="" />
             {controlMethods.map((method, index) => {
-              return <option key={index} value={method}>{method}</option>;
+              return (
+                <option key={index} value={method}>
+                  {method}
+                </option>
+              );
             })}
           </NativeSelect>
         </FormControl>
@@ -367,19 +405,14 @@ export default function ControlConfigForm(props) {
           </TinyHeader>
           {loadToggle()}
           {loadConfig === "float" ? (
-            <FloatInput
-              id="controlTimeInput"
+            <TextField
               name="load"
-              label="Load"
-              type="number"
-              defaultValue={
-                configuration[`${clusterFocus}${_CONTROL}`][deviceName][
-                  deviceName
-                ][`${setting}_setting`]["load"]
-              }
-              step="0.01"
+              InputLabelProps={{
+                shrink: true,
+              }}
               onChange={handleFloatChange}
-              darkMode={darkMode}
+              value={load}
+              onBlur={handleFloatBlur}
             />
           ) : (
             <div>
@@ -397,7 +430,7 @@ export default function ControlConfigForm(props) {
                 </Grid>
                 <Grid item xs={2}>
                   <IconButton
-                  style={{ marginTop: "14px" }}
+                    style={{ marginTop: "14px" }}
                     onClick={() => {
                       setLoadCalculatorOpenModal(true);
                     }}
@@ -449,7 +482,7 @@ export default function ControlConfigForm(props) {
             </Grid>
             <Grid item xs={2}>
               <IconButton
-              style={{ marginTop: "14px" }}
+                style={{ marginTop: "14px" }}
                 onClick={() => {
                   setCurtailCalculatorOpenModal(true);
                 }}
