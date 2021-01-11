@@ -129,8 +129,8 @@ export default function CriteriaConfigForm(props) {
           always: [],
           nc: [],
         };
-        criteriaObj["min"] = 0;
-        criteriaObj["max"] = 0;
+        criteriaObj["minimum"] = 0;
+        criteriaObj["maximum"] = 0;
         break;
       case "mapper":
         criteriaObj["map_key"] = "";

@@ -66,14 +66,13 @@ const FloatingCalculator = (props) => {
           }
         } else {
           if (previous !== null) {
-          displayArray[index] = {
-            title: previous,
-            type: argumentType(previous),
-          };
-          index++;
-        }
+            displayArray[index] = {
+              title: previous,
+              type: argumentType(previous),
+            };
+            index++;
+          }
           previous = part;
-          
         }
       } else {
         // catch first iteration
@@ -128,12 +127,15 @@ const FloatingCalculator = (props) => {
         displayFormulaCopy.length - 1
       ].title = `${lastValue.title}${value}`;
     } else {
-      if (curtailedType !== null){
-        displayFormulaCopy.push({ title: `${value}`, type });
-      } else {
+      if (curtailedType === null) {
         displayFormulaCopy.push({ title: value, type });
+      } else {
+        if (curtailedType === "nc") {
+          displayFormulaCopy.push({ title: `${value}[nc]`, type });
+        } else {
+          displayFormulaCopy.push({ title: `${value}[always]`, type });
+        }
       }
-      
     }
     setDisplayFormula(displayFormulaCopy);
   };
@@ -216,9 +218,7 @@ const FloatingCalculator = (props) => {
             <Button
               variant="contained"
               size="small"
-              onClick={() =>
-                buttonPress(arg, "arg", curtailed ? "always" : null)
-              }
+              onClick={() => buttonPress(arg, "arg", "nc")}
               style={{
                 textTransform: "none",
                 fontSize: "10px",
@@ -314,8 +314,8 @@ const FloatingCalculator = (props) => {
   const chipWrapper = displayFormula.map((chip, index) => {
     return (
       <Chip
-      key={index}
-      variant={"outlined"}
+        key={index}
+        variant={"outlined"}
         label={chip.title}
         color={
           chip.type === "op"
@@ -339,28 +339,28 @@ const FloatingCalculator = (props) => {
     </Grid>
   );
 
-  const saveForumla = () => {
-    let forumlaString = "";
+  const saveFormula = () => {
+    let formulaString = "";
     let argArray = [];
     let alwaysArray = [];
     let curtailedArray = [];
     for (let form of displayFormula) {
-      if (forumlaString === "") {
-        forumlaString = form.title;
+      if (formulaString === "") {
+        formulaString = form.title;
       } else {
-        forumlaString = `${forumlaString} ${form.title}`;
+        formulaString = `${formulaString} ${form.title}`;
       }
       if (form.type === "arg" && argArray.indexOf(form.title) === -1) {
-        if (curtailed && form.title.indexOf("[nc]") > -1){
-          curtailedArray.push(form.title.slice(0,-4))
+        if (curtailed && form.title.indexOf("[nc]") > -1) {
+          curtailedArray.push(form.title.slice(0, -4));
         }
-        if (curtailed && form.title.indexOf("[always]") > -1){
-          alwaysArray.push(form.title.slice(0,-8))
+        if (curtailed && form.title.indexOf("[always]") > -1) {
+          alwaysArray.push(form.title.slice(0, -8));
         }
         argArray.push(form.title);
       }
     }
-    handleOperationChange(forumlaString, argArray, alwaysArray, curtailedArray);
+    handleOperationChange(formulaString, argArray, alwaysArray, curtailedArray);
     handleClose();
   };
 
@@ -408,7 +408,7 @@ const FloatingCalculator = (props) => {
           <Button onClick={handleClose} color="primary">
             Cancel
           </Button>
-          <Button onClick={saveForumla} color="primary" autoFocus>
+          <Button onClick={saveFormula} color="primary" autoFocus>
             Save
           </Button>
         </DialogActions>
