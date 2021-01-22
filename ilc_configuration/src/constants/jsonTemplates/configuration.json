@@ -12,7 +12,7 @@
         "control_time": 0,
         "curtailment_break": 0,
         "average_building_power_window": 0,
-        "stagger_release": false,
+        "stagger_release": true,
         "stagger_off_time": false,
         "cluster": []
     },
