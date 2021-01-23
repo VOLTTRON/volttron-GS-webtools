@@ -74,7 +74,7 @@ export default function ControlConfigForm(props) {
       ? configuration[`${clusterFocus}${_CONTROL}`][props.deviceName][
           props.deviceName
         ][`${props.setting}_setting`]["load"][OPERATION]
-      : null
+      : ""
   );
 
   const [loadCalculatorFormulaArgs, setLoadCalculatorFormulaArgs] = useState(
