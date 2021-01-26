@@ -153,6 +153,7 @@ const AirSidePointMapping = (props) => {
         })}
         <IconButton
           onClick={() => handleAddButtonClick("zone_reheat")}
+          disabled={!enableZoneReheatAndDamper}
           aria-label="add"
           color="primary"
         >
@@ -182,6 +183,7 @@ const AirSidePointMapping = (props) => {
         })}
         <IconButton
           onClick={() => handleAddButtonClick("zone_damper")}
+          disabled={!enableZoneReheatAndDamper}
           aria-label="add"
           color="primary"
         >

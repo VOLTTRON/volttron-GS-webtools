@@ -138,11 +138,11 @@ const AirsideThresholds = (props) => {
       });
       setExpandThresholds(false);
 
-      setArgument({...argument, "sat_stpt_deviation_thr": 5})
+      setArgument({ ...argument, sat_stpt_deviation_thr: 5 });
     } else {
-      setThresholds({ ...thresholds, custom: true });
       setExpandThresholds(true);
     }
+    setArgument({ ...argument, [event.target.name]: event.target.value });
   };
 
   let content = null;
@@ -173,16 +173,16 @@ const AirsideThresholds = (props) => {
               type: "number",
             }}
           />
-          </Grid>
-          <Grid item xs={12}>
-            <Slider
-              name="sat_stpt_deviation_thr"
-              value={argument.sat_stpt_deviation_thr}
-              onChange={handleArgumentSliderChange("sat_stpt_deviation_thr")}
-              min={2}
-              max={10}
-            />
-          </Grid>
+        </Grid>
+        <Grid item xs={12}>
+          <Slider
+            name="sat_stpt_deviation_thr"
+            value={argument.sat_stpt_deviation_thr}
+            onChange={handleArgumentSliderChange("sat_stpt_deviation_thr")}
+            min={2}
+            max={10}
+          />
+        </Grid>
         <Grid item xs={9}>
           <StyledTypography color="primary" gutterBottom>
             STATIC PRESSURE SETPOINT DEVIATION THRESHOLD
@@ -229,8 +229,8 @@ const AirsideThresholds = (props) => {
       <div>
         <FormControl component="fieldset">
           <RadioGroup
-            name="custom"
-            value={thresholds.custom ? "custom" : "default"}
+            name="sensitivity"
+            value={argument.sensitivity === "default" ? "default" : "custom"}
             onChange={handleDefaultRadioChange}
             row
           >
