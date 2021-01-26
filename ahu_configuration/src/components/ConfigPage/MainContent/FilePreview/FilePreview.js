@@ -315,14 +315,11 @@ const FilePreview = (props) => {
                 : ""
             }],
         },`;
-    const variableArgs1 = `        "sensitivity": "${
-      airsideArgument.sensitivity ? airsideArgument.sensitivity : ""
-    }",
-        "autocorrect_flag": ${
-          airsideArgument.autocorrect_flag
-            ? airsideArgument.autocorrect_flag
-            : false
-        },
+    const variableArgs1 = `        "autocorrect_flag": ${
+      airsideArgument.autocorrect_flag
+        ? airsideArgument.autocorrect_flag
+        : false
+    },
         "sat_retuning": ${
           airsideThresholds.sat_retuning ? airsideThresholds.sat_retuning : ""
         },
@@ -359,11 +356,14 @@ const FilePreview = (props) => {
         "warm_up_time": ${
           airsideThresholds.warm_up_time ? airsideThresholds.warm_up_time : ""
         },`;
-    const variableArgs2 = `        "sat_stpt_deviation_thr": ${
-      airsideArgument.sat_stpt_deviation_thr
-        ? airsideArgument.sat_stpt_deviation_thr
-        : ""
-    },
+    const variableArgs2 = `        "sensitivity": "${
+      airsideArgument.sensitivity ? airsideArgument.sensitivity : ""
+    }",
+        "sat_stpt_deviation_thr": ${
+          airsideArgument.sat_stpt_deviation_thr
+            ? airsideArgument.sat_stpt_deviation_thr
+            : ""
+        },
         "stcpr_stpt_deviation_thr": ${
           airsideThresholds.stcpr_stpt_deviation_thr
             ? airsideThresholds.stcpr_stpt_deviation_thr

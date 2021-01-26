@@ -340,35 +340,6 @@ const AirsideArgument = (props) => {
             <FormLabel
               style={{ color: "#0c9a6f", display: "flex", fontSize: "12px" }}
             >
-              SENSITIVITY
-              <ToolTipInfo fieldName="sensitivity" />
-            </FormLabel>
-            <RadioGroup
-              name="sensitivity"
-              value={argument.sensitivity === "default" ? "default" : "custom"}
-              onChange={handleRadioChange}
-              row
-            >
-              <FormControlLabel
-                value="default"
-                control={<Radio color="primary" />}
-                label="Default(recommended)"
-                labelPlacement="end"
-              />
-              <FormControlLabel
-                value="custom"
-                control={<Radio color="primary" />}
-                label="Custom"
-                labelPlacement="end"
-              />
-            </RadioGroup>
-          </StyledFormControl>
-        </Grid>
-        <Grid item xs={12}>
-          <StyledFormControl component="fieldset">
-            <FormLabel
-              style={{ color: "#0c9a6f", display: "flex", fontSize: "12px" }}
-            >
               AUTOCORRECT FLAG
               <ToolTipInfo fieldName="autocorrect_flag" />
             </FormLabel>
