@@ -9,7 +9,8 @@ import configurationTemplate from '../../constants/jsonTemplates/configuration.j
 import Brightness6Icon from '@material-ui/icons/Brightness6';
 import Brightness7Icon from '@material-ui/icons/Brightness7';
 import { darkModeContext } from "../../context/darkModeContext";
-import formatConfiguration  from "../../utils/formatConfiguration"
+import formatConfiguration  from "../../utils/formatConfiguration";
+import { clone } from "../../utils/clone";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -27,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 export default function NavigationBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const {configuration, rerender, setRerender} = useContext(MasterDriverContext);
+  const {configuration, setConfiguration, rerender, setRerender} = useContext(MasterDriverContext);
   const { darkMode, setDarkMode } = useContext(darkModeContext);
 
   const handleClick = (event) => {
@@ -62,9 +63,9 @@ export default function NavigationBar() {
     setAnchorEl(null);
   }
 
-  const handleMasterDriverUpload = event => {
+  const handleMasterDriverUpload = e => {
     let reader = new FileReader();
-    const file = event.target.files[0];
+    const file = e.target.files[0];
     reader.readAsText(file);
     reader.onload = () => {
         localStorage.setItem("ilc-config-master-driver-config", reader.result)
@@ -72,13 +73,52 @@ export default function NavigationBar() {
         localStorage.setItem("ilc-configuration-status", JSON.stringify({"clusterFocus": "", "darkMode": "", "currentPage": ""}))
         history.push("/main")
         window.location.reload();
-
     };
     reader.onerror = function() {
         console.log(reader.error);
     };
-
   };
+
+  const handleJSONImportClick = () => {
+    const input = document.createElement('input');
+    input.type= "file";
+    input.onchange = (e) => {
+      let reader = new FileReader();
+      const file = e.target.files[0];
+      reader.readAsText(file);
+      reader.onload = () => {
+        // todo: validate incoming reader result
+        const jsonObject = JSON.parse(reader.result)
+        let formattedJsonObject = {}
+        for (const [key, value] of Object.entries(jsonObject)) {
+          formattedJsonObject[key] = clone(jsonObject[key]['data']);
+        }
+        // create criteria object
+        formattedJsonObject["criteria"] = {}
+        for (const [key, value] of Object.entries(jsonObject['config']['data']['cluster'])) {
+          console.log(jsonObject)
+          const clusterName = value["cluster_name"];
+          formattedJsonObject["criteria"][clusterName] = [];
+          let criteriaArray = Object.entries(jsonObject[`${clusterName}_pairwise_criteria_config`]['data']['curtail'])
+          const sortedObjArray = criteriaArray.sort(function (obj1, obj2) {
+            return Object.keys(obj1).length - Object.keys(obj2).length;
+          })
+          let criteriaObjs = []
+          sortedObjArray.map((criteria, index) => {
+            criteriaObjs.push({id: index, text: criteria[0]})
+          })
+          formattedJsonObject["criteria"][clusterName] = criteriaObjs;
+        }
+        setConfiguration(formattedJsonObject);
+        history.push("/main")
+        window.location.reload();
+      }
+    }
+    document.body.appendChild(input)
+    input.click();
+    document.body.removeChild(input)
+    setAnchorEl(null);
+  }
 
   const handleDarkMode = () => {
     let mode = !darkMode;
@@ -101,6 +141,7 @@ export default function NavigationBar() {
           >
             <MenuItem onClick={handleSaveConfiguration}>Save Configuration</MenuItem>
             <MenuItem onClick={handleMasterDriverClick}>Import New Master Driver Configuration Store</MenuItem>
+            <MenuItem onClick={handleJSONImportClick}>Import JSON file</MenuItem>
           </Menu>
           <Typography variant="h5">
             ILC Configuration Tool
