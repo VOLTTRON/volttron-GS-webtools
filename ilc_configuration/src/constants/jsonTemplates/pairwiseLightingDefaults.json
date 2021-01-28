@@ -1,0 +1,11 @@
+{
+    "room_type": {
+        "lighting_level": 6,
+        "rated_power": 3
+    },
+    "rated_power":{
+        "lighting_level": 2
+    },
+    "lighting_level": {
+    }
+}

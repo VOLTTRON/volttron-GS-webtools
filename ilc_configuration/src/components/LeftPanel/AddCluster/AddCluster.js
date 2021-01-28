@@ -4,7 +4,10 @@ import ClusterContext from '../../../context/clusterContext';
 import { InputLabel, FormControl, Select, TextField, Button } from '@material-ui/core'
 import { makeStyles } from '@material-ui/core/styles';
 import {default as history} from '../../../history';
-import pairwiseTemplate from '../../../constants/jsonTemplates/pairwiseCurtail.json'
+import pairwiseAHUTemplate from '../../../constants/jsonTemplates/pairwiseAHUDefaults.json'
+import pairwiseLightingTemplate from '../../../constants/jsonTemplates/pairwiseLightingDefaults.json'
+import pairwiseRTUTemplate from '../../../constants/jsonTemplates/pairwiseRTUDefaults.json'
+import pairwiseOtherTemplate from '../../../constants/jsonTemplates/pairwiseOtherDefaults.json'
 import mapperTemplate from '../../../constants/jsonTemplates/mapper.json'
 import {SmallLabel} from '../../common/_styledLabel';
 import {FloatInput} from '../../common/_styledInput'
@@ -30,7 +33,7 @@ export default function AddCluster(props) {
     let { clusterFocus, setClusterFocus } = useContext(ClusterContext);
     const [state, setState] = useState({
         cluster_name: `cluster_${configuration["config"]["cluster"].length + 1}`,
-        cluster_types: ["RTU", "AHU", "LIGHT"],
+        cluster_types: ["AHU", "LIGHT", "RTU"],
         cluster_type: "RTU",
         cluster_priority: 1
     })
@@ -41,6 +44,57 @@ export default function AddCluster(props) {
             ...state,
             [name]: event.target.value
         })
+    }
+
+    const setCurtailAndCriteriaBasedOnType = (type, config, name) => {
+        let criteria = null;
+        let curtail = null;
+        if(type === "AHU") {
+            curtail = parseCurtail(pairwiseAHUTemplate);
+            criteria = parseCriteria(pairwiseAHUTemplate);
+        } else if (type === "LIGHT") {
+            curtail = parseCurtail(pairwiseLightingTemplate);
+            criteria = parseCriteria(pairwiseLightingTemplate);
+        } else if (type === "RTU") {
+            curtail = parseCurtail(pairwiseRTUTemplate);
+            criteria = parseCriteria(pairwiseRTUTemplate);
+        } else if (type === "OTHER") {
+            curtail = parseCurtail(pairwiseOtherTemplate);
+            criteria = [];
+        }
+        config[`${name}${_PAIRWISE}`]["curtail"] = curtail;
+        config["criteria"][name] = criteria;
+
+        return config;
+    }
+
+    const parseCriteria = (criteria) => {
+        let json = JSON.parse(JSON.stringify(criteria));
+        var sorted = [];
+        for (var def in json) {
+            sorted.push({'text': def, 'id': Object.keys(json[def]).length});
+        }
+        sorted.sort(function(a, b) {return b['id'] - a['id']});
+
+        return sorted;
+    }
+
+    const parseCurtail = (curtail) => {
+        var sortedArray = [];
+        var sortedObject = {};
+        for (var def in curtail) {
+            sortedArray.push({
+                'name': def,
+                'id': Object.keys(curtail[def]).length,
+                'data': curtail[def]
+            });
+        }
+        sortedArray.sort(function(a, b) {return b['id'] - a['id']});
+        for (var x = 0; x < sortedArray.length; x++) {
+            sortedObject[sortedArray[x]['name']] = sortedArray[x]['data'];
+        }
+
+        return sortedObject;
     }
 
     const addCluster = () => {
@@ -75,26 +129,13 @@ export default function AddCluster(props) {
         }
         newConfiguration["config"]["cluster"].push(newCluster);
         newConfiguration[`${cluster_name}${_PAIRWISE}`] = {}
-        newConfiguration[`${cluster_name}${_PAIRWISE}`]["curtail"] = JSON.parse(JSON.stringify(pairwiseTemplate))
+
+        // set curtail and criteria based on cluster type
+        newConfiguration = setCurtailAndCriteriaBasedOnType(cluster_type, newConfiguration, cluster_name);
+
         newConfiguration[`${cluster_name}${_CONTROL}`] = {};
         let mapper = clone(mapperTemplate)
         newConfiguration[`${cluster_name}${_CRITERIA}`] = {mapper: mapper};
-        newConfiguration["criteria"][cluster_name] = [{
-            id: 1,
-            text: "zonetemperature_setpoint"
-        },{
-            id: 2,
-            text: "stage"
-        },{
-            id: 3,
-            text: "history_zonetemperature"
-        },{
-            id: 4,
-            text: "rated_power"
-        },{
-            id: 5,
-            text: "room_type"
-        }]
 
         setConfiguration(newConfiguration)
         history.push(`/pairwise/${cluster_name}`)
@@ -135,8 +176,8 @@ export default function AddCluster(props) {
                         id: 'clusterTypeInput'
                     }}
                 >
-                    <option aria-label="None" value="" />
                     {state.cluster_types.map(type => {return <option value={type}>{type}</option>})}
+                    <option aria-label="OTHER" value="OTHER">OTHER</option>
                 </Select>
             </FormControl>
             <FormControl className={classes.formControl}>
