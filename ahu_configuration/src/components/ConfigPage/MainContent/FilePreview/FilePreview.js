@@ -48,6 +48,8 @@ const FilePreview = (props) => {
     let content = `"unit": {`;
     let subDevices = ``;
     let subDeviceCount = 0;
+    let devicesInSubDevice = false;
+    let alreadyProcessedSubDevices = [];
     if (campus && building && device) {
       campusBuildingDeviceContext.device[0].forEach((device) => {
         content += `
@@ -68,6 +70,9 @@ const FilePreview = (props) => {
                 subDevices += "\n                   ";
                 subDeviceCount = 0;
               }
+              alreadyProcessedSubDevices.push(element);
+            } else {
+              devicesInSubDevice = true;
             }
           });
           if (subDevices.length > 1) {
@@ -82,6 +87,10 @@ const FilePreview = (props) => {
         subDeviceCount = 0;
       });
     }
+    if (devicesInSubDevice) {
+      content += addDevicesInSubDevices(subDevice, alreadyProcessedSubDevices);
+    }
+
     content += `
         }`;
     return content;
@@ -483,5 +492,26 @@ const FilePreview = (props) => {
 
   return <>{renderContent}</>;
 };
+
+/**
+ * Handle special case where devices were transferred to sub-devices
+ * @param {*} subdevices
+ * @param {*} alreadyProcessedSubDevices
+ */
+const addDevicesInSubDevices = (subdevices, alreadyProcessedSubDevices) => {
+  let content = ``;
+  for (let subdevice of subdevices) {
+    if (!alreadyProcessedSubDevices.includes(subdevice)){
+
+    content +=
+`\n            "${subdevice}":{
+                "subdevices":[]
+              }
+`
+    }
+  }
+
+  return content;
+}
 
 export default FilePreview;

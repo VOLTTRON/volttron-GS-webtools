@@ -1,4 +1,4 @@
-const getDeviceString = (campus, building, device, subDevice, locationList) => {
+const getDeviceString = (campus, building, device, subDevice, locationList, devicesInSubDevices, firstSubDevice) => {
   let deviceString = `"unit": {`;
   if (campus && building && device) {
     device.forEach((deviceInstance) => {
@@ -6,6 +6,7 @@ const getDeviceString = (campus, building, device, subDevice, locationList) => {
             "${deviceInstance}": {
                 "subdevices": [`;
 
+                if (!devicesInSubDevices){
       if (subDevice && locationList[campus][building][deviceInstance]) {
         subDevice.forEach((element) => {
           if (
@@ -20,10 +21,19 @@ const getDeviceString = (campus, building, device, subDevice, locationList) => {
           // Remove trailing comma
           deviceString = deviceString.substring(0, deviceString.length - 1);
         }
-      }
+      }}
       deviceString += `]
             },`;
     });
+
+    if (devicesInSubDevices && firstSubDevice){
+      subDevice.forEach((subDeviceInstance) => {
+        deviceString += `
+            "${subDeviceInstance}": {
+                "subdevices": []
+            },`;
+      })
+    }
     if (deviceString.slice(-1) === ",") {
       // Remove trailing comma
       deviceString = deviceString.substring(0, deviceString.length - 1);
@@ -35,13 +45,21 @@ const getDeviceString = (campus, building, device, subDevice, locationList) => {
   return deviceString;
 };
 
+const getMetaString = (devicesInSubDevices, firstSubDevice) => {
+  return `"meta": {
+    "devicesInSubDevices": ${devicesInSubDevices},
+    "firstSubDevice": "${firstSubDevice}"
+  }`;
+};
+
 const getEconomizerJsonString = (
   campus,
   building,
   pointMapping,
   argument,
   thresholds,
-  deviceString
+  deviceString,
+  metaString
 ) => {
   return `{
     "application": "economizer.economizer_rcx.Application",
@@ -150,7 +168,8 @@ const getEconomizerJsonString = (
             ? thresholds.cooling_enabled_threshold
             : ""
         }
-    }
+    },
+    ${metaString}
   }`;
 };
 
@@ -160,7 +179,8 @@ const getAirsideJsonString = (
   pointMapping,
   argument,
   thresholds,
-  deviceString
+  deviceString,
+  metaString
 ) => {
   return `{
       "agentid": "airside_aircx",
@@ -294,7 +314,8 @@ const getAirsideJsonString = (
           "sunday_sch": ["${thresholds.sunday_sch[0]}","${
     thresholds.sunday_sch[1]
   }"]
-      }
+      },
+      ${metaString}
   }`;
 };
 export const exportJson = (
@@ -307,15 +328,19 @@ export const exportJson = (
   argument,
   thresholds,
   file,
-  airSide
+  airSide,
+  devicesInSubDevices,
+  firstSubDevice = ""
 ) => {
-  let deviceString = getDeviceString(
+  const deviceString = getDeviceString(
     campus,
     building,
     device,
     subDevice,
-    locationList
+    locationList,
+    devicesInSubDevices, firstSubDevice
   );
+  const metaString = getMetaString(devicesInSubDevices, firstSubDevice);
   let jsonString = airSide
     ? getAirsideJsonString(
         campus,
@@ -323,7 +348,8 @@ export const exportJson = (
         pointMapping,
         argument,
         thresholds,
-        deviceString
+        deviceString,
+        metaString
       )
     : getEconomizerJsonString(
         campus,
@@ -331,7 +357,8 @@ export const exportJson = (
         pointMapping,
         argument,
         thresholds,
-        deviceString
+        deviceString,
+        metaString
       );
 
   downloadObjectAsJson(jsonString, file);

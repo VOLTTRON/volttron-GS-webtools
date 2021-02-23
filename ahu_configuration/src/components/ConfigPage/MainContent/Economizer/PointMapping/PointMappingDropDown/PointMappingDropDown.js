@@ -1,5 +1,5 @@
 import React from "react";
-import { Select, IconButton } from "@material-ui/core";
+import { Select, IconButton, Chip } from "@material-ui/core";
 import ClearIcon from "@material-ui/icons/Clear";
 const PointMappingDropDown = (props) => {
   const {
@@ -10,7 +10,19 @@ const PointMappingDropDown = (props) => {
     handlePointMappingChange,
     parentSelectItems,
     handleRemoveButtonClick,
+    subDevice,
   } = props;
+
+  let dropDownOptions = parentSelectItems;
+  let subDeviceSourced = null;
+  if (fieldName === "zone_reheat" || fieldName === "zone_damper") {
+    // If more selects than sub-devices, then use last sub-device
+    let key = keyIndex > subDevice.length - 1 ? subDevice.length - 1 : keyIndex;
+    subDeviceSourced = subDevice[key] ? (
+      <Chip color="secondary" size="small" label={subDevice[key]} />
+    ) : null;
+    dropDownOptions = dropDownOptions[key];
+  }
   return (
     <>
       <Select
@@ -23,9 +35,11 @@ const PointMappingDropDown = (props) => {
         onChange={(e) => handlePointMappingChange(e, keyIndex)}
         name={fieldName}
         style={{ minWidth: "51%" }}
+        autoWidth={true}
       >
-        {parentSelectItems}
+        {dropDownOptions}
       </Select>
+      {subDeviceSourced}
       {keyIndex > 0 ? (
         <IconButton
           onClick={() => handleRemoveButtonClick(fieldName, keyIndex)}
@@ -39,5 +53,3 @@ const PointMappingDropDown = (props) => {
 };
 
 export default PointMappingDropDown;
-
-

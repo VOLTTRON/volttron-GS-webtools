@@ -2,6 +2,7 @@ import React, { useState } from "react";
 
 export const CampusBuildingDeviceContext = React.createContext(null);
 
+/* eslint import/no-anonymous-default-export: [2, {"allowArrowFunction": true}] */
 export default ({ children }) => {
   const [campus, setCampus] = useState("");
   const [building, setBuilding] = useState("");
@@ -11,6 +12,8 @@ export default ({ children }) => {
   const [subDevice, setSubDevice] = useState([]);
   const [subDeviceList, setSubDeviceList] = useState([]);
   const [locationList, setLocationList] = useState([]);
+  const [devicesInSubDevices, setDevicesInSubDevices] = useState(false);
+  const [firstSubDevice, setFirstSubDevice] = useState("");
 
   const campusBuildingDevice = {
     campus: [campus, setCampus],
@@ -20,7 +23,9 @@ export default ({ children }) => {
     device: [device, setDevice],
     subDevice: [subDevice, setSubDevice],
     subDeviceList: [subDeviceList, setSubDeviceList],
-    locationList: [locationList, setLocationList]
+    locationList: [locationList, setLocationList],
+    devicesInSubDevices: [devicesInSubDevices, setDevicesInSubDevices],
+    firstSubDevice: [firstSubDevice, setFirstSubDevice]
   };
 
   return (
