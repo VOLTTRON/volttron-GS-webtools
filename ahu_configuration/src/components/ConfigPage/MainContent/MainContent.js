@@ -50,6 +50,8 @@ const MainContent = props => {
   const [building, setBuilding] = campusBuildingDeviceContext.building;
   const [device, setDevice] = campusBuildingDeviceContext.device;
   const [subDevice, setSubDevice] = campusBuildingDeviceContext.subDevice;
+  const [devicesInSubDevices, setDevicesInSubDevices] = campusBuildingDeviceContext.devicesInSubDevices;
+  const [firstSubDevice, setFirstSubDevice] = campusBuildingDeviceContext.firstSubDevice;
   const [
     locationList,
     setLocationList
@@ -76,7 +78,10 @@ const MainContent = props => {
       airsideArguments,
       airsideThresholds,
       file,
-      true
+      true,
+      devicesInSubDevices,
+      firstSubDevice
+
     ) :
     exportJson(
       campus,
@@ -88,7 +93,9 @@ const MainContent = props => {
       argument,
       thresholds,
       file,
-      false
+      false,
+      "",
+      ""
     )
   };
 
@@ -148,7 +155,7 @@ const MainContent = props => {
         } else {
           content = <PointMapping></PointMapping>;
         }
-        
+
         break;
       case "Settings":
         if(fileType === "AirsideAIRCx"){
@@ -156,7 +163,7 @@ const MainContent = props => {
         } else {
           content = <Argument></Argument>;
         }
-        
+
         break;
       case "Thresholds":
         if(fileType === "AirsideAIRCx"){
@@ -218,7 +225,7 @@ const MainContent = props => {
         <Box p={1} bgcolor="grey.300">
           {nextSectionButton}
         </Box>
-        
+
       </StyledBoxMainWrapper>
       {fileNameDialog}
     </>

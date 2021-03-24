@@ -1,14 +1,15 @@
 /**
 
- * 
- * @param {*} dropDownContext 
- * @param {*} masterDriverContext 
+ *
+ * @param {*} dropDownContext
+ * @param {*} masterDriverContext
  */
 
 /**
  * Iterates through drop down options in masterDriverContext
  * looking for a match of the current values. Once it finds
- * a match it will populate the dropdown context
+ * a match it will populate the dropdown context.
+ * Fires on device and subDevice change
  *
  * @param {*} campus
  * @param {*} building
@@ -19,55 +20,74 @@
 export const dropDown = (
   campus,
   building,
-  deviceList,
-  subdevice,
+  devices,
+  subDevices,
   dropDownContext,
   masterDriverContext,
-  isEconomizer
+  isEconomizer,
+  devicesInSubDevices
 ) => {
   const dropDownOptions = masterDriverContext.masterDriver.dropDowns;
-  let dropDownList = [];
-  let subDeviceDropDownList = [];
-  for (let [key, value] of Object.entries(dropDownOptions)) {
-    if (subdevice !== null) { // No need to keep looping after drop downs are populated
-      if (subDeviceDropDownList.length > 0) {
-        break;
-      }
-      // Iterate through selected devices to find sub-device parent
-      for (var device of deviceList) {
-        if (
-          !isEconomizer &&
-          value.dropdownList[campus] &&
-          value.dropdownList[campus][building] &&
-          value.dropdownList[campus][building][device] &&
-          value.dropdownList[campus][building][device][subdevice]
-        ) {
-          for (let [innerKey, innerValue] of Object.entries(
-            value.dropdownList[campus][building][device][subdevice].devicePoints
-          )) {
-            subDeviceDropDownList.push(innerValue.volttronPointName); // Used for airside Zone Reheat and Zone Damper
-          }
-          dropDownContext.setDropDownsChildren(subDeviceDropDownList);
-          break;
-        }
-      }
-    } else {
-      // Handle Economizer and Airside Device
+
+  let parentDropDownList = [];
+  let childDropDownList = [];
+  if (subDevices === null || subDevices.length < 1) {
+    // handle parent/device change
+    for (let value of Object.values(dropDownOptions)) {
       if (
         value.dropdownList[campus] &&
         value.dropdownList[campus][building] &&
-        value.dropdownList[campus][building][deviceList[0]]
+        value.dropdownList[campus][building][devices[0]]
       ) {
-        for (let [innerKey, innerValue] of Object.entries(
-          value.dropdownList[campus][building][deviceList[0]].defaultConfig
+        for (let innerValue of Object.values(
+          value.dropdownList[campus][building][devices[0]].defaultConfig
             .devicePoints
         )) {
-          dropDownList.push(innerValue.volttronPointName);
+          parentDropDownList.push(innerValue.volttronPointName);
         }
-        dropDownContext.setDropDownsParent(dropDownList);
+        dropDownContext.setDropDownsParent(parentDropDownList);
         break;
       }
     }
+  } else {
+    // handle child/subDevice change
+    for (let subDevice of subDevices) {
+      let singleSubDeviceList = [];
+      for (let value of Object.values(dropDownOptions)) {
+        if (devicesInSubDevices) {
+          for (let innerValue of Object.values(
+            value.dropdownList[campus][building][subDevice].defaultConfig
+              .devicePoints
+          )) {
+            singleSubDeviceList.push(innerValue.volttronPointName);
+          }
+          childDropDownList.push(singleSubDeviceList);
+          break;
+        } else {
+          for (var device of devices) {
+            if (
+              !isEconomizer &&
+              value.dropdownList[campus] &&
+              value.dropdownList[campus][building] &&
+              value.dropdownList[campus][building][device] &&
+              value.dropdownList[campus][building][device][subDevice] &&
+              value.dropdownList[campus][building][device][subDevice]
+            ) {
+              for (let innerValue of Object.values(
+                value.dropdownList[campus][building][device][subDevice]
+                  .devicePoints
+              )) {
+                singleSubDeviceList.push(innerValue.volttronPointName);
+              }
+              childDropDownList.push(singleSubDeviceList);
+              break;
+            }
+          }
+          break;
+        }
+      }
+    }
+    dropDownContext.setDropDownsChildren(childDropDownList);
   }
 };
 

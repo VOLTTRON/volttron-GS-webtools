@@ -2,7 +2,6 @@ import React, { useState, useContext, useEffect } from "react";
 import LeftPanel from "../../components/ConfigPage/LeftPanel/LeftPanel";
 import TopPanel from "../../components/ConfigPage/TopPanel/TopPanel";
 import MainContent from "../../components/ConfigPage/MainContent/MainContent";
-import styled from "styled-components";
 import { DropDownsContext } from "../../context/DropDownsContext/DropDownsContext";
 import { MasterDriverContext } from "../../context/MasterDriverContext/MasterDriverContext";
 import { CampusBuildingDeviceContext } from "../../context/CampusBuildingDeviceContext/CampusBuildingDeviceContext";
@@ -54,7 +53,16 @@ const ConfigPage = (props) => {
     subDeviceList,
     setSubDeviceList,
   ] = campusBuildingDeviceContext.subDeviceList;
+  const [
+    devicesInSubDevices,
+    setDevicesInSubDevices,
+  ] = campusBuildingDeviceContext.devicesInSubDevices;
+  const [
+    firstSubDevice,
+    setFirstSubDevice,
+  ] = campusBuildingDeviceContext.firstSubDevice;
   const [showError, setShowError] = useState(false);
+  const [pointMapping, setPointMapping] = ahuContext.airPointMapping;
   const [timer, setTimer] = useState(Math.floor(Date.now() / 1000));
 
   useEffect(() => {
@@ -80,7 +88,7 @@ const ConfigPage = (props) => {
   }
 
   // Location List cannot be context since it it used in layout and would
-  // cause infinite rerenders. Instead we get it from props and set the
+  // cause infinite re-renders. Instead we get it from props and set the
   // context from props if it is empty
   if (Object.keys(locationList).length < 1) {
     setLocationList(locationListProp);
@@ -96,7 +104,7 @@ const ConfigPage = (props) => {
     setDeviceList([]);
     setSubDevice([]);
     setSubDeviceList([]);
-    dropDownsContext.setDropDownsChildren({});
+    dropDownsContext.setDropDownsChildren([{}]);
     dropDownsContext.setDropDownsParent({});
   };
 
@@ -107,24 +115,34 @@ const ConfigPage = (props) => {
       campus,
       value,
       deviceListObj,
-      null,
+      [],
       dropDownsContext,
       masterDriverContext,
-      true
+      devicesInSubDevices
     );
     setDeviceList(deviceListObj);
     setBuilding(value);
     setDevice([]);
   };
 
-  const handleDeviceChange = (event) => {
+  /**
+   * On device change...
+   * check if device in sub device
+   *  No: Go on normal
+   *  Yes: Check and see if that value has been selected as a sub
+   *    No: Just remove from
+   * @param {*} event
+   * @param {*} subDevicesList
+   */
+
+  const handleDeviceChange = (event, subDevicesList) => {
     let subDeviceListObj = [];
     let subdeviceList = [];
     const value = event.target.value;
     value.forEach((deviceKey) => {
       for (let key of Object.keys(locationList[campus][building][deviceKey])) {
-        // defaultConfig is used to for the devices with no sub devices
-        // but needs to be scrubbed from the subdevice drop down options
+        // defaultConfig is used for the devices with no sub devices
+        // but needs to be scrubbed from the subDevice drop down options
         if (key !== "defaultConfig") {
           subdeviceList.push(key);
         }
@@ -138,35 +156,95 @@ const ConfigPage = (props) => {
       campus,
       building,
       value,
-      null,
+      [],
       dropDownsContext,
       masterDriverContext,
-      ahuContext.fileType[0] === "Economizer_AIRCx"
+      ahuContext.fileType[0] === "Economizer_AIRCx",
+      devicesInSubDevices && value < 1
     ); // Changes dd context
-    setSubDeviceList(subDeviceListObj);
+    // Change sub-devices when devices have not been transferred to sub-devices or devices are empty
+    if (subDevicesList?.Devices?.length === undefined || value.length < 1) {
+      setSubDeviceList(subDeviceListObj);
+    }
+
     if (value < 1) {
-      // Empty devices needs to clear subdevices
+      // Empty devices needs to clear sub-devices
       setSubDevice([]);
-      dropDownsContext.setDropDownsChildren({});
+      setFirstSubDevice("");
+      setDevicesInSubDevices(false);
+      dropDownsContext.setDropDownsChildren([{}]);
     }
     setDevice(value);
   };
 
   const handleSubDeviceChange = (event) => {
-    const value = event.target.value;
-    if (subDevice.length < 1) {
-      // Zone Reheat and Zone Damper dd values only get first selection
-      dropDown(
-        campus,
-        building,
-        deviceList,
-        value,
-        dropDownsContext,
-        masterDriverContext,
-        ahuContext.fileType[0] === "Economizer_AIRCx"
-      ); // Changes dd context
+    const newSubDevices = event.target.value;
+    let zoneReHeatValues = pointMapping.zone_reheat;
+    let zoneDamperValues = pointMapping.zone_damper;
+    // compare old devices to new devices
+    if (newSubDevices.length > subDevice.length) {
+      // sub-device was selected. Remove extra ZR or ZD instances
+      if (zoneReHeatValues.length > subDevice.length) {
+        // zoneReHeatValues.splice(zoneReHeatValues.length  - subDevice.length);
+        zoneReHeatValues.length = newSubDevices.length;
+      }
+      if (zoneDamperValues.length > subDevice.length) {
+        // zoneDamperValues.splice(zoneDamperValues.length + 1 - subDevice.length);
+        zoneDamperValues.length = newSubDevices.length;
+      }
+    } else {
+      // sub-device was de-selected
+      let removedIndex = 0;
+      for (let i = 0; i < subDevice.length; i++) {
+        if (newSubDevices[i] !== subDevice[i]) {
+          removedIndex = i;
+          break;
+        }
+      }
+
+      if (removedIndex === 0 && newSubDevices.length === 1) {
+        // First element removed and there are no others to take its place
+        zoneReHeatValues = [""];
+        zoneDamperValues = [""];
+      } else if (removedIndex < newSubDevices.length) {
+        // sub-device removed was not the last sub-device
+        zoneReHeatValues.splice(removedIndex, 1);
+        zoneDamperValues.splice(removedIndex, 1);
+      } else {
+        // last sub-device removed. Drop all dd instances of that type
+        if (zoneReHeatValues.length === 1) {
+          zoneReHeatValues = [""];
+        } else {
+          zoneReHeatValues.length = removedIndex;
+        }
+        if (zoneReHeatValues.length === 1) {
+          zoneDamperValues = [""];
+        } else {
+          zoneDamperValues.length = removedIndex;
+        }
+      }
     }
-    setSubDevice(value);
+
+    dropDown(
+      campus,
+      building,
+      device,
+      newSubDevices,
+      dropDownsContext,
+      masterDriverContext,
+      ahuContext.fileType[0] === "Economizer_AIRCx",
+      devicesInSubDevices
+    ); // Changes dd context
+    setPointMapping({
+      ...pointMapping,
+      zone_reheat: zoneReHeatValues,
+      zone_damper: zoneDamperValues,
+    });
+    debugger;
+    if (devicesInSubDevices) {
+      setFirstSubDevice(newSubDevices[0] ? newSubDevices[0] : "");
+    }
+    setSubDevice(newSubDevices);
   };
 
   return (
@@ -202,7 +280,9 @@ const ConfigPage = (props) => {
             handleDeviceChange={handleDeviceChange}
             subDevice={subDevice}
             subDeviceList={subDeviceList}
+            setSubDeviceList={setSubDeviceList}
             handleSubDeviceChange={handleSubDeviceChange}
+            setDevicesInSubDevices={setDevicesInSubDevices}
           ></TopPanel>
         </StyledDivTop>
         <StyledDivMain

@@ -207,6 +207,14 @@ export const handleAHUUpload = (
     setSubDeviceList,
   ] = campusBuildingDeviceContext.subDeviceList;
   const [subDevice, setSubDevice] = campusBuildingDeviceContext.subDevice;
+  const [
+    devicesInSubDevices,
+    setDevicesInSubDevices,
+  ] = campusBuildingDeviceContext.devicesInSubDevices;
+  const [
+    firstSubDevice,
+    setFirstSubDevice,
+  ] = campusBuildingDeviceContext.firstSubDevice;
   let error = "";
   let fileContentObject = {};
   try {
@@ -222,15 +230,24 @@ export const handleAHUUpload = (
   }
 
   // Set campus, building, device, and sub-device
+  const isAirSide = fileContentObject.analysis_name === "AirsideAIRCx";
+
   try {
     const campus = fileContentObject.device.campus;
     const building = fileContentObject.device.building;
     setCampus(fileContentObject.device.campus);
     setBuilding(fileContentObject.device.building);
-    const devices = Object.keys(fileContentObject.device.unit);
+    debugger;
+    const devicesAndSubDevices = getDevices(
+      Object.keys(fileContentObject.device.unit),
+      isAirSide,
+      fileContentObject.meta.firstSubDevice
+    );
+    const devices = devicesAndSubDevices.devices;
+    const subDevices = devicesAndSubDevices.subDevices;
     setDevice(devices);
+    setDevicesInSubDevices(fileContentObject.meta.devicesInSubDevices);
 
-    let subDevices = [];
     devices.forEach((element) => {
       const subDevicesArray = Object.keys(
         fileContentObject.device.unit[element].subdevices
@@ -242,29 +259,41 @@ export const handleAHUUpload = (
     setSubDevice(subDevices);
 
     // Get the location list and build out the dd options for building,
-    // device, and subdevice
+    // device, and sub-device
     let locationList = verifyLocation(masterDriverContext);
     setBuildingList(Object.keys(locationList[campus]));
     setDeviceList(Object.keys(locationList[campus][building]));
     let subDeviceListObj = [];
-    for (let [key, value] of Object.entries(locationList[campus][building])) {
-      if (devices.includes(key)) { // Only add subdevices for the selected device(s)
-        subDeviceListObj[key] = Object.keys(locationList[campus][building][key]);
-        subDeviceListObj[key] = subDeviceListObj[key].filter(item => item !== "defaultConfig")
+    for (let key of Object.keys(locationList[campus][building])) {
+      if (devices.includes(key)) {
+        // Only add sub-devices for the selected device(s)
+        subDeviceListObj[key] = Object.keys(
+          locationList[campus][building][key]
+        );
+        subDeviceListObj[key] = subDeviceListObj[key].filter(
+          (item) => item !== "defaultConfig"
+        );
       }
     }
     setSubDeviceList(subDeviceListObj);
 
     // Set drop down options for zone_reheat & zone_damper on airside
-    let subdevice = null;
+    let subDevice = null;
 
-    if (fileContentObject.device.unit && Object.keys(fileContentObject.device.unit)[0]) {
-      subdevice = fileContentObject.device.unit[Object.keys(fileContentObject.device.unit)[0]].subdevices
+    if (
+      fileContentObject.device.unit &&
+      Object.keys(fileContentObject.device.unit)[0]
+    ) {
+      // TODO: Check meta obj for deviceInSub
+      subDevice =
+        fileContentObject.device.unit[
+          Object.keys(fileContentObject.device.unit)[0]
+        ].subdevices;
       dropDown(
         fileContentObject.device.campus,
         fileContentObject.device.building,
         devices,
-        subdevice,
+        subDevice,
         dropDownsContext,
         masterDriverContext,
         fileContentObject.analysis_name !== "AirsideAIRCx"
@@ -275,7 +304,7 @@ export const handleAHUUpload = (
       fileContentObject.device.campus,
       fileContentObject.device.building,
       devices,
-      null,
+      [null],
       dropDownsContext,
       masterDriverContext,
       fileContentObject.analysis_name !== "AirsideAIRCx"
@@ -285,7 +314,7 @@ export const handleAHUUpload = (
     return error;
   }
 
-  if (fileContentObject.analysis_name === "AirsideAIRCx") {
+  if (isAirSide) {
     error = setAirsideContexts(
       fileContentObject,
       setAirPointMapping,
@@ -306,4 +335,38 @@ export const handleAHUUpload = (
   return error;
 };
 
+const getDevices = (devices, isAirSide, firstSubDevice) => {
+  let toReturn = { devices: [], subDevices: [] };
+  if (isAirSide && firstSubDevice) {
+    debugger;
+    let filteredResults = devices.filter((device) => device === firstSubDevice);
+    const duplicateFirstDevice = filteredResults.length > 1;
+    let duplicateFirstDeviceCount = 0;
+    let remainingAsSubDevices = false;
+    for (let device of devices) {
+      // There is a duplicated sub-device in devices
+      if (duplicateFirstDevice) {
+        if (device === firstSubDevice) {
+          duplicateFirstDeviceCount++;
+        }
+        if (duplicateFirstDeviceCount > 1) {
+          remainingAsSubDevices = true;
+        }
+      } else {
+        if (device === firstSubDevice) {
+          remainingAsSubDevices = true;
+        }
+      }
+      if (remainingAsSubDevices) {
+        toReturn.subDevices.push(device);
+      } else {
+        toReturn.devices.push(device);
+      }
+    }
+  } else {
+    toReturn.devices = devices;
+  }
+
+  return toReturn;
+};
 export default { handleAHUUpload };

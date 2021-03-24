@@ -1,8 +1,5 @@
 import React, { useContext } from "react";
-import styled from "styled-components";
 import {
-  FormControl,
-  Select,
   MenuItem,
   InputLabel,
   Grid,
@@ -67,17 +64,26 @@ const AirSidePointMapping = (props) => {
     </MenuItem>,
   ];
 
-  const enableZoneReheatAndDamper =
-    Object.keys(dropdownsContext.dropDownsChildren).length > 1 &&
-    subDevice.length > 0;
+  const enableZoneReheatAndDamper = subDevice.length > 0;
+
   if (enableZoneReheatAndDamper) {
-    subDeviceSelectItems.push(
-      dropdownsContext.dropDownsChildren.map((dropdown) => (
-        <MenuItem value={dropdown} key={dropdown}>
-          {dropdown}
+    subDeviceSelectItems = [];
+
+    for (let dropDownList of dropdownsContext.dropDownsChildren) {
+      let subDeviceSelectItem = [];
+      subDeviceSelectItem = dropDownList.map((select) => (
+        <MenuItem value={select} key={select}>
+          {select}
         </MenuItem>
-      ))
-    );
+      ));
+
+      subDeviceSelectItems.push([
+        <MenuItem value=" " key={null}>
+          <em>None</em>
+        </MenuItem>,
+        ...subDeviceSelectItem,
+      ]);
+    }
   } else {
     if (
       (pointMapping.zone_damper.length > 0 &&
@@ -104,7 +110,9 @@ const AirSidePointMapping = (props) => {
   return (
     <Grid container style={{ paddingLeft: "10px" }} spacing={1}>
       <Grid item xs={12} style={{ minWidth: "250px" }}>
-        <InputLabel style={{ color: "#0c9a6f", display: "flex" ,fontSize: "12px"}}>
+        <InputLabel
+          style={{ color: "#0c9a6f", display: "flex", fontSize: "12px" }}
+        >
           FAN STATUS
           <ToolTipInfo fieldName="fan_status" />
         </InputLabel>
@@ -132,11 +140,13 @@ const AirSidePointMapping = (props) => {
       </Grid>
 
       <Grid item xs={12} style={{ minWidth: "250px" }}>
-        <InputLabel style={{ color: "#0c9a6f", display: "flex" ,fontSize: "12px"}}>
+        <InputLabel
+          style={{ color: "#0c9a6f", display: "flex", fontSize: "12px" }}
+        >
           ZONE REHEAT
           <ToolTipInfo fieldName="zone_reheat" />
         </InputLabel>
-        {pointMapping.zone_reheat.map((e) => {
+        {pointMapping.zone_reheat.map(() => {
           zoneReheatKey += 1;
           return (
             <PointMappingDropDown
@@ -148,6 +158,7 @@ const AirSidePointMapping = (props) => {
               handleRemoveButtonClick={handleRemoveButtonClick}
               pointMapping={pointMapping}
               parentSelectItems={subDeviceSelectItems}
+              subDevice={subDevice}
             />
           );
         })}
@@ -162,7 +173,9 @@ const AirSidePointMapping = (props) => {
       </Grid>
 
       <Grid item xs={12} style={{ minWidth: "250px" }}>
-        <InputLabel style={{ color: "#0c9a6f", display: "flex" ,fontSize: "12px"}}>
+        <InputLabel
+          style={{ color: "#0c9a6f", display: "flex", fontSize: "12px" }}
+        >
           ZONE DAMPER
           <ToolTipInfo fieldName="zone_damper" />
         </InputLabel>
@@ -178,6 +191,7 @@ const AirSidePointMapping = (props) => {
               handleRemoveButtonClick={handleRemoveButtonClick}
               pointMapping={pointMapping}
               parentSelectItems={subDeviceSelectItems}
+              subDevice={subDevice}
             />
           );
         })}
@@ -192,7 +206,9 @@ const AirSidePointMapping = (props) => {
       </Grid>
 
       <Grid item xs={12} style={{ minWidth: "250px" }}>
-        <InputLabel style={{ color: "#0c9a6f", display: "flex" ,fontSize: "12px"}}>
+        <InputLabel
+          style={{ color: "#0c9a6f", display: "flex", fontSize: "12px" }}
+        >
           DUCT STATIC PRESSURE
           <ToolTipInfo fieldName="duct_stcpr" />
         </InputLabel>
@@ -220,7 +236,9 @@ const AirSidePointMapping = (props) => {
       </Grid>
 
       <Grid item xs={12} style={{ minWidth: "250px" }}>
-        <InputLabel style={{ color: "#0c9a6f", display: "flex" ,fontSize: "12px"}}>
+        <InputLabel
+          style={{ color: "#0c9a6f", display: "flex", fontSize: "12px" }}
+        >
           DUCT STATIC PRESSURE SETPOINT
           <ToolTipInfo fieldName="duct_stcpr_stpt" />
         </InputLabel>
@@ -248,7 +266,9 @@ const AirSidePointMapping = (props) => {
       </Grid>
 
       <Grid item xs={12} style={{ minWidth: "250px" }}>
-        <InputLabel style={{ color: "#0c9a6f", display: "flex" ,fontSize: "12px"}}>
+        <InputLabel
+          style={{ color: "#0c9a6f", display: "flex", fontSize: "12px" }}
+        >
           SUPPLY AIR TEMPERATURE
           <ToolTipInfo fieldName="sa_temp" />
         </InputLabel>
@@ -276,7 +296,9 @@ const AirSidePointMapping = (props) => {
       </Grid>
 
       <Grid item xs={12} style={{ minWidth: "250px" }}>
-        <InputLabel style={{ color: "#0c9a6f", display: "flex" ,fontSize: "12px"}}>
+        <InputLabel
+          style={{ color: "#0c9a6f", display: "flex", fontSize: "12px" }}
+        >
           FAN SPEED COMMAND
           <ToolTipInfo fieldName="fan_speedcmd" />
         </InputLabel>
@@ -304,7 +326,9 @@ const AirSidePointMapping = (props) => {
       </Grid>
 
       <Grid item xs={12} style={{ minWidth: "250px" }}>
-        <InputLabel style={{ color: "#0c9a6f", display: "flex" ,fontSize: "12px"}}>
+        <InputLabel
+          style={{ color: "#0c9a6f", display: "flex", fontSize: "12px" }}
+        >
           SUPPLY AIR TEMP SETPOINT
           <ToolTipInfo fieldName="sat_stpt" />
         </InputLabel>

@@ -6,8 +6,16 @@ import {
   ListItemText,
   Checkbox,
   MenuItem,
+  IconButton,
+  Tooltip,
 } from "@material-ui/core";
-import {StyledFormControl, StyledBoxWrapper, StyledBox, StyledMenuItem} from "./_style"
+import ChevronRightIcon from "@material-ui/icons/ChevronRight";
+import {
+  StyledFormControl,
+  StyledBoxWrapper,
+  StyledBox,
+  StyledMenuItem,
+} from "./_style";
 
 const TopPanel = (props) => {
   const {
@@ -23,11 +31,25 @@ const TopPanel = (props) => {
     handleDeviceChange,
     subDevice,
     subDeviceList,
+    setSubDeviceList,
     handleSubDeviceChange,
+    setDevicesInSubDevices
   } = props;
 
   let subDeviceLists = [];
-  
+
+  /**
+   * User can transfer from device to sub-device if Airside
+   * and no sub-device options are available
+   */
+  const transferDeviceOptionsToSubDeviceOptions = () => {
+    let newSubList = [];
+    newSubList["Devices"] = deviceList
+    console.log({ deviceList });
+    setSubDeviceList(newSubList);
+    setDevicesInSubDevices(true);
+  };
+
   if (subDeviceList !== undefined) {
     const keys = Object.keys(subDeviceList);
     keys.forEach((key) => {
@@ -47,12 +69,32 @@ const TopPanel = (props) => {
       });
     });
   }
-  
 
   let subDeviceDropDowns = null;
+  // Handle airside
   if (!economizerFile) {
+    let transferButton = null;
+    if (subDeviceLists.length < 1) {
+      transferButton = (
+        <span disabled={device.length < 1}>
+          <Tooltip title="Transfer device list to sub-device list">
+            <IconButton
+            disabled={device.length < 1}
+              onClick={() => transferDeviceOptionsToSubDeviceOptions()}
+              color="primary"
+            >
+              <ChevronRightIcon></ChevronRightIcon>
+            </IconButton>
+          </Tooltip>
+        </span>
+      );
+    } else {
+      transferButton = null;
+    }
+
     subDeviceDropDowns = (
       <>
+        {transferButton}
         <StyledBox
           p={1}
           bgcolor="grey.300"
@@ -60,7 +102,7 @@ const TopPanel = (props) => {
           flexGrow={1}
         >
           <StyledFormControl>
-            <InputLabel>Subdevice</InputLabel>
+            <InputLabel>Sub-device</InputLabel>
             <Select
               name="Subdevice"
               value={subDevice}
@@ -68,9 +110,21 @@ const TopPanel = (props) => {
               variant="outlined"
               autoWidth
               multiple
+              disabled={device.length < 1}
               onChange={handleSubDeviceChange}
               input={<Input />}
               renderValue={(selected) => selected.join(", ")}
+              MenuProps={{
+                anchorOrigin: {
+                  vertical: "top",
+                  horizontal: "left"
+                },
+                transformOrigin: {
+                  vertical: "top",
+                  horizontal: "left"
+                },
+                getContentAnchorEl: null
+              }}
             >
               {subDeviceLists}
             </Select>
@@ -129,9 +183,20 @@ const TopPanel = (props) => {
                 required
                 autoWidth
                 multiple
-                onChange={handleDeviceChange}
+                onChange={(e) => handleDeviceChange(e, subDeviceList)}
                 input={<Input />}
                 renderValue={(selected) => selected.join(", ")}
+                MenuProps={{
+                  anchorOrigin: {
+                    vertical: "top",
+                    horizontal: "left"
+                  },
+                  transformOrigin: {
+                    vertical: "top",
+                    horizontal: "left"
+                  },
+                  getContentAnchorEl: null
+                }}
               >
                 {deviceList.map((devices) => (
                   <MenuItem key={devices} value={devices}>

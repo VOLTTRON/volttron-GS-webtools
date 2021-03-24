@@ -1,17 +1,17 @@
 import React, { useState } from "react";
 
 export const DropDownsContext = React.createContext({
-  dropDownsParent: {}, 
+  dropDownsParent: {},
   setDropDownsParent: () => {},
   dropDownsChildren: {}, // Used for airside Zone Reheat and Zone Damper
-  setDropDownsChildren: () => {}, 
+  setDropDownsChildren: () => {},
 });
 
 const DropDownsProvider = props => {
   const [dropDownsParent, setDropDownsParent] = useState({
   });
-  const [dropDownsChildren, setDropDownsChildren] = useState({
-});
+  const [dropDownsChildren, setDropDownsChildren] = useState([{
+}]);
   const parentDropdownsHandler = (dropdownObj) => {
     setDropDownsParent(dropdownObj);
   };
@@ -26,7 +26,7 @@ const DropDownsProvider = props => {
         dropDownsParent: dropDownsParent,
         setDropDownsChildren: childrenDropdownsHandler,
         dropDownsChildren: dropDownsChildren,
-      }} 
+      }}
     >
       {props.children}
     </DropDownsContext.Provider>
