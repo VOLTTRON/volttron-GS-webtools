@@ -76,6 +76,7 @@ const AirSidePointMapping = (props) => {
           {select}
         </MenuItem>
       ));
+
       subDeviceSelectItems.push([
         <MenuItem value=" " key={null}>
           <em>None</em>

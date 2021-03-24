@@ -135,7 +135,6 @@ const ConfigPage = (props) => {
    * @param {*} subDevicesList
    */
 
-
   const handleDeviceChange = (event, subDevicesList) => {
     let subDeviceListObj = [];
     let subdeviceList = [];
@@ -203,7 +202,11 @@ const ConfigPage = (props) => {
         }
       }
 
-      if (removedIndex < newSubDevices.length) {
+      if (removedIndex === 0 && newSubDevices.length === 1) {
+        // First element removed and there are no others to take its place
+        zoneReHeatValues = [""];
+        zoneDamperValues = [""];
+      } else if (removedIndex < newSubDevices.length) {
         // sub-device removed was not the last sub-device
         zoneReHeatValues.splice(removedIndex, 1);
         zoneDamperValues.splice(removedIndex, 1);
