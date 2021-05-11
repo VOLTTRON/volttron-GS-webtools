@@ -8,6 +8,7 @@ import MasterDriverContext from '../../context/masterDriverContext';
 import { CurrentPageContext } from "../../context/currentPageContext";
 import ConfigurationTemplate from '../../constants/jsonTemplates/configuration.json'
 import OutputFormatTemplate from '../../constants/jsonTemplates/format.json'
+import {clone} from '../../utils/clone';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -25,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
 export default function NavigationBar() {
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
-  const {configuration, darkMode, setDarkMode} = useContext(MasterDriverContext);
+  const {configuration, setConfiguration, darkMode, setDarkMode} = useContext(MasterDriverContext);
   const currentPageContext = useContext(CurrentPageContext);
   const [ currentPage, setCurrentPage ] = currentPageContext.currentPage;
 
@@ -83,6 +84,35 @@ export default function NavigationBar() {
 
   };
 
+  const handleJSONImportClick = () => {
+    const input = document.createElement('input');
+    input.type= "file";
+    input.onchange = (e) => {
+      let reader = new FileReader();
+      const file = e.target.files[0];
+      reader.readAsText(file);
+      reader.onload = () => {
+        // todo: validate incoming reader result
+        const jsonObject = JSON.parse(reader.result)
+        let formattedJsonObject = {}
+        debugger;
+        // get key for config object
+        let configName = Object.keys(jsonObject)[0]
+        for (const [key, value] of Object.entries(jsonObject[configName]['data'])) {
+          formattedJsonObject[key] = clone(jsonObject[configName]['data'][key]);
+        }
+
+        setConfiguration(formattedJsonObject);
+        history.push("/main")
+        window.location.reload();
+      }
+    }
+    document.body.appendChild(input)
+    input.click();
+    document.body.removeChild(input)
+    setAnchorEl(null);
+  }
+
   const handleDarkMode = () => {
     let mode = !darkMode;
     setDarkMode(mode);
@@ -104,6 +134,7 @@ export default function NavigationBar() {
           >
             <MenuItem onClick={handleSaveConfiguration}>Save Configuration</MenuItem>
             <MenuItem onClick={handleMasterDriverClick}>Import New Master Driver Configuration Store</MenuItem>
+            <MenuItem onClick={handleJSONImportClick}>Import JSON file</MenuItem>
           </Menu>
           <Typography variant="h5">
             TCC Configuration Tool
