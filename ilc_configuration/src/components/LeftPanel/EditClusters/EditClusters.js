@@ -7,7 +7,7 @@ export default function EditCluster(props) {
 
     const createClusterEdit = () => {
         let clusterSettings = []
-        configuration["config"]["cluster"].forEach(cluster => {
+        configuration["config"]["clusters"].forEach(cluster => {
             clusterSettings.push(<ClusterSettings cluster={cluster}/>)
         })
         return clusterSettings    

@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FormControl, TreeView, TreeItem } from "../_styledCriteriaConfigForm";
 import ClusterContext from "../../../context/clusterContext";
 import Status from "../formComponents/Status";
@@ -25,7 +25,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import FloatingCalculator from "../../common/FloatingCalculator";
 import { clone } from "../../../utils/clone";
 
-const operationTypes = ["formula", "status", "mapper", "constant", "history"];
+const operationTypes = ["formula", "status", "mappers", "constant", "history"];
 
 export default function CriteriaDropdown(props) {
   const {
@@ -41,31 +41,26 @@ export default function CriteriaDropdown(props) {
 
   const { clusterFocus } = useContext(ClusterContext);
   const [calculatorModalOpen, setCalculatorModalOpen] = useState(false);
-  const calculatorFormula = configuration[`${clusterFocus}${_CRITERIA}`][
-    propsName
-  ][propsName][propsSetting][criteria["text"]]
-    ? configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
-        propsSetting
-      ][criteria["text"]][OPERATION]
+
+  const [minValue, setMinValue] = useState(2);
+  const [maxValue, setMaxValue] = useState(2);
+  const [calculatorFormula, setCalculatorFormula] = useState();
+
+  useEffect(() => {
+    const formula = configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][propsSetting][criteria["text"]]
+    ? configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][propsSetting][criteria["text"]][OPERATION]
     : "";
-  const calculatorMin = configuration[`${clusterFocus}${_CRITERIA}`][propsName][
-    propsName
-  ][propsSetting][criteria["text"]]
-    ? configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
-        propsSetting
-      ][criteria["text"]]["minimum"]
-    : 0;
-  const calculatorMax = configuration[`${clusterFocus}${_CRITERIA}`][propsName][
-    propsName
-  ][propsSetting][criteria["text"]]
-    ? configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][
-        propsSetting
-      ][criteria["text"]]["maximum"]
-    : 0;
-
-  const [minValue, setMinValue] = useState(calculatorMin);
-  const [maxValue, setMaxValue] = useState(calculatorMax);
-
+  const calculatorMin = configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][propsSetting][criteria["text"]]
+    ? configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][propsSetting][criteria["text"]]["minimum"]
+    : 1;
+  const calculatorMax = configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][propsSetting][criteria["text"]]
+    ? configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][propsSetting][criteria["text"]]["maximum"]
+    : 1;
+    setMinValue(calculatorMin);
+    setMaxValue(calculatorMax);
+    setCalculatorFormula(formula)
+  }, [configuration[`${clusterFocus}${_CRITERIA}`][propsName][propsName][propsSetting][criteria["text"]]])
+  
   /**
    * Save formula from floating calculator
    * @param {*} formula
@@ -213,7 +208,7 @@ export default function CriteriaDropdown(props) {
               criteria={criteriaName}
             />
           );
-        case "mapper":
+        case "mappers":
           return (
             <Mapper
               device={parentName}

@@ -37,6 +37,7 @@ import {
 } from "../../constants/strings";
 import EditIcon from "@material-ui/icons/Edit";
 import FloatingCalculator from "../common/FloatingCalculator";
+import CONTROL_MODES from "../../constants/controlModes"
 
 export default function MainConfigForm(props) {
   const {
@@ -56,9 +57,9 @@ export default function MainConfigForm(props) {
     formulaArgs: configuration[CONFIG][POWER_METER]["demand_formula"] ? configuration[CONFIG][POWER_METER]["demand_formula"]["operationArgs"] : [],
     agentId: configuration[CONFIG]["agent_id"],
     demandLimit: configuration[CONFIG]["demand_limit"],
+    controlMode: configuration[CONFIG]["control_mode"],
     controlTime: configuration[CONFIG]["control_time"],
     curtailmentConfirm: NaN,
-    curtailmentBreak: configuration[CONFIG]["curtailment_break"],
     averageBuildingPowerWindow:
       configuration[CONFIG]["average_building_power_window"],
     stagger_release: true,
@@ -113,9 +114,9 @@ export default function MainConfigForm(props) {
   ) => {
     const name = event.target.name;
     const floatValue = parseFloat(event.target.value);
-    if (name === "curtailment_confirm") {
+    if (name === "confirm_time") {
       if (isNaN(floatValue)) {
-        delete newConfiguration[CONFIG]["curtailment_confirm"];
+        delete newConfiguration[CONFIG]["confirm_time"];
         setConfiguration(newConfiguration);
       } else {
         updateConfiguration(name, floatValue, newConfiguration);
@@ -145,14 +146,14 @@ export default function MainConfigForm(props) {
         for (let [parentDeviceKey, parentDevice] of Object.entries(
           newConfiguration[configName]
         )) {
-          if (parentDeviceKey === "mapper") {
+          if (parentDeviceKey === "mappers") {
             continue;
           }
           for (let [deviceName, deviceCriteria] of Object.entries(
             parentDevice
           )) {
             for (let [settingKey, setting] of Object.entries(deviceCriteria)) {
-              if (settingKey === "mapper") {
+              if (settingKey === "mappers") {
                 continue;
               }
               let dtTokens = setting["device_topic"].split("/");
@@ -190,14 +191,14 @@ export default function MainConfigForm(props) {
         for (let [parentDeviceKey, parentDevice] of Object.entries(
           newConfiguration[configName]
         )) {
-          if (parentDeviceKey === "mapper") {
+          if (parentDeviceKey === "mappers") {
             continue;
           }
           for (let [deviceName, deviceCriteria] of Object.entries(
             parentDevice
           )) {
             for (let [settingKey, setting] of Object.entries(deviceCriteria)) {
-              if (settingKey === "mapper") {
+              if (settingKey === "mappers") {
                 continue;
               }
               let dtTokens = setting["device_topic"].split("/");
@@ -431,6 +432,25 @@ export default function MainConfigForm(props) {
         </Tooltip>
       </FormControl>
       <FormControl>
+        <SmallLabel darkMode={darkMode}>Control Mode</SmallLabel>
+        <Tooltip title="Determines need for min and max curtailment settings option">
+        <Select
+          native
+          value={configuration[CONFIG]["control_mode"]}
+          onChange={handleChange}
+          inputProps={{
+            name: "control_mode",
+            id: "control_mode_input",
+          }}
+        >
+          <option aria-label="None" value="" />
+          {CONTROL_MODES.map((mode) => {
+            return <option value={mode}>{mode}</option>;
+          })}
+        </Select>
+        </Tooltip>
+      </FormControl>
+      <FormControl>
         <SmallLabel darkMode={darkMode}>Control Time (minutes)</SmallLabel>
         <Tooltip title="After ILC control brings the building demand to the demand target, ILC will hold control of devices for this amount of time, then the ILC will begin to release devices.">
           <FloatInput
@@ -447,11 +467,11 @@ export default function MainConfigForm(props) {
         </Tooltip>
       </FormControl>
       <FormControl>
-        <SmallLabel darkMode={darkMode}>Curtailment Confirm</SmallLabel>
+        <SmallLabel darkMode={darkMode}>Confirm Time (minutes)</SmallLabel>
         <FloatInput
           id="curtailmentConfirmInput"
-          name="curtailment_confirm"
-          label="Curtailment Confirm"
+          name="confirm_time"
+          label="Confirm Time (minutes)"
           type="number"
           defaultValue={state.curtailmentConfirm}
           step="0.01"
@@ -459,22 +479,6 @@ export default function MainConfigForm(props) {
           onChange={handleFloatChange}
           darkMode={darkMode}
         />
-      </FormControl>
-      <FormControl>
-        <SmallLabel darkMode={darkMode}>Curtailment Break (minutes)</SmallLabel>
-        <Tooltip title="ILC will release devices in a staggered manner over amount of time">
-          <FloatInput
-            id="curtailmentBreakInput"
-            name="curtailment_break"
-            label="Curtailment Break (minutes)"
-            type="number"
-            defaultValue={state.curtailmentBreak}
-            step="0.01"
-            min="0"
-            onChange={handleFloatChange}
-            darkMode={darkMode}
-          />
-        </Tooltip>
       </FormControl>
       <FormControl>
         <SmallLabel darkMode={darkMode}>

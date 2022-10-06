@@ -39,7 +39,7 @@ export default function ClusterPriority (props) {
 
     const updatePriority = () => {
         let newConfiguration = clone(configuration);
-        newConfiguration["config"]["cluster"][props.index]["cluster_priority"] = parseFloat(state.cluster_priority)
+        newConfiguration["config"]["clusters"][props.index]["cluster_priority"] = parseFloat(state.cluster_priority)
         setConfiguration(newConfiguration)
 
     }

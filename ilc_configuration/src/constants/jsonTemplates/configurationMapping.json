@@ -6,11 +6,11 @@
     "point": ["config", "power_meter", "point"],
     "agent_id": ["config", "agent_id"],
     "demand_limit": ["config", "demand_limit"],
+    "control_mode": ["config", "control_mode"],
     "control_time": ["config", "control_time"],
-    "curtailment_confirm": ["config", "curtailment_confirm"],
-    "curtailment_break": ["config", "curtailment_break"],
+    "confirm_time": ["config", "confirm_time"],
     "average_building_power_window": ["config", "average_building_power_window"],
     "stagger_release": ["config", "stagger_release"],
     "stagger_off_time": ["config", "stagger_off_time"],
-    "cluster": ["config", "cluster"]
+    "clusters": ["config", "clusters"]
 }

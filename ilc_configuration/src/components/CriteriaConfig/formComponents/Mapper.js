@@ -33,7 +33,7 @@ export default function Mapper(props) {
 
   const clone = (obj) => JSON.parse(JSON.stringify(obj));
 
-  const mapperObj = configuration[`${clusterFocus}${_CRITERIA}`]["mapper"];
+  const mapperObj = configuration[`${clusterFocus}${_CRITERIA}`]["mappers"];
 
   const handleChange = (event) => {
     const name = event.target.name;
@@ -58,15 +58,15 @@ export default function Mapper(props) {
     setConfiguration(newConfiguration);
   };
 
-  const createMapKeys = () => {
-    const mapKeys = Object.keys(mapperObj).map((mapKey) => {
+  const createMapKeys = (dict_name) => {
+    const mapKeys = Object.keys(mapperObj[dict_name]).map((mapKey) => {
       return <option value={mapKey}>{mapKey}</option>;
     });
     return mapKeys;
   };
 
-  const createDictNames = (mapKey) => {
-    const dictNames = Object.keys(mapperObj[mapKey]).map((dictName) => {
+  const createDictNames = () => {
+    const dictNames = Object.keys(mapperObj).map((dictName) => {
       return <option value={dictName}>{dictName}</option>;
     });
     return dictNames;
@@ -76,22 +76,8 @@ export default function Mapper(props) {
     device
   ][device][setting][criteria];
   return (
+
     <>
-      <FormControl>
-        <InputLabel>Map Key</InputLabel>
-        <NativeSelect
-          value={map_key ? map_key : ""}
-          onChange={handleChange}
-          inputProps={{
-            name: "map_key",
-          }}
-        >
-          <option value=""></option>
-          {createMapKeys()}
-        </NativeSelect>
-      </FormControl>
-      {map_key ? (
-        <>
           <FormControl>
             <InputLabel>Dict. Name</InputLabel>
             <NativeSelect
@@ -102,11 +88,24 @@ export default function Mapper(props) {
               }}
             >
               <option value=""></option>
-              {createDictNames(map_key)}
+              {createDictNames()}
             </NativeSelect>
-          </FormControl>
-        </>
-      ) : null}
+      </FormControl>
+      {dict_name ? (
+      <FormControl>
+        <InputLabel>Map Key</InputLabel>
+        <NativeSelect
+          value={map_key ? map_key : ""}
+          onChange={handleChange}
+          inputProps={{
+            name: "map_key",
+          }}
+        >
+          <option value=""></option>
+          {createMapKeys(dict_name)}
+        </NativeSelect>
+      </FormControl>
+            ) : null}
     </>
   );
 }

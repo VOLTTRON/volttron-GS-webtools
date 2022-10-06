@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-
+import '../../App.css';
 import {
-  Dialog,
+  Dialog as dialog,
   DialogTitle,
-  DialogContent,
+  DialogContent as dialogContent,
   Button,
   DialogActions,
   Modal,
   Grid,
   Chip,
   Typography,
+  
 } from "@material-ui/core";
 
 const StyledFormulaDiv = styled.div`
@@ -19,6 +20,14 @@ const StyledFormulaDiv = styled.div`
   padding: 10px;
   margin-bottom: 7px;
 `;
+
+export const DialogContent = styled(dialogContent)`
+  max-width: 1200px;
+`
+
+export const Dialog = styled(dialog)`
+  max-width: 1200px;
+`
 
 const FloatingCalculator = (props) => {
   const calcStrings = [
@@ -175,6 +184,7 @@ const FloatingCalculator = (props) => {
                 variant="contained"
                 onClick={() => conf[0](conf[1], conf[3])}
                 disabled={conf[4]}
+                style={{maxWidth: '50px'}}
               >
                 {conf[2]}
               </Button>
@@ -332,7 +342,7 @@ const FloatingCalculator = (props) => {
   });
 
   const keypad = (
-    <Grid container justify="center">
+    <Grid container justify="center" style={{marginTop: '25px'}}>
       {buttonConfigurations.map((rowConfigs, index) => {
         return <GridRow key={index} buttonConfig={rowConfigs} />;
       })}
@@ -372,18 +382,18 @@ const FloatingCalculator = (props) => {
         aria-describedby="alert-dialog-description"
         disableBackdropClick
       >
-        <DialogTitle id="alert-dialog-title">{"Edit Formula"}</DialogTitle>
+        <DialogTitle style={{maxWidth: '1200px'}} id="alert-dialog-title">{"Edit Formula"}</DialogTitle>
         <DialogContent>
           <StyledFormulaDiv>{chipWrapper}</StyledFormulaDiv>
 
           <Grid container spacing={0}>
-            <Grid item xs={7}>
+            <Grid item xs={curtailed ? 5 : 7}>
               <Typography style={{ textAlign: "center" }}>
                 Operations
               </Typography>
               {keypad}
             </Grid>
-            <Grid item xs={5}>
+            <Grid item xs={curtailed ? 4 : 5}>
               <Typography style={{ textAlign: "center" }}>Arguments</Typography>
               {curtailed ? (
                 <Typography style={{ textAlign: "center", fontSize: ".75rem" }}>
@@ -391,17 +401,22 @@ const FloatingCalculator = (props) => {
                 </Typography>
               ) : null}
               {operationalArgs}
-              {curtailed ? (
-                <>
-                  <Typography
-                    style={{ textAlign: "center", fontSize: ".75rem" }}
-                  >
-                    Not Curtailed
-                  </Typography>
-                  {operationalArgsAlways}
-                </>
-              ) : null}
+
             </Grid>
+            {curtailed ? (
+            <Grid item xs={3}>
+
+                  <>
+                    <Typography
+                      style={{ textAlign: "center", fontSize: ".75rem", marginTop: '25px' }}
+                    >
+                      Not Curtailed
+                    </Typography>
+                    {operationalArgsAlways}
+                  </>
+
+            </Grid>
+                            ) : null}
           </Grid>
         </DialogContent>
         <DialogActions>
