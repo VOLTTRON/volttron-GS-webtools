@@ -40,3 +40,7 @@
 .darkLabel {
   color: white;
 }
+
+.MuiDialog-paperWidthSm {
+  max-width: 900px !important;
+}

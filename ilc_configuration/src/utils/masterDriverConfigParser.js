@@ -1,7 +1,14 @@
 import * as CSV from 'csv-string';
 
 export function masterDriverConfigParser () {
-    const masterDriverConfig = JSON.parse(localStorage.getItem('ilc-config-master-driver-config'));
+    let masterDriverConfig = {}
+    try{
+        masterDriverConfig = JSON.parse(localStorage.getItem('ilc-config-master-driver-config'));
+    }
+    catch{
+        throw new Error("Something went wrong when parsing ilc-config-master-driver-config in local storage. Remove this file and retry.")
+    }
+
     // parse master driver config object
     let parsedMDC = {
         "campuses": [],

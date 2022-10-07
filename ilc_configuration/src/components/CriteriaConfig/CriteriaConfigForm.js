@@ -8,8 +8,8 @@ import { FormControl } from "./_styledCriteriaConfigForm";
 import { PrimaryButton } from "../common/_styledButton";
 
 import { VerySmallHeader } from "../common/_styledHeader";
-import { _CRITERIA, _CONTROL } from "../../constants/strings";
-import defaultMapper from "../../constants/jsonTemplates/mapper.json";
+import { _CRITERIA, _CONTROL, OPERATION, OPERATION_ARGS } from "../../constants/strings";
+import defaultMapper from "../../constants/jsonTemplates/mappers.json";
 import { Grid } from "@material-ui/core";
 import CriteriaDropdown from "./CriteriaDropdown/CriteriaDropdown";
 
@@ -79,7 +79,7 @@ export default function CriteriaConfigForm(props) {
           device_topic: `${campus}/${building}/${deviceName}`,
         },
       };
-      newConfiguration[`${clusterFocus}${_CRITERIA}`]["mapper"] = defaultMapper;
+      newConfiguration[`${clusterFocus}${_CRITERIA}`]["mappers"] = defaultMapper;
       // set control config
       newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName] = {};
       newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName] = {
@@ -124,15 +124,15 @@ export default function CriteriaConfigForm(props) {
         criteriaObj["off_value"] = 0;
         break;
       case "formula":
-        criteriaObj["operation"] = "";
-        criteriaObj["operation_args"] = {
+        criteriaObj[OPERATION] = "";
+        criteriaObj[OPERATION_ARGS] = {
           always: [],
           nc: [],
         };
         criteriaObj["minimum"] = 0;
         criteriaObj["maximum"] = 0;
         break;
-      case "mapper":
+      case "mappers":
         criteriaObj["map_key"] = "";
         criteriaObj["dict_name"] = "";
         break;
@@ -170,7 +170,7 @@ export default function CriteriaConfigForm(props) {
           {Object.entries(configuration[`${clusterFocus}${_CRITERIA}`]).map(
             (deviceObj) => {
               const deviceName = deviceObj[0];
-              if (!(deviceName === "mapper" || deviceName === thisDevice)) {
+              if (!(deviceName === "mappers" || deviceName === thisDevice)) {
                 return (
                   <option key={deviceName} value={deviceName}>
                     {deviceName}
@@ -189,45 +189,20 @@ export default function CriteriaConfigForm(props) {
     const { sourceDeviceName } = state;
     if (sourceDeviceName) {
       const newConfiguration = clone(configuration);
-      const curtailDeviceTopic =
-        newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][
-          copyToDevice
-        ]["curtail"]["device_topic"];
-      let augmentDeviceTopic = "";
-      if (
-        newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][
-          copyToDevice
-        ]["augment"]
-      ) {
-        augmentDeviceTopic =
-          newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][
-            copyToDevice
-          ]["augment"]["device_topic"];
+      // Update curtail device topic
+      const curtailDeviceTopic = newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][copyToDevice]["curtail"]["device_topic"];
+
+      // Update augment if needed
+      if ( newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][copyToDevice]["augment"]) {
+        const augmentDeviceTopic = newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][copyToDevice]["augment"]["device_topic"];
+        newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][copyToDevice]["augment"]["device_topic"] = augmentDeviceTopic;
       }
-      const sourceDevice = clone(
-        configuration[`${clusterFocus}${_CRITERIA}`][sourceDeviceName][
-          sourceDeviceName
-        ]
-      );
-      newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][
-        copyToDevice
-      ] = sourceDevice;
-      // update device topic
-      newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][
-        copyToDevice
-      ]["curtail"]["device_topic"] = curtailDeviceTopic;
-      if (
-        newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][
-          copyToDevice
-        ]["augment"]
-      ) {
-        newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][
-          copyToDevice
-        ]["augment"]["device_topic"] = augmentDeviceTopic;
-      }
+      const sourceDeviceCopy = clone(configuration[`${clusterFocus}${_CRITERIA}`][sourceDeviceName][sourceDeviceName]);
+      newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][copyToDevice] = sourceDeviceCopy;
+      newConfiguration[`${clusterFocus}${_CRITERIA}`][copyToDevice][copyToDevice]["curtail"]["device_topic"] = curtailDeviceTopic;
+
       setConfiguration(newConfiguration);
       setState({ ...state, copying: false });
-    } else {
     }
   };
 

@@ -17,8 +17,7 @@ import EditIcon from "@material-ui/icons/Edit";
 import { FormControl } from "../common/_styledFormControl";
 import { TinyHeader } from "../common/_styledHeader";
 import { SmallLabel } from "../common/_styledLabel";
-import { FloatInput } from "../common/_styledInput";
-import { _CONTROL, OPERATION, OPERATION_ARGS } from "../../constants/strings";
+import { _CONTROL, OPERATION, OPERATION_ARGS, CONDITION, CONDITION_ARGS } from "../../constants/strings";
 import { clone } from "../../utils/clone";
 import { TreeView, TreeItem } from "../common/_styledTree";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
@@ -31,7 +30,7 @@ export default function ControlConfigForm(props) {
     MasterDriverContext
   );
   const { clusterFocus } = useContext(ClusterContext);
-
+  const [controlMethodCalculatorModalOpen, setControlMethodCalculatorModalOpen] = useState(false);
   const [offset, setOffset] = useState(
     configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
       `${setting}_setting`
@@ -90,7 +89,7 @@ export default function ControlConfigForm(props) {
   const isLoadCalc =
     configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
       `${setting}_setting`
-    ][`load`][OPERATION];
+    ]?.[`load`]?.[OPERATION];
   const [loadConfig, setLoadConfig] = useState(
     isLoadCalc ? "calculator" : "float"
   );
@@ -109,11 +108,11 @@ export default function ControlConfigForm(props) {
   ) => {
     newConfiguration[`${clusterFocus}${_CONTROL}`][props.deviceName][
       props.deviceName
-    ]["device_status"][props.setting][OPERATION] = forumla;
+    ]["device_status"][props.setting][CONDITION] = forumla;
 
     newConfiguration[`${clusterFocus}${_CONTROL}`][props.deviceName][
       props.deviceName
-    ]["device_status"][props.setting][OPERATION_ARGS] = formulaArgs;
+    ]["device_status"][props.setting][CONDITION_ARGS] = formulaArgs;
     setConfiguration(newConfiguration);
     setCurtailCalculatorFormula(forumla);
   };
@@ -143,6 +142,21 @@ export default function ControlConfigForm(props) {
       `${setting}_setting`
     ][name] = value;
     setConfiguration(newConfiguration);
+  };
+
+  const handleControlMethodCalculatorOperationChange = (
+    formula,
+    args,
+  ) => {
+    debugger;
+    const clonedConfig = clone(configuration)
+    clonedConfig[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
+      `${setting}_setting`]["equation"][OPERATION] = formula;
+
+    clonedConfig[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
+      `${setting}_setting`]["equation"][OPERATION_ARGS] = args;
+
+    setConfiguration(clonedConfig);
   };
 
   /**
@@ -222,7 +236,7 @@ export default function ControlConfigForm(props) {
       ]["equation"]["operation"] = "";
       newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
         `${setting}_setting`
-      ]["equation"]["operation_args"] = [];
+      ]["equation"][OPERATION_ARGS] = [];
     }
     setConfiguration(newConfiguration);
   };
@@ -337,7 +351,46 @@ export default function ControlConfigForm(props) {
               />
             </FormControl>
           </>
-        );
+        )
+      case "equation":
+          return (
+            <>
+              <div>
+                <Grid container spacing={0}>
+                  <Grid item xs={10}>
+                    <TextField
+                      id="criteriaFormulaInput"
+                      label="Operation"
+                      type="string"
+                      value={configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
+                        `${setting}_setting`]["equation"][OPERATION]}
+                      disabled
+                      multiline
+                      style={{ width: "100%" }}
+                    />
+                  </Grid>
+                    <IconButton
+                      style={{ marginTop: "14px" }}
+                      onClick={() => {
+                        setControlMethodCalculatorModalOpen(true);
+                      }}
+                    >
+                    <EditIcon />
+                    </IconButton>
+                </Grid>
+                <FloatingCalculator
+                  open={controlMethodCalculatorModalOpen}
+                  handleClose={() => setControlMethodCalculatorModalOpen(false)}
+                  operationalArguments={points}
+                  formula={configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName][
+                    `${setting}_setting`]["equation"][OPERATION]}
+                  handleOperationChange={handleControlMethodCalculatorOperationChange}
+                  extraButtons={false}
+                  curtailed={true}
+                />
+              </div>
+            </>
+          );
       default:
         return null;
     }
@@ -472,9 +525,10 @@ export default function ControlConfigForm(props) {
             <Grid item xs={10}>
               <TextField
                 id="demandFormulaInput"
-                label="Operation"
+                label="Condition"
                 type="string"
-                value={curtailCalculatorFormula}
+                value={configuration[`${clusterFocus}${_CONTROL}`][props.deviceName]
+                  [props.deviceName]["device_status"][props.setting][CONDITION]}
                 disabled
                 multiline
                 style={{ width: "100%" }}
@@ -495,7 +549,7 @@ export default function ControlConfigForm(props) {
             open={curtailCalculatorOpenModal}
             handleClose={() => setCurtailCalculatorOpenModal(false)}
             operationalArguments={points}
-            formula={curtailCalculatorFormula}
+            formula={configuration[`${clusterFocus}${_CONTROL}`][props.deviceName][props.deviceName]["device_status"][props.setting][CONDITION]}
             handleOperationChange={handleCurtailCalculatorChange}
             extraButtons={true}
           />

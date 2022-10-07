@@ -9,7 +9,7 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ChevronRightIcon from '@material-ui/icons/ChevronRight';
 import { InputLabel, NativeSelect, Grid } from '@material-ui/core'
 import { clone } from '../utils/clone'
-import defaultMapper from '../constants/jsonTemplates/mapper.json'
+import defaultMapper from '../constants/jsonTemplates/mappers.json'
 import { darkModeContext } from "../context/darkModeContext";
 import MapperEditor from '../components/CriteriaConfig/mapperEditor/MapperEditor'
 import {_CONTROL, _CRITERIA} from '../constants/strings'
@@ -46,7 +46,7 @@ export default function CriteriaConfig(props) {
         const devices = Object.keys(configuration[`${clusterFocus}${_CRITERIA}`])
         let criteriaConfigs =
         devices.map(deviceName => {
-            if(deviceName === "mapper"){
+            if(deviceName === "mappers"){
                 return
             }
             const viewAugment = configuration[`${clusterFocus}${_CRITERIA}`][deviceName][deviceName]["augment"] ? true : false
@@ -110,15 +110,15 @@ export default function CriteriaConfig(props) {
         newConfiguration[`${clusterFocus}${_CRITERIA}`][deviceName][deviceName]["curtail"] = {
                 device_topic: `${campus}/${building}/${deviceName}`
         }
-        newConfiguration[`${clusterFocus}${_CRITERIA}`]["mapper"] = clone(defaultMapper)
+        newConfiguration[`${clusterFocus}${_CRITERIA}`]["mappers"] = clone(defaultMapper)
         // set control config
         newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName] = {}
         newConfiguration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName] = {
                 device_topic: `${campus}/${building}/${deviceName}`,
                 device_status: {
                     curtail: {
-                        operation: "",
-                        operation_args: [ ]
+                        condition: "",
+                        condition_args: [ ]
                     }
                 },
                 curtail_setting:{

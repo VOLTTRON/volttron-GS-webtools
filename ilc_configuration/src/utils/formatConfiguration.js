@@ -1,5 +1,5 @@
 import { clone } from './clone'
-import {_CRITERIA, _PAIRWISE, _CONTROL, MAPPER, CONFIG} from '../constants/strings'
+import {_CRITERIA, _PAIRWISE, _CONTROL, MAPPER, CONFIG, OPERATION_ARGS} from '../constants/strings'
 
 export default function formatConfiguration (configuration) {
     let clonedConfiguration = clone(configuration);
@@ -21,11 +21,11 @@ export default function formatConfiguration (configuration) {
                                 continue;
                             }
                             // remove duplicates from criteria operation args
-                            if(pointObj["operation_args"]){
-                                const alwaysSet = new Set(pointObj["operation_args"]["always"])
-                                const ncSet = new Set(pointObj["operation_args"]["nc"])
-                                clonedConfiguration[key][parentName][deviceName][curtailName][pointName]["operation_args"]["always"] = [...alwaysSet]
-                                clonedConfiguration[key][parentName][deviceName][curtailName][pointName]["operation_args"]["nc"] = [...ncSet]
+                            if(pointObj[OPERATION_ARGS]){
+                                const alwaysSet = new Set(pointObj[OPERATION_ARGS]["always"])
+                                const ncSet = new Set(pointObj[OPERATION_ARGS]["nc"])
+                                clonedConfiguration[key][parentName][deviceName][curtailName][pointName][OPERATION_ARGS]["always"] = [...alwaysSet]
+                                clonedConfiguration[key][parentName][deviceName][curtailName][pointName][OPERATION_ARGS]["nc"] = [...ncSet]
                                 // remove [always] and [nc] from operation string
                                 let operationString = "";
                                 var rex = new RegExp("\\[always]", "g");

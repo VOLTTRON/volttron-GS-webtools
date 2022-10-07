@@ -43,7 +43,7 @@ const Card = ({ id, text, index, moveCard }) => {
         }
         // delete criteria from criteria config
         Object.keys(newConfiguration[`${clusterFocus}${_CRITERIA}`]).forEach(deviceName => {
-          if(deviceName!=="mapper"){
+          if(deviceName!=="mappers"){
             delete(newConfiguration[`${clusterFocus}${_CRITERIA}`][deviceName][deviceName]["curtail"][text])
             if(newConfiguration[`${clusterFocus}${_CRITERIA}`][deviceName][deviceName]["augment"]){
               delete(newConfiguration[`${clusterFocus}${_CRITERIA}`][deviceName][deviceName]["augment"][text])

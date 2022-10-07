@@ -53,7 +53,7 @@ export default function LeftPanel(props) {
       var response = window.confirm("Do you really want to delete cluster: " + clusterName + "?");
       if(response === true){
         let clusterToRemoveIndex = -1;
-        let clusterConfig = configuration["config"]["cluster"]
+        let clusterConfig = configuration["config"]["clusters"]
         let config = configuration
 
         if(clusterFocus === clusterName){
@@ -68,7 +68,7 @@ export default function LeftPanel(props) {
             }
         }
         clusterConfig.splice(clusterToRemoveIndex, 1)
-        config["config"]["cluster"] = clusterConfig
+        config["config"]["clusters"] = clusterConfig
 
         // Remove cluster from criteria
         let crit = config["criteria"]
@@ -111,7 +111,7 @@ export default function LeftPanel(props) {
           defaultExpandIcon={<ArrowRightIcon />}
           defaultExpanded={["1"]}>
             <TreeItem index="1" nodeId="1" label="Device Clusters" darkMode={darkMode}>
-              {configuration["config"]["cluster"].map(cluster => {
+              {configuration["config"]["clusters"].map(cluster => {
                 nodeId = nodeId + 4;
                 return (
                   <TreeItem key={`${nodeId + 1}`} nodeId={`${nodeId + 1}`} label={cluster["cluster_name"]} darkMode={darkMode}>

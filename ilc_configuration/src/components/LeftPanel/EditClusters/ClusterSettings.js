@@ -24,7 +24,7 @@ export default function ClusterSettings(props) {
     const [state, setState] = useState({
         cluster_name: props.cluster['cluster_name'],
         oldClusterName: props.cluster['cluster_name'],
-        cluster_types: ["RTU", "AHU", "LIGHT"],
+        cluster_types: ["RTU", "AHU VAV", "LIGHT"],
         cluster_type: props.cluster['cluster_type'],
         cluster_priority: props.cluster['cluster_priority'],
         oldClusterPriority: props.cluster['cluster_priority']
@@ -53,7 +53,7 @@ export default function ClusterSettings(props) {
         let error = false;
 
         // let totalClusterPriority = 0
-        // configuration["config"]["cluster"].forEach(cluster => {
+        // configuration["config"]["clusters"].forEach(cluster => {
         //     totalClusterPriority += cluster["cluster_priority"]
         // })
         // totalClusterPriority += newClusterPriority;
@@ -65,7 +65,7 @@ export default function ClusterSettings(props) {
         //     return;
         // }
 
-        newConfiguration["config"]["cluster"].forEach((cluster, index) => {
+        newConfiguration["config"]["clusters"].forEach((cluster, index) => {
             if(cluster["cluster_name"] === oldClusterName){
 
                 if (oldClusterName !== newClusterName){
@@ -75,13 +75,13 @@ export default function ClusterSettings(props) {
                         return;
                     }
                     // change cluster name in main config
-                    newConfiguration[CONFIG]["cluster"][index][DEVICE_CONTROL] =
+                    newConfiguration[CONFIG]["clusters"][index][DEVICE_CONTROL] =
                     `config://${newClusterName}${_CONTROL}`
-                    newConfiguration[CONFIG]["cluster"][index][DEVICE_CRITERIA] =
+                    newConfiguration[CONFIG]["clusters"][index][DEVICE_CRITERIA] =
                     `config://${newClusterName}${_CRITERIA}`
-                    newConfiguration[CONFIG]["cluster"][index][PAIRWISE_CRITERIA] =
+                    newConfiguration[CONFIG]["clusters"][index][PAIRWISE_CRITERIA] =
                     `config://${newClusterName}${_PAIRWISE}`
-                    newConfiguration[CONFIG]["cluster"][index]["cluster_name"] = newClusterName;
+                    newConfiguration[CONFIG]["clusters"][index]["cluster_name"] = newClusterName;
                     if (newConfiguration["criteria"]){
                         newConfiguration["criteria"][newClusterName] =
                         Array.from(newConfiguration["criteria"][oldClusterName])
@@ -99,8 +99,8 @@ export default function ClusterSettings(props) {
 
 
                 }
-                newConfiguration["config"]["cluster"][index]["cluster_type"] = newClusterType;
-                newConfiguration["config"]["cluster"][index]["cluster_priority"] = newClusterPriority;
+                newConfiguration["config"]["clusters"][index]["cluster_type"] = newClusterType;
+                newConfiguration["config"]["clusters"][index]["cluster_priority"] = newClusterPriority;
                 return;
             }
         })

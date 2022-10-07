@@ -8,7 +8,7 @@ import pairwiseAHUTemplate from '../../../constants/jsonTemplates/pairwiseAHUDef
 import pairwiseLightingTemplate from '../../../constants/jsonTemplates/pairwiseLightingDefaults.json'
 import pairwiseRTUTemplate from '../../../constants/jsonTemplates/pairwiseRTUDefaults.json'
 import pairwiseOtherTemplate from '../../../constants/jsonTemplates/pairwiseOtherDefaults.json'
-import mapperTemplate from '../../../constants/jsonTemplates/mapper.json'
+import mapperTemplate from '../../../constants/jsonTemplates/mappers.json'
 import {SmallLabel} from '../../common/_styledLabel';
 import {FloatInput} from '../../common/_styledInput'
 import {SmallHeader} from '../../common/_styledHeader'
@@ -27,13 +27,15 @@ const useStyles = makeStyles((theme) => ({
     },
   }));
 
+  const AHU_VAV = "AHU VAV"
+
 export default function AddCluster(props) {
     const { darkMode } = useContext(darkModeContext);
     const { configuration, setConfiguration } = useContext(MasterDriverContext);
     let { clusterFocus, setClusterFocus } = useContext(ClusterContext);
     const [state, setState] = useState({
-        cluster_name: `cluster_${configuration["config"]["cluster"].length + 1}`,
-        cluster_types: ["AHU", "LIGHT", "RTU"],
+        cluster_name: `cluster_${configuration["config"]["clusters"].length + 1}`,
+        cluster_types: [AHU_VAV, "LIGHT", "RTU"],
         cluster_type: "RTU",
         cluster_priority: 1
     })
@@ -49,7 +51,7 @@ export default function AddCluster(props) {
     const setCurtailAndCriteriaBasedOnType = (type, config, name) => {
         let criteria = null;
         let curtail = null;
-        if(type === "AHU") {
+        if(type === AHU_VAV) {
             curtail = parseCurtail(pairwiseAHUTemplate);
             criteria = parseCriteria(pairwiseAHUTemplate);
         } else if (type === "LIGHT") {
@@ -102,7 +104,7 @@ export default function AddCluster(props) {
         // check total cluster priority == 1
         let totalClusterPriority = 0
         let newConfiguration = clone(configuration);
-        newConfiguration["config"]["cluster"].forEach(cluster => {
+        newConfiguration["config"]["clusters"].forEach(cluster => {
             totalClusterPriority += cluster["cluster_priority"]
         })
         totalClusterPriority += parseFloat(cluster_priority)
@@ -121,21 +123,21 @@ export default function AddCluster(props) {
             [DEVICE_CRITERIA]: `config://${cluster_name}${_CRITERIA}`,
             [PAIRWISE_CRITERIA]: `config://${cluster_name}${_PAIRWISE}`
         }
-        for(let index in newConfiguration["config"]["cluster"]){
-            if (newConfiguration["config"]["cluster"][index]["cluster_name"] == cluster_name){
+        for(let index in newConfiguration["config"]["clusters"]){
+            if (newConfiguration["config"]["clusters"][index]["cluster_name"] == cluster_name){
                 alert("Cluster name in use, enter a new name")
                 return
             }
         }
-        newConfiguration["config"]["cluster"].push(newCluster);
+        newConfiguration["config"]["clusters"].push(newCluster);
         newConfiguration[`${cluster_name}${_PAIRWISE}`] = {}
 
         // set curtail and criteria based on cluster type
         newConfiguration = setCurtailAndCriteriaBasedOnType(cluster_type, newConfiguration, cluster_name);
 
         newConfiguration[`${cluster_name}${_CONTROL}`] = {};
-        let mapper = clone(mapperTemplate)
-        newConfiguration[`${cluster_name}${_CRITERIA}`] = {mapper: mapper};
+        let mappers = clone(mapperTemplate)
+        newConfiguration[`${cluster_name}${_CRITERIA}`] = {mappers: mappers};
 
         setConfiguration(newConfiguration)
         history.push(`/pairwise/${cluster_name}`)
@@ -144,9 +146,9 @@ export default function AddCluster(props) {
 
     const makeClusterPriorityComparisons = () => {
         let clusterPriorities = []
-        if (configuration["config"]["cluster"].length){
+        if (configuration["config"]["clusters"].length){
             clusterPriorities.push(<SmallHeader darkMode={darkMode}>Existing Cluster Priorities</SmallHeader>)
-            configuration["config"]["cluster"].forEach((cluster, index) => {
+            configuration["config"]["clusters"].forEach((cluster, index) => {
                 clusterPriorities.push(
                     <ClusterPriority cluster={cluster} index={index}/>
                 )

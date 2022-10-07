@@ -146,7 +146,7 @@ export default function ControlConfig(props) {
 
         let controlConfigs =
         Object.keys(configuration[`${clusterFocus}${_CRITERIA}`]).map(deviceName => {
-            if(deviceName === "mapper"){
+            if(deviceName === "mappers"){
                 return;
             }
             const viewAugment = configuration[`${clusterFocus}${_CONTROL}`][deviceName][deviceName]["device_status"]["augment"] ? true : false
