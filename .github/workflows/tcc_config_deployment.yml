@@ -11,16 +11,14 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@master
-      - name: Install Dependencies
+      - name: Setup Node
         uses: actions/setup-node@v3
         with:
           node-version: '16'
+      - name: Install Dependencies
         working-directory: ./tcc_configuration
         run: npm install
       - name: Build
-        uses: actions/setup-node@v3
-        with:
-          node-version: '16'
         working-directory: ./tcc_configuration
         run: CI=false npm run build
       - name: Archive Production Artifact
