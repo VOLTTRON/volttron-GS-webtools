@@ -13,14 +13,14 @@ jobs:
         uses: actions/checkout@master
       - name: Install Dependencies
         uses: actions/setup-node@v3
-          with:
-            node-version: '16'
+        with:
+          node-version: '16'
         working-directory: ./ahu_configuration
         run: npm install
       - name: Build
         uses: actions/setup-node@v3
-          with:
-            node-version: '16'
+        with:
+          node-version: '16'
         working-directory: ./ahu_configuration
         run: CI=false npm run build
       - name: Archive Production Artifact
