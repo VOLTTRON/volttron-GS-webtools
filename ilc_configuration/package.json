@@ -2,6 +2,9 @@
   "name": "ilc_config_react",
   "version": "0.1.0",
   "private": true,
+  "engines": {
+    "node": ">=14.0.0 <17.0.0"
+   },
   "dependencies": {
     "@material-ui/core": "^4.9.9",
     "@material-ui/icons": "^4.9.1",
