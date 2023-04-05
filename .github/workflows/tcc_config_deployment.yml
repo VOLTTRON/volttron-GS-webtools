@@ -13,9 +13,13 @@ jobs:
         uses: actions/checkout@master
       - name: Install Dependencies
         working-directory: ./tcc_configuration
+        with:
+          node-version: 16
         run: npm install
       - name: Build
         working-directory: ./tcc_configuration
+        with:
+          node-version: 16
         run: CI=false npm run build
       - name: Archive Production Artifact
         uses: actions/upload-artifact@master
